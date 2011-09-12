@@ -115,5 +115,15 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 }
 
 void DepthViewWindow::on_actionSave_As_triggered(){
-
+    QString filename = QFileDialog::getSaveFileName(this,"Save Image", "", "Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)");
+    QImage out;
+    if(filename.contains(".jps") || filename.contains(".pns")){
+        // TODO - Setup SideBySide Output to use here.
+    }
+    else{
+        out = ui->imageWidget->renderer.draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
+    }
+    if(!out.isNull()){
+        out.save(filename);
+    }
 }
