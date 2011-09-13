@@ -9,6 +9,7 @@ class ImageWidget : public QWidget {
     Q_OBJECT
     QScrollBar *hBar;
     QScrollBar *vBar;
+    QPoint lastmousepos;
 public:
     QImage imgL, imgR;
     float zoom;
@@ -25,6 +26,7 @@ public slots:
 protected:
     void resizeEvent(QResizeEvent * e);
     void paintEvent(QPaintEvent *e);
+    void mouseMoveEvent(QMouseEvent *e);
 };
 
 #endif // IMAGEWIDGET_H
