@@ -21,7 +21,7 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, float panX, float panY, int 
     }
     else{
         imgL = imgL.scaled(imgL.width()*zoom,imgL.height()*zoom,Qt::KeepAspectRatio);
-        imgR = imgR.scaled(imgR.width()*zoom,imgR.width()*zoom,Qt::KeepAspectRatio);
+        imgR = imgR.scaled(imgR.width()*zoom,imgR.height()*zoom,Qt::KeepAspectRatio);
     }
 
     panX += finalwidth/2 - imgL.width()/2;
@@ -29,22 +29,20 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, float panX, float panY, int 
 
     QImage final(finalwidth,finalheight,QImage::Format_ARGB32);
 
-    int minx = qMin(final.width(), qMin(imgL.width(), imgR.width()));
-    int miny = qMin(final.height(), qMin(imgL.height(), imgR.height()));
     QRgb *line;
     for(int y=0;y<final.height();y++){
         line = (QRgb *)final.scanLine(y);
         for(int x=0;x<final.width();x++){
-            if(x-panX >= minx || y-panY >= miny || x < panX || y < panY){
-                line[x] = qRgb(0,0,0);
-            }
-            else{
+            if(imgL.valid(x-panX,y-panY)&&imgR.valid(x-panX,y-panY)){
                 QRgb Lpixel=imgL.pixel(x-panX,y-panY);
                 QRgb Rpixel=imgR.pixel(x-panX,y-panY);
                 int red   = qRed(Rpixel)*colormult     + qGray(Rpixel)*!colormult;
                 int green = qGreen(Lpixel)*colormult   + qGray(Lpixel)*!colormult;
                 int blue  = qBlue(Lpixel)*colormult    + qGray(Lpixel)*!colormult;
                 line[x] = qRgb(red,green,blue);
+            }
+            else{
+                line[x] = qRgb(0,0,0);
             }
         }
     }

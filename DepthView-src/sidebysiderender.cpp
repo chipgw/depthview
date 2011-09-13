@@ -15,35 +15,48 @@ QImage SideBySideRender::draw(QImage imgL, QImage imgR, float panX, float panY, 
     }
 
     if(zoom == 0){
-        imgL = imgL.scaledToWidth(finalwidth);
-        imgR = imgR.scaledToWidth(finalwidth);
+        imgL = imgL.scaledToWidth(finalwidth/2);
+        imgR = imgR.scaledToWidth(finalwidth/2);
     }
     else{
         imgL = imgL.scaledToWidth(imgL.width()*zoom);
         imgR = imgR.scaledToWidth(imgR.width()*zoom);
     }
+    panY += finalheight/2 - imgL.height()/2;
 
-    panX += finalwidth/2 - imgL.width()/2;
-    panY += finalheight/2 - imgL.height()/4;
+    float panX_L = finalwidth/4 - imgL.width()/2;
+    float panX_R = finalwidth/4 - imgL.width()/2;
+
+    if(SideBySideRender::mirrorL){
+        imgL = imgL.mirrored(true,false);
+        panX_L -= panX;
+    }
+    else{
+        panX_L += panX;
+    }
+    if(SideBySideRender::mirrorR){
+        imgR = imgR.mirrored(true,false);
+        panX_R -= panX;
+    }
+    else{
+        panX_R += panX;
+    }
+
 
     QImage final(finalwidth,finalheight,QImage::Format_ARGB32);
 
-    int minx = qMin(finalwidth, qMin(imgL.width(), imgR.width()));
-    int miny = qMin(finalheight, qMin(imgL.height()/2, imgR.height()/2));
     QRgb *line;
     for(int y=0;y<finalheight;y++){
         line = (QRgb *)final.scanLine(y);
         for(int x=0;x<finalwidth;x++){
-            if(x-panX >= minx || y-panY >= miny || x < panX || y < panY){
-                line[x] = qRgb(0,0,0);
+            if(x>finalwidth/2 && imgR.valid(x-finalwidth/2-panX_R,y-panY)){
+                line[x]=imgR.pixel(x-finalwidth/2-panX_R,y-panY);
+            }
+            else if(x<finalwidth/2 && imgL.valid(x-panX_L,y-panY)){
+                line[x]=imgL.pixel(x-panX_L,y-panY);
             }
             else{
-                if(imgR.valid((x-finalwidth/2-panX)*2,(y-panY)*2)){
-                    line[x]=imgR.pixel((x-finalwidth/2-panX)*2,(y-panY)*2);
-                }
-                else if(imgL.valid((x-panX)*2,(y-panY)*2)){
-                    line[x]=imgL.pixel((x-panX)*2,(y-panY)*2);
-                }
+                line[x] = qRgb(0,0,0);
             }
         }
     }
@@ -52,3 +65,6 @@ QImage SideBySideRender::draw(QImage imgL, QImage imgR, float panX, float panY, 
 
     return final;
 }
+
+bool SideBySideRender::mirrorL = false;
+bool SideBySideRender::mirrorR = false;

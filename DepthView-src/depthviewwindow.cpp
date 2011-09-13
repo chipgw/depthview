@@ -124,18 +124,61 @@ void DepthViewWindow::on_actionSave_As_triggered(){
     QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
     QImage out;
     if(filename.contains(".jps") || filename.contains(".pns")){
-        // TODO - Setup SideBySide Output to use here.
+        SideBySideRender renderer;
+        bool tempmirrorL = SideBySideRender::mirrorL;
+        bool tempmirrorR = SideBySideRender::mirrorR;
+        SideBySideRender::mirrorL = false;
+        SideBySideRender::mirrorR = false;
+        out = renderer.draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
+        SideBySideRender::mirrorL = tempmirrorL;
+        SideBySideRender::mirrorR = tempmirrorR;
+        if(filename.contains(".jps")){
+            if(!out.isNull()){
+                out.save(filename, "JPG");
+            }
+        }
+        if(filename.contains(".pns")){
+            if(!out.isNull()){
+                out.save(filename, "PNG");
+            }
+        }
     }
     else{
         out = ui->imageWidget->renderer->draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
-    }
-    if(!out.isNull()){
-        out.save(filename);
+        if(!out.isNull()){
+            out.save(filename);
+        }
     }
 }
 
 void DepthViewWindow::on_actionNo_Mirror_triggered(){
     delete ui->imageWidget->renderer;
     ui->imageWidget->renderer = new SideBySideRender();
+    SideBySideRender::mirrorL = false;
+    SideBySideRender::mirrorR = false;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionMirror_Left_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new SideBySideRender();
+    SideBySideRender::mirrorL = true;
+    SideBySideRender::mirrorR = false;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionMirror_Right_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new SideBySideRender();
+    SideBySideRender::mirrorL = false;
+    SideBySideRender::mirrorR = true;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionMirror_Both_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new SideBySideRender();
+    SideBySideRender::mirrorL = true;
+    SideBySideRender::mirrorR = true;
     ui->imageWidget->repaint();
 }

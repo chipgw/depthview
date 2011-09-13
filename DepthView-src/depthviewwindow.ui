@@ -55,6 +55,9 @@
       <string>Side By Side</string>
      </property>
      <addaction name="actionNo_Mirror"/>
+     <addaction name="actionMirror_Left"/>
+     <addaction name="actionMirror_Right"/>
+     <addaction name="actionMirror_Both"/>
     </widget>
     <addaction name="menuAnglaph"/>
     <addaction name="menuSide_By_Side"/>
@@ -192,6 +195,21 @@
   <action name="actionNo_Mirror">
    <property name="text">
     <string>No Mirror</string>
+   </property>
+  </action>
+  <action name="actionMirror_Left">
+   <property name="text">
+    <string>Mirror Left</string>
+   </property>
+  </action>
+  <action name="actionMirror_Right">
+   <property name="text">
+    <string>Mirror Right</string>
+   </property>
+  </action>
+  <action name="actionMirror_Both">
+   <property name="text">
+    <string>Mirror Both</string>
    </property>
   </action>
  </widget>

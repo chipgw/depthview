@@ -39,6 +39,9 @@ private slots:
     void on_actionAbout_Qt_triggered();
                                              void on_actionSave_As_triggered();
                                                                                       void on_actionNo_Mirror_triggered();
+                                                                                                                               void on_actionMirror_Left_triggered();
+                                                                                                                                                                        void on_actionMirror_Right_triggered();
+                                                                                                                                                                                                                 void on_actionMirror_Both_triggered();
                                            };
 
 #endif // DEPTHVIEWWINDOW_H
