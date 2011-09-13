@@ -37,15 +37,11 @@ private slots:
     void on_actionOpen_triggered();
     void on_actionExit_triggered();
     void on_actionAbout_Qt_triggered();
-                                             void on_actionSave_As_triggered();
-                                                                                      void on_actionNo_Mirror_triggered();
-                                                                                                                               void on_actionMirror_Left_triggered();
-                                                                                                                                                                        void on_actionMirror_Right_triggered();
-                                                                                                                                                                                                                 void on_actionMirror_Both_triggered();
-                                                                                                                                                                                                                                                          void on_actionFit_triggered();
-                                                                                                                                                                                                                                                                                                   void on_actionzoom100_triggered();
-                                                                                                                                                                                                                                                                                                                                            void on_actionzoom50_triggered();
-                                                                                                                                                                                                                                                                                                                                                                                     void on_actionzoom200_triggered();
-                                           };
+    void on_actionSave_As_triggered();
+    void on_actionNo_Mirror_triggered();
+    void on_actionMirror_Left_triggered();
+    void on_actionMirror_Right_triggered();
+    void on_actionMirror_Both_triggered();
+};
 
 #endif // DEPTHVIEWWINDOW_H
