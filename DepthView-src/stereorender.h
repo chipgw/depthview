@@ -12,7 +12,7 @@ public:
 
     StereoRender();
 
-    virtual QImage draw(QImage imgL, QImage imgR, float panX, float panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
+    virtual QImage draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
 };
 
 #endif // STEREORENDER_H

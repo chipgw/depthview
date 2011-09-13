@@ -4,7 +4,7 @@
 StereoRender::StereoRender(){
 }
 
-QImage StereoRender::draw(QImage imgL, QImage imgR, float panX, float panY, int finalwidth, int finalheight, float zoom){
+QImage StereoRender::draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
     // Default Stereo Draw is Anglaph
     QTime starttime = QTime::currentTime();
 
@@ -15,7 +15,7 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, float panX, float panY, int 
         finalheight = imgL.height();
     }
 
-    if(zoom == 0){
+    if(zoom == 0.0f){
         imgL = imgL.scaled(finalwidth,finalheight,Qt::KeepAspectRatio);
         imgR = imgR.scaled(finalwidth,finalheight,Qt::KeepAspectRatio);
     }

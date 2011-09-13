@@ -5,30 +5,25 @@
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
     this->hBar = new QScrollBar(Qt::Horizontal, this);
     this->vBar = new QScrollBar(Qt::Vertical, this);
-    //this->hBar->hide();
-    //this->vBar->hide();
     this->hBar->setMinimum(-100);
     this->vBar->setMinimum(-100);
     this->setMouseTracking(true);
     zoom = 1;
     smooth = true;
     this->renderer = new StereoRender();
-    connect(this->hBar, SIGNAL(valueChanged(int)),this,SLOT(repaint()));
-    connect(this->vBar, SIGNAL(valueChanged(int)),this,SLOT(repaint()));
+    this->recalculatescroolmax();
+    connect(this->hBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
+    connect(this->vBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
 }
 
 void ImageWidget::resizeEvent(QResizeEvent *e){
-    this->hBar->resize(e->size().width()-20, 20);
-    this->hBar->move(0, e->size().height()-20);
-    int hmax = (imgL.width() - this->width())/2;
-    this->hBar->setMaximum( hmax);
-    this->hBar->setMinimum(-hmax);
+    this->hBar->resize(e->size().width()-15, 15);
+    this->hBar->move(0, e->size().height()-15);
 
-    this->vBar->resize(20, e->size().height()-20);
-    this->vBar->move(e->size().width()-20,0);
-    int vmax = (imgL.height() - this->height())/2;
-    this->vBar->setMaximum( vmax);
-    this->vBar->setMinimum(-vmax);
+    this->vBar->resize(15, e->size().height()-15);
+    this->vBar->move(e->size().width()-15,0);
+
+    this->recalculatescroolmax();
 }
 
 void ImageWidget::paintEvent(QPaintEvent *e){
@@ -39,6 +34,7 @@ void ImageWidget::loadStereoImage(QString filename){
     QImage img(filename);
     this->imgL = img.copy(0,0,img.width()/2,img.height());
     this->imgR = img.copy(img.width()/2,0,img.width()/2,img.height());
+    this->recalculatescroolmax();
 }
 
 void ImageWidget::mouseMoveEvent(QMouseEvent *e){
@@ -60,4 +56,27 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
         this->setCursor(Qt::ArrowCursor);
         this->lastmousepos = e->pos();
     }
+}
+void ImageWidget::wheelEvent(QWheelEvent *e){
+    float zoomorig = zoom;
+    zoom += e->delta()/1000.0f*zoom;
+    zoom = qMax(zoom, 0.2f);
+    zoom = qMin(zoom, 4.0f);
+    this->recalculatescroolmax();
+    vBar->setValue(vBar->value()*zoom/zoomorig);
+    hBar->setValue(hBar->value()*zoom/zoomorig);
+    this->repaint();
+}
+
+void ImageWidget::recalculatescroolmax(){
+    int hmax = qMax((imgL.width()*zoom - this->width())/2,0.0f);
+    this->hBar->setMaximum( hmax);
+    this->hBar->setMinimum(-hmax);
+
+    int vmax = qMax((imgL.height()*zoom - this->height())/2,0.0f);
+    this->vBar->setMaximum( vmax);
+    this->vBar->setMinimum(-vmax);
+
+    hBar->setVisible(hmax != 0);
+    vBar->setVisible(vmax != 0);
 }

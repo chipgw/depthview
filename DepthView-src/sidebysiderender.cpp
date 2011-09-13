@@ -3,7 +3,7 @@
 SideBySideRender::SideBySideRender(){
 }
 
-QImage SideBySideRender::draw(QImage imgL, QImage imgR, float panX, float panY, int finalwidth, int finalheight, float zoom){
+QImage SideBySideRender::draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
     // Default Stereo Draw is Anglaph
     QTime starttime = QTime::currentTime();
 
@@ -19,27 +19,28 @@ QImage SideBySideRender::draw(QImage imgL, QImage imgR, float panX, float panY, 
         imgR = imgR.scaledToWidth(finalwidth/2);
     }
     else{
-        imgL = imgL.scaledToWidth(imgL.width()*zoom);
-        imgR = imgR.scaledToWidth(imgR.width()*zoom);
+        imgL = imgL.scaledToWidth(imgL.width()*zoom/2);
+        imgR = imgR.scaledToWidth(imgR.width()*zoom/2);
     }
     panY += finalheight/2 - imgL.height()/2;
+    panY /= 2;
 
     float panX_L = finalwidth/4 - imgL.width()/2;
     float panX_R = finalwidth/4 - imgL.width()/2;
 
     if(SideBySideRender::mirrorL){
         imgL = imgL.mirrored(true,false);
-        panX_L -= panX;
+        panX_L -= panX/2;
     }
     else{
-        panX_L += panX;
+        panX_L += panX/2;
     }
     if(SideBySideRender::mirrorR){
         imgR = imgR.mirrored(true,false);
-        panX_R -= panX;
+        panX_R -= panX/2;
     }
     else{
-        panX_R += panX;
+        panX_R += panX/2;
     }
 
 
