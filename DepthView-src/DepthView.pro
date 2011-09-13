@@ -13,11 +13,15 @@ TEMPLATE = app
 SOURCES += main.cpp\
         depthviewwindow.cpp \
     imagewidget.cpp \
-    stereorender.cpp
+    stereorender.cpp \
+    sidebysiderender.cpp
 
 HEADERS  += depthviewwindow.h \
     imagewidget.h \
-    stereorender.h
+    stereorender.h \
+    sidebysiderender.h
 
 FORMS    += \
     depthviewwindow.ui
+
+

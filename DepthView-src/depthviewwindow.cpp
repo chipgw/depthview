@@ -31,7 +31,7 @@ bool DepthViewWindow::loadImage(QString filename){
     }
 }
 bool DepthViewWindow::showLoadImageDialog(){
-    QString filename = QFileDialog::getOpenFileName(this,"Open Image", "", "Stereo Image Files (*.jps *.pns)");
+    QString filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Stereo Image Files (*.jps *.pns)"));
     return loadImage(filename);
 }
 
@@ -48,16 +48,22 @@ void DepthViewWindow::on_actionOpen_triggered(){
 }
 
 void DepthViewWindow::on_actionFull_Color_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new StereoRender();
     StereoRender::colormult = 1;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionHalf_Color_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new StereoRender();
     StereoRender::colormult = 0.5;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionGreyscale_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new StereoRender();
     StereoRender::colormult = 0;
     ui->imageWidget->repaint();
 }
@@ -115,15 +121,21 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 }
 
 void DepthViewWindow::on_actionSave_As_triggered(){
-    QString filename = QFileDialog::getSaveFileName(this,"Save Image", "", "Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)");
+    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
     QImage out;
     if(filename.contains(".jps") || filename.contains(".pns")){
         // TODO - Setup SideBySide Output to use here.
     }
     else{
-        out = ui->imageWidget->renderer.draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
+        out = ui->imageWidget->renderer->draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
     }
     if(!out.isNull()){
         out.save(filename);
     }
+}
+
+void DepthViewWindow::on_actionNo_Mirror_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new SideBySideRender();
+    ui->imageWidget->repaint();
 }

@@ -1,26 +1,34 @@
 #include "stereorender.h"
 #include "imagewidget.h"
-#include <cmath>
-#include <QTime>
-#include <QDebug>
 
 StereoRender::StereoRender(){
 }
 
-QImage StereoRender::draw(QImage imgL, QImage imgR, float panX, float panY, int finalwidth, int finalheight){
+QImage StereoRender::draw(QImage imgL, QImage imgR, float panX, float panY, int finalwidth, int finalheight, float zoom){
     // Default Stereo Draw is Anglaph
-    QImage final;
-
     QTime starttime = QTime::currentTime();
 
     if(finalwidth > 0 && finalheight > 0){
-        final = QImage(finalwidth,finalheight,QImage::Format_ARGB32);
-        panX += finalwidth/2 - imgL.width()/2;
-        panY += finalheight/2 - imgL.height()/2;
     }
     else{
-        final = QImage(imgL.width(),imgL.height(),QImage::Format_ARGB32);
+        finalwidth = imgL.width();
+        finalheight = imgL.height();
     }
+
+    if(zoom == 0){
+        imgL = imgL.scaled(finalwidth,finalheight,Qt::KeepAspectRatio);
+        imgR = imgR.scaled(finalwidth,finalheight,Qt::KeepAspectRatio);
+    }
+    else{
+        imgL = imgL.scaled(imgL.width()*zoom,imgL.height()*zoom,Qt::KeepAspectRatio);
+        imgR = imgR.scaled(imgR.width()*zoom,imgR.width()*zoom,Qt::KeepAspectRatio);
+    }
+
+    panX += finalwidth/2 - imgL.width()/2;
+    panY += finalheight/2 - imgL.height()/2;
+
+    QImage final(finalwidth,finalheight,QImage::Format_ARGB32);
+
     int minx = qMin(final.width(), qMin(imgL.width(), imgR.width()));
     int miny = qMin(final.height(), qMin(imgL.height(), imgR.height()));
     QRgb *line;

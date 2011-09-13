@@ -50,7 +50,14 @@
      <addaction name="actionHalf_Color"/>
      <addaction name="actionGreyscale"/>
     </widget>
+    <widget class="QMenu" name="menuSide_By_Side">
+     <property name="title">
+      <string>Side By Side</string>
+     </property>
+     <addaction name="actionNo_Mirror"/>
+    </widget>
     <addaction name="menuAnglaph"/>
+    <addaction name="menuSide_By_Side"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -180,6 +187,11 @@
    </property>
    <property name="shortcut">
     <string>Left</string>
+   </property>
+  </action>
+  <action name="actionNo_Mirror">
+   <property name="text">
+    <string>No Mirror</string>
    </property>
   </action>
  </widget>

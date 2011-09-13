@@ -9,6 +9,7 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
     this->vBar->hide();
     zoom = 1;
     smooth = true;
+    this->renderer = new StereoRender();
 }
 
 void ImageWidget::resizeEvent(QResizeEvent *e){
@@ -21,12 +22,7 @@ void ImageWidget::resizeEvent(QResizeEvent *e){
 
 void ImageWidget::paintEvent(QPaintEvent *e){
     QPainter painter(this);
-    Qt::TransformationMode mode = Qt::FastTransformation;
-    if (smooth){
-        mode = Qt::SmoothTransformation;
-    }
-    painter.drawImage(0,0,renderer.draw(imgL.scaled(this->size(),Qt::KeepAspectRatio, mode),imgR.scaled(this->size(),Qt::KeepAspectRatio, mode),0,0,this->width(),this->height()));
-    // imgL.scaledToWidth(imgL.width()*zoom),imgR.scaledToWidth(imgR.width()*zoom)
+    painter.drawImage(0,0,renderer->draw(imgL,imgR,0,0,this->width(),this->height()));
 }
 void ImageWidget::loadStereoImage(QString filename){
     QImage img(filename);

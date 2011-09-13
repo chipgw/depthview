@@ -38,6 +38,7 @@ private slots:
     void on_actionExit_triggered();
     void on_actionAbout_Qt_triggered();
                                              void on_actionSave_As_triggered();
+                                                                                      void on_actionNo_Mirror_triggered();
                                            };
 
 #endif // DEPTHVIEWWINDOW_H

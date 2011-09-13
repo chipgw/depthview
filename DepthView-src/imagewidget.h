@@ -3,6 +3,7 @@
 
 #include <QScrollBar>
 #include "stereorender.h"
+#include "sidebysiderender.h"
 
 class ImageWidget : public QWidget {
     Q_OBJECT
@@ -11,7 +12,7 @@ class ImageWidget : public QWidget {
 public:
     QImage imgL, imgR;
     float zoom;
-    StereoRender renderer;
+    StereoRender *renderer;
     bool smooth;
 
     explicit ImageWidget(QWidget *parent = 0);
