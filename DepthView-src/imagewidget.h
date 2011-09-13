@@ -4,6 +4,7 @@
 #include <QScrollBar>
 #include "stereorender.h"
 #include "sidebysiderender.h"
+#include "interlacedrender.h"
 
 class ImageWidget : public QWidget {
     Q_OBJECT

@@ -198,3 +198,17 @@ void DepthViewWindow::on_actionzoom50_triggered(){
 void DepthViewWindow::on_actionzoom200_triggered(){
     ui->imageWidget->setZoom(2);
 }
+
+void DepthViewWindow::on_actionHorizontal_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new InterlacedRender(this);
+    InterlacedRender::horizontal = true;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionVertical_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new InterlacedRender(this);
+    InterlacedRender::horizontal = false;
+    ui->imageWidget->repaint();
+}

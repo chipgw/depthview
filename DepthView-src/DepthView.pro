@@ -14,14 +14,18 @@ SOURCES += main.cpp\
         depthviewwindow.cpp \
     imagewidget.cpp \
     stereorender.cpp \
-    sidebysiderender.cpp
+    sidebysiderender.cpp \
+    interlacedrender.cpp
 
 HEADERS  += depthviewwindow.h \
     imagewidget.h \
     stereorender.h \
-    sidebysiderender.h
+    sidebysiderender.h \
+    interlacedrender.h
 
 FORMS    += \
     depthviewwindow.ui
+
+
 
 

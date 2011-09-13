@@ -59,8 +59,16 @@
      <addaction name="actionMirror_Right"/>
      <addaction name="actionMirror_Both"/>
     </widget>
+    <widget class="QMenu" name="menuInterlaced">
+     <property name="title">
+      <string>Interlaced</string>
+     </property>
+     <addaction name="actionHorizontal"/>
+     <addaction name="actionVertical"/>
+    </widget>
     <addaction name="menuAnglaph"/>
     <addaction name="menuSide_By_Side"/>
+    <addaction name="menuInterlaced"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -252,6 +260,16 @@
    </property>
    <property name="shortcut">
     <string>2</string>
+   </property>
+  </action>
+  <action name="actionVertical">
+   <property name="text">
+    <string>Vertical</string>
+   </property>
+  </action>
+  <action name="actionHorizontal">
+   <property name="text">
+    <string>Horizontal</string>
    </property>
   </action>
  </widget>
