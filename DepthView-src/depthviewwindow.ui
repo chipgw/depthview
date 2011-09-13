@@ -66,8 +66,18 @@
     <property name="title">
      <string>View</string>
     </property>
+    <widget class="QMenu" name="menuZoom">
+     <property name="title">
+      <string>Zoom</string>
+     </property>
+     <addaction name="actionFit"/>
+     <addaction name="actionzoom200"/>
+     <addaction name="actionzoom100"/>
+     <addaction name="actionzoom50"/>
+    </widget>
     <addaction name="actionShow_MenuBar"/>
     <addaction name="actionFullscreen"/>
+    <addaction name="menuZoom"/>
    </widget>
    <widget class="QMenu" name="menuImage">
     <property name="title">
@@ -210,6 +220,38 @@
   <action name="actionMirror_Both">
    <property name="text">
     <string>Mirror Both</string>
+   </property>
+  </action>
+  <action name="actionFit">
+   <property name="text">
+    <string>Fit</string>
+   </property>
+   <property name="shortcut">
+    <string>0</string>
+   </property>
+  </action>
+  <action name="actionzoom100">
+   <property name="text">
+    <string>100%</string>
+   </property>
+   <property name="shortcut">
+    <string>1</string>
+   </property>
+  </action>
+  <action name="actionzoom50">
+   <property name="text">
+    <string>50%</string>
+   </property>
+   <property name="shortcut">
+    <string>5</string>
+   </property>
+  </action>
+  <action name="actionzoom200">
+   <property name="text">
+    <string>200%</string>
+   </property>
+   <property name="shortcut">
+    <string>2</string>
    </property>
   </action>
  </widget>

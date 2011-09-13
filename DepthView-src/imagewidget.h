@@ -10,14 +10,16 @@ class ImageWidget : public QWidget {
     QScrollBar *hBar;
     QScrollBar *vBar;
     QPoint lastmousepos;
+    float zoom;
 public:
     QImage imgL, imgR;
-    float zoom;
     StereoRender *renderer;
     bool smooth;
 
     explicit ImageWidget(QWidget *parent = 0);
     void loadStereoImage(QString filename);
+    void setZoom(float val);
+    float getZoom();
 
 signals:
 

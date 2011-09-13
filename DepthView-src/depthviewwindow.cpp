@@ -182,3 +182,19 @@ void DepthViewWindow::on_actionMirror_Both_triggered(){
     SideBySideRender::mirrorR = true;
     ui->imageWidget->repaint();
 }
+
+void DepthViewWindow::on_actionFit_triggered(){
+    ui->imageWidget->setZoom(0);
+}
+
+void DepthViewWindow::on_actionzoom100_triggered(){
+    ui->imageWidget->setZoom(1);
+}
+
+void DepthViewWindow::on_actionzoom50_triggered(){
+    ui->imageWidget->setZoom(0.5);
+}
+
+void DepthViewWindow::on_actionzoom200_triggered(){
+    ui->imageWidget->setZoom(2);
+}

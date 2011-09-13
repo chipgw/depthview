@@ -8,7 +8,7 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
     this->hBar->setMinimum(-100);
     this->vBar->setMinimum(-100);
     this->setMouseTracking(true);
-    zoom = 1;
+    zoom = 0;
     smooth = true;
     this->renderer = new StereoRender();
     this->recalculatescroolmax();
@@ -58,6 +58,9 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
     }
 }
 void ImageWidget::wheelEvent(QWheelEvent *e){
+    if(zoom == 0){
+        zoom = this->width()/(imgL.width()*1.0f);
+    }
     float zoomorig = zoom;
     zoom += e->delta()/1000.0f*zoom;
     zoom = qMax(zoom, 0.2f);
@@ -79,4 +82,12 @@ void ImageWidget::recalculatescroolmax(){
 
     hBar->setVisible(hmax != 0);
     vBar->setVisible(vmax != 0);
+}
+void ImageWidget::setZoom(float val){
+    zoom = val;
+    this->recalculatescroolmax();
+    this->repaint();
+}
+float ImageWidget::getZoom(){
+    return this->zoom;
 }
