@@ -36,9 +36,9 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, int panX, int panY, int fina
             if(imgL.valid(x-panX,y-panY)&&imgR.valid(x-panX,y-panY)){
                 QRgb Lpixel=imgL.pixel(x-panX,y-panY);
                 QRgb Rpixel=imgR.pixel(x-panX,y-panY);
-                int red   = qRed(Rpixel)*colormult     + qGray(Rpixel)*!colormult;
-                int green = qGreen(Lpixel)*colormult   + qGray(Lpixel)*!colormult;
-                int blue  = qBlue(Lpixel)*colormult    + qGray(Lpixel)*!colormult;
+                int red   = qRed(Rpixel)*colormult     + qGray(Rpixel)*(1-colormult);
+                int green = qGreen(Lpixel)*colormult   + qGray(Lpixel)*(1-colormult);
+                int blue  = qBlue(Lpixel)*colormult    + qGray(Lpixel)*(1-colormult);
                 line[x] = qRgb(red,green,blue);
             }
             else{
