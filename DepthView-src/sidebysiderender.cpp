@@ -22,7 +22,7 @@ QImage SideBySideRender::draw(QImage imgL, QImage imgR, int panX, int panY, int 
         imgL = imgL.scaledToWidth(imgL.width()*zoom/2);
         imgR = imgR.scaledToWidth(imgR.width()*zoom/2);
     }
-    panY += finalheight/2 - imgL.height()/2;
+    panY += finalheight - imgL.height();
     panY /= 2;
 
     float panX_L = finalwidth/4 - imgL.width()/2;
