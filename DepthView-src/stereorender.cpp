@@ -8,9 +8,7 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, int panX, int panY, int fina
     // Default Stereo Draw is Anglaph
     QTime starttime = QTime::currentTime();
 
-    if(finalwidth > 0 && finalheight > 0){
-    }
-    else{
+    if(finalwidth <= 0 || finalheight <= 0){
         finalwidth = imgL.width();
         finalheight = imgL.height();
     }
@@ -30,20 +28,28 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, int panX, int panY, int fina
     QImage final(finalwidth,finalheight,QImage::Format_ARGB32);
 
     QRgb *line;
+    QRgb *lineL;
+    QRgb *lineR;
+
     for(int y=0;y<final.height();y++){
         line = (QRgb *)final.scanLine(y);
-        for(int x=0;x<final.width();x++){
-            if(imgL.valid(x-panX,y-panY)&&imgR.valid(x-panX,y-panY)){
-                QRgb Lpixel=imgL.pixel(x-panX,y-panY);
-                QRgb Rpixel=imgR.pixel(x-panX,y-panY);
-                int red   = qRed(Rpixel)*colormult     + qGray(Rpixel)*(1-colormult);
-                int green = qGreen(Lpixel)*colormult   + qGray(Lpixel)*(1-colormult);
-                int blue  = qBlue(Lpixel)*colormult    + qGray(Lpixel)*(1-colormult);
-                line[x] = qRgb(red,green,blue);
+        if(y-panY >= 0 && y-panY < imgL.height()){
+            lineL = (QRgb *)imgL.constScanLine(y-panY);
+            lineR = (QRgb *)imgR.constScanLine(y-panY);
+            for(int x=0;x<final.width();x++){
+                if(imgL.valid(x-panX,y-panY)&&imgR.valid(x-panX,y-panY)){
+                    line[x] = qRgb(qRed(lineR[x-panX])*colormult     + qGray(lineR[x-panX])*(1-colormult),
+                                   qGreen(lineL[x-panX])*colormult   + qGray(lineL[x-panX])*(1-colormult),
+                                   qBlue(lineL[x-panX])*colormult    + qGray(lineL[x-panX])*(1-colormult));
+                }
+                else{
+                    line[x] = qRgb(0,0,0);
+                }
             }
-            else{
+        }
+        else{
+            for(int x=0;x<final.width();x++)
                 line[x] = qRgb(0,0,0);
-            }
         }
     }
 
