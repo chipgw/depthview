@@ -4,21 +4,26 @@
 #include <QMainWindow>
 #include <QDir>
 #include "imagewidget.h"
+#include <QSettings>
 
 namespace Ui {
     class DepthViewWindow;
 }
 
-class DepthViewWindow : public QMainWindow { Q_OBJECT
+class DepthViewWindow : public QMainWindow {
+    Q_OBJECT
 public:
     QStringList fileFilters;
     QString currentFile;
+    QSettings settings;
 
     explicit DepthViewWindow(QWidget *parent = 0);
     ~DepthViewWindow();
 
     bool loadImage(QString filename);
     bool showLoadImageDialog();
+
+    void loadSettings();
 
 private:
     Ui::DepthViewWindow *ui;
@@ -48,6 +53,8 @@ private slots:
     void on_actionzoom50_triggered();
     void on_actionHorizontal_triggered();
     void on_actionVertical_triggered();
+    void on_actionOptions_triggered();
+    void on_actionAbout_triggered();
 };
 
 #endif // DEPTHVIEWWINDOW_H

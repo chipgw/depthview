@@ -15,16 +15,19 @@ SOURCES += main.cpp\
     imagewidget.cpp \
     stereorender.cpp \
     sidebysiderender.cpp \
-    interlacedrender.cpp
+    interlacedrender.cpp \
+    settingswindow.cpp
 
 HEADERS  += depthviewwindow.h \
     imagewidget.h \
     stereorender.h \
     sidebysiderender.h \
-    interlacedrender.h
+    interlacedrender.h \
+    settingswindow.h
 
 FORMS    += \
-    depthviewwindow.ui
+    depthviewwindow.ui \
+    settingswindow.ui
 
 
 

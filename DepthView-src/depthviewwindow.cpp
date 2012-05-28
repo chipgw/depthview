@@ -4,15 +4,19 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QMessageBox>
+#include <settingswindow.h>
 
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow){
     ui->setupUi(this);
     fileFilters << "*.jps" << "*.pns";
     ui->imageWidget->addActions(ui->menubar->actions());
     ui->imageWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
+
+    this->loadSettings();
 }
 
 DepthViewWindow::~DepthViewWindow(){
+    settings.setValue("lastrun", QDate::currentDate().toString());
     delete ui;
 }
 
@@ -211,4 +215,51 @@ void DepthViewWindow::on_actionVertical_triggered(){
     ui->imageWidget->renderer = new InterlacedRender(this);
     InterlacedRender::horizontal = false;
     ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionOptions_triggered(){
+    SettingsWindow settingsdialog(&settings, this);
+    if(settingsdialog.exec() == QDialog::Accepted){
+        this->loadSettings();
+    }
+}
+
+void DepthViewWindow::on_actionAbout_triggered(){
+    QMessageBox::about(this, "About DepthView", "DepthView is a basic application for viewing stereo 3D image files. http://sourceforge.net/projects/depthview/");
+}
+
+void DepthViewWindow::loadSettings(){
+    if(settings.contains("defaultrender")){
+        QString renderer = settings.value("defaultrender").toString();
+        if(renderer == "Anglaph, Full Color"){
+            this->on_actionFull_Color_triggered();
+        }
+        else if(renderer == "Anglaph, Half Color"){
+            this->on_actionHalf_Color_triggered();
+        }
+        else if(renderer == "Anglaph, Greyscale"){
+            this->on_actionGreyscale_triggered();
+        }
+        else if(renderer == "Side by Side, No Mirror"){
+            this->on_actionNo_Mirror_triggered();
+        }
+        else if(renderer == "Side by Side, Mirror Left"){
+            this->on_actionMirror_Left_triggered();
+        }
+        else if(renderer == "Side by Side, Mirror Right"){
+            this->on_actionMirror_Right_triggered();
+        }
+        else if(renderer == "Side by Side, Mirror Both"){
+            this->on_actionMirror_Both_triggered();
+        }
+        else if(renderer == "Interlaced, Horizontal"){
+            this->on_actionHorizontal_triggered();
+        }
+        else if(renderer == "Interlaced, Vertical"){
+            this->on_actionVertical_triggered();
+        }
+    }
+    if(settings.contains("startfullscreen")){
+        ui->actionFullscreen->setChecked(settings.value("startfullscreen").toBool());
+    }
 }

@@ -3,6 +3,10 @@
 
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
+
+    a.setOrganizationName("DepthView");
+    a.setApplicationName("DepthView");
+
     DepthViewWindow w;
     w.show();
 
