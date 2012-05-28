@@ -69,6 +69,7 @@
     <addaction name="menuAnglaph"/>
     <addaction name="menuSide_By_Side"/>
     <addaction name="menuInterlaced"/>
+    <addaction name="actionCheckerboard"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -282,6 +283,11 @@
   <action name="actionOptions">
    <property name="text">
     <string>Options</string>
+   </property>
+  </action>
+  <action name="actionCheckerboard">
+   <property name="text">
+    <string>Checkerboard</string>
    </property>
   </action>
  </widget>

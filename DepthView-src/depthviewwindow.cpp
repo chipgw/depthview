@@ -258,8 +258,17 @@ void DepthViewWindow::loadSettings(){
         else if(renderer == "Interlaced, Vertical"){
             this->on_actionVertical_triggered();
         }
+        else if(renderer == "Checkerboard"){
+            this->on_actionCheckerboard_triggered();
+        }
     }
     if(settings.contains("startfullscreen")){
         ui->actionFullscreen->setChecked(settings.value("startfullscreen").toBool());
     }
+}
+
+void DepthViewWindow::on_actionCheckerboard_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new CheckerBoardRender(this);
+    ui->imageWidget->repaint();
 }

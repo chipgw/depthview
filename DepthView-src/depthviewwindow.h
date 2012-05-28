@@ -55,6 +55,7 @@ private slots:
     void on_actionVertical_triggered();
     void on_actionOptions_triggered();
     void on_actionAbout_triggered();
+    void on_actionCheckerboard_triggered();
 };
 
 #endif // DEPTHVIEWWINDOW_H

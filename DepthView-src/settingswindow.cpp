@@ -17,6 +17,8 @@ SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(p
     ui->defaultRendererComboBox->addItem("Interlaced, Horizontal");
     ui->defaultRendererComboBox->addItem("Interlaced, Vertical");
 
+    ui->defaultRendererComboBox->addItem("Checkerboard");
+
     ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings->value("defaultrender").toString()));
     ui->startFullscreenCheckBox->setChecked(settings->value("startfullscreen").toBool());
 }

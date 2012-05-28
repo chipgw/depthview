@@ -5,6 +5,7 @@
 #include "stereorender.h"
 #include "sidebysiderender.h"
 #include "interlacedrender.h"
+#include "checkerboardrender.h"
 
 class ImageWidget : public QWidget {
     Q_OBJECT
