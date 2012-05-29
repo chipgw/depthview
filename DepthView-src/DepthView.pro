@@ -31,6 +31,6 @@ FORMS    += \
     depthviewwindow.ui \
     settingswindow.ui
 
-
+RC_FILE = DepthView.rc
 
 
