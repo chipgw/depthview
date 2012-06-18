@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QSettings>
+#include <QAbstractButton>
+#include <QMessageBox>
 
 namespace Ui {
 class SettingsWindow;
@@ -17,6 +19,8 @@ public:
     
 private slots:
     void accept();
+
+    void on_buttonBox_clicked(QAbstractButton *button);
 
 private:
     Ui::SettingsWindow *ui;

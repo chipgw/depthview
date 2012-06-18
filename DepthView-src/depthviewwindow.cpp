@@ -261,9 +261,21 @@ void DepthViewWindow::loadSettings(){
         else if(renderer == "Checkerboard"){
             this->on_actionCheckerboard_triggered();
         }
+        else if(renderer == "Mono, Left"){
+            this->on_actionLeft_Image_triggered();
+        }
+        else if(renderer == "Mono, Right"){
+            this->on_actionRight_Image_triggered();
+        }
+        else{
+            this->on_actionFull_Color_triggered();
+        }
     }
     if(settings.contains("startfullscreen")){
         ui->actionFullscreen->setChecked(settings.value("startfullscreen").toBool());
+    }
+    else{
+        ui->actionFullscreen->setChecked(false);
     }
 }
 
