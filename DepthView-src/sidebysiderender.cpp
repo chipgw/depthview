@@ -4,7 +4,6 @@ SideBySideRender::SideBySideRender(){
 }
 
 QImage SideBySideRender::draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
-    // Default Stereo Draw is Anglaph
     QTime starttime = QTime::currentTime();
 
     if(finalwidth <= 0 || finalheight <= 0){

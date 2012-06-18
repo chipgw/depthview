@@ -66,10 +66,18 @@
      <addaction name="actionHorizontal"/>
      <addaction name="actionVertical"/>
     </widget>
+    <widget class="QMenu" name="menuSingle">
+     <property name="title">
+      <string>Mono View (No 3D Effect)</string>
+     </property>
+     <addaction name="actionLeft_Image"/>
+     <addaction name="actionRight_Image"/>
+    </widget>
     <addaction name="menuAnglaph"/>
     <addaction name="menuSide_By_Side"/>
     <addaction name="menuInterlaced"/>
     <addaction name="actionCheckerboard"/>
+    <addaction name="menuSingle"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -288,6 +296,16 @@
   <action name="actionCheckerboard">
    <property name="text">
     <string>Checkerboard</string>
+   </property>
+  </action>
+  <action name="actionLeft_Image">
+   <property name="text">
+    <string>Left Image</string>
+   </property>
+  </action>
+  <action name="actionRight_Image">
+   <property name="text">
+    <string>Right Image</string>
    </property>
   </action>
  </widget>

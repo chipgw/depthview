@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     sidebysiderender.cpp \
     interlacedrender.cpp \
     settingswindow.cpp \
-    checkerboardrender.cpp
+    checkerboardrender.cpp \
+    singlerender.cpp
 
 HEADERS  += depthviewwindow.h \
     imagewidget.h \
@@ -25,7 +26,8 @@ HEADERS  += depthviewwindow.h \
     sidebysiderender.h \
     interlacedrender.h \
     settingswindow.h \
-    checkerboardrender.h
+    checkerboardrender.h \
+    singlerender.h
 
 FORMS    += \
     depthviewwindow.ui \

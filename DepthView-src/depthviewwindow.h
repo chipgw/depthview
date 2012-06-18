@@ -56,6 +56,8 @@ private slots:
     void on_actionOptions_triggered();
     void on_actionAbout_triggered();
     void on_actionCheckerboard_triggered();
+    void on_actionLeft_Image_triggered();
+    void on_actionRight_Image_triggered();
 };
 
 #endif // DEPTHVIEWWINDOW_H

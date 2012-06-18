@@ -272,3 +272,17 @@ void DepthViewWindow::on_actionCheckerboard_triggered(){
     ui->imageWidget->renderer = new CheckerBoardRender(this);
     ui->imageWidget->repaint();
 }
+
+void DepthViewWindow::on_actionLeft_Image_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new SingleRender();
+    SingleRender::left = true;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionRight_Image_triggered(){
+    delete ui->imageWidget->renderer;
+    ui->imageWidget->renderer = new SingleRender();
+    SingleRender::left = false;
+    ui->imageWidget->repaint();
+}
