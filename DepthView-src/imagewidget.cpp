@@ -91,3 +91,12 @@ void ImageWidget::setZoom(float val){
 float ImageWidget::getZoom(){
     return this->zoom;
 }
+
+void ImageWidget::zoomIn(){
+    wheelEvent(new QWheelEvent(mapFromGlobal(QCursor::pos()),
+                               64, Qt::NoButton, Qt::NoModifier));
+}
+void ImageWidget::zoomOut(){
+    wheelEvent(new QWheelEvent(mapFromGlobal(QCursor::pos()),
+                               -64, Qt::NoButton, Qt::NoModifier));
+}

@@ -58,6 +58,10 @@ private slots:
     void on_actionCheckerboard_triggered();
     void on_actionLeft_Image_triggered();
     void on_actionRight_Image_triggered();
+    void on_actionFirst_triggered();
+    void on_actionLast_triggered();
+    void on_actionZoomIn_triggered();
+    void on_actionZoomOut_triggered();
 };
 
 #endif // DEPTHVIEWWINDOW_H

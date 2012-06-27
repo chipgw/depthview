@@ -23,6 +23,8 @@ public:
     void loadStereoImage(QString filename);
     void setZoom(float val);
     float getZoom();
+    void zoomIn();
+    void zoomOut();
 
 signals:
 

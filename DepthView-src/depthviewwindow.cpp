@@ -298,3 +298,21 @@ void DepthViewWindow::on_actionRight_Image_triggered(){
     SingleRender::left = false;
     ui->imageWidget->repaint();
 }
+
+void DepthViewWindow::on_actionFirst_triggered(){
+    QStringList entryList = QDir::current().entryList(fileFilters);
+    loadImage(entryList[0]);
+}
+
+void DepthViewWindow::on_actionLast_triggered(){
+    QStringList entryList = QDir::current().entryList(fileFilters);
+    loadImage(entryList[entryList.count()-1]);
+}
+
+void DepthViewWindow::on_actionZoomIn_triggered(){
+    ui->imageWidget->zoomIn();
+}
+
+void DepthViewWindow::on_actionZoomOut_triggered(){
+    ui->imageWidget->zoomOut();
+}

@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/icons/silk">
+        <file alias="index.theme">icons/silk/index.theme</file>
+        <file alias="16x16/folder.png">icons/silk/folder.png</file>
+        <file alias="16x16/folder-image.png">icons/silk/folder_image.png</file>
+        <file alias="16x16/image.png">icons/silk/image.png</file>
+        <file alias="16x16/information.png">icons/silk/information.png</file>
+        <file alias="16x16/printer.png">icons/silk/printer.png</file>
+        <file alias="16x16/accept.png">icons/silk/accept.png</file>
+        <file alias="16x16/application.png">icons/silk/application.png</file>
+        <file alias="16x16/arrow_refresh.png">icons/silk/arrow_refresh.png</file>
+        <file alias="16x16/disk.png">icons/silk/disk.png</file>
+        <file alias="16x16/exclamation.png">icons/silk/exclamation.png</file>
+        <file alias="16x16/help.png">icons/silk/help.png</file>
+        <file alias="16x16/picture.png">icons/silk/picture.png</file>
+        <file alias="16x16/resultset_first.png">icons/silk/resultset_first.png</file>
+        <file alias="16x16/resultset_last.png">icons/silk/resultset_last.png</file>
+        <file alias="16x16/resultset_next.png">icons/silk/resultset_next.png</file>
+        <file alias="16x16/resultset_previous.png">icons/silk/resultset_previous.png</file>
+        <file alias="16x16/wrench.png">icons/silk/wrench.png</file>
+        <file alias="16x16/arrow_in.png">icons/silk/arrow_in.png</file>
+        <file alias="16x16/arrow_inout.png">icons/silk/arrow_inout.png</file>
+        <file alias="16x16/arrow_out.png">icons/silk/arrow_out.png</file>
+        <file alias="16x16/zoom.png">icons/silk/zoom.png</file>
+        <file alias="16x16/zoom_in.png">icons/silk/zoom_in.png</file>
+        <file alias="16x16/zoom_out.png">icons/silk/zoom_out.png</file>
+        <file alias="16x16/cross.png">icons/silk/cross.png</file>
+    </qresource>
+</RCC>

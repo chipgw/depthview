@@ -35,4 +35,7 @@ FORMS    += \
 
 RC_FILE = DepthView.rc
 
+RESOURCES += \
+    icons.qrc
+
 
