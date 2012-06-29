@@ -26,4 +26,7 @@
         <file alias="16x16/zoom_out.png">icons/silk/zoom_out.png</file>
         <file alias="16x16/cross.png">icons/silk/cross.png</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file alias="MainIcon.png">icons/DepthView.png</file>
+    </qresource>
 </RCC>

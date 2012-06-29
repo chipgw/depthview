@@ -225,7 +225,7 @@ void DepthViewWindow::on_actionOptions_triggered(){
 }
 
 void DepthViewWindow::on_actionAbout_triggered(){
-    QMessageBox::about(this, "About DepthView", "DepthView is a basic application for viewing stereo 3D image files. http://sourceforge.net/projects/depthview/");
+    QMessageBox::about(this, "About DepthView", "<html><head/><body><p>DepthView is a basic application for viewing stereo 3D image files.</p><p>website at <a href=\"http://sourceforge.net/projects/depthview/\"><span style=\" text-decoration: underline; color:#0000ff;\">sourceforge.net/projects/depthview/</span></a></p></body></html>");
 }
 
 void DepthViewWindow::loadSettings(){
