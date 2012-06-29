@@ -3,6 +3,7 @@
 !include "FileAssociation.nsh"
   
 Name "DepthView"
+BrandingText "DepthView"
 OutFile "DepthViewInstaller.exe"
 
 InstallDir $PROGRAMFILES\DepthView
@@ -14,8 +15,11 @@ Var StartMenuFolder
 RequestExecutionLevel admin
 
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\orange.bmp" ; optional
-!define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\orange.bmp"
+!define MUI_HEADERIMAGE_BITMAP "header.bmp" ; optional
+!define MUI_WELCOMEFINISHPAGE_BITMAP "wizard.bmp"
+!define MUI_UNWELCOMEFINISHPAGE_BITMAP "wizard-uninstall.bmp"
+!define MUI_ICON  "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
+!define MUI_UNICON  "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
   
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_STARTMENU "DepthView" $StartMenuFolder
