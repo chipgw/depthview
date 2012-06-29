@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   width="256"
+   height="256"
+   id="svg2">
+  <defs
+     id="defs4">
+    <filter
+       x="-0.25"
+       y="-0.25"
+       width="1.5"
+       height="1.5"
+       color-interpolation-filters="sRGB"
+       id="filter3438">
+      <feGaussianBlur
+         result="result6"
+         stdDeviation="4"
+         id="feGaussianBlur3440" />
+      <feComposite
+         in2="result6"
+         operator="atop"
+         in="SourceGraphic"
+         result="result8"
+         id="feComposite3442" />
+      <feComposite
+         in2="SourceAlpha"
+         operator="over"
+         in="result8"
+         result="result9"
+         id="feComposite3444" />
+      <feColorMatrix
+         result="result10"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 "
+         id="feColorMatrix3446" />
+      <feBlend
+         in2="result6"
+         mode="normal"
+         in="result10"
+         id="feBlend3448" />
+    </filter>
+    <filter
+       x="-0.25"
+       y="-0.25"
+       width="1.5"
+       height="1.5"
+       color-interpolation-filters="sRGB"
+       id="filter3450">
+      <feGaussianBlur
+         id="feGaussianBlur3452"
+         stdDeviation="3"
+         result="result6" />
+      <feComposite
+         in2="result6"
+         operator="atop"
+         in="SourceGraphic"
+         result="result8"
+         id="feComposite3454" />
+      <feComposite
+         in2="SourceAlpha"
+         operator="over"
+         in="result8"
+         result="result9"
+         id="feComposite3456" />
+      <feColorMatrix
+         id="feColorMatrix3458"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 "
+         result="result10" />
+      <feBlend
+         in2="result6"
+         mode="normal"
+         in="result10"
+         id="feBlend3460" />
+    </filter>
+    <filter
+       x="-0.25"
+       y="-0.25"
+       width="1.5"
+       height="1.5"
+       color-interpolation-filters="sRGB"
+       id="filter3462">
+      <feGaussianBlur
+         id="feGaussianBlur3464"
+         stdDeviation="5"
+         result="result6" />
+      <feComposite
+         in2="result6"
+         operator="atop"
+         in="SourceGraphic"
+         result="result8"
+         id="feComposite3466" />
+      <feComposite
+         in2="SourceAlpha"
+         operator="over"
+         in="result8"
+         result="result9"
+         id="feComposite3468" />
+      <feColorMatrix
+         id="feColorMatrix3470"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 "
+         result="result10" />
+      <feBlend
+         in2="result6"
+         mode="normal"
+         in="result10"
+         id="feBlend3472" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-796.36218)"
+     id="layer1">
+    <path
+       d="m 249,90 a 16,16 0 1 1 -32,0 16,16 0 1 1 32,0 z"
+       transform="matrix(2,0,0,2,-322,658.36218)"
+       id="path2993"
+       style="fill:#ff0000;stroke-width:6;filter:url(#filter3450)" />
+    <path
+       d="m 196,82 a 32,32 0 1 1 -64,0 32,32 0 1 1 64,0 z"
+       transform="matrix(1.5,0,0,1.5,-42,755.36218)"
+       id="path2991"
+       style="fill:#00ff00;stroke-width:6;filter:url(#filter3438)" />
+    <path
+       d="m 142,171 a 64,64 0 1 1 -128,0 64,64 0 1 1 128,0 z"
+       transform="matrix(1.5,0,0,1.5,-9,687.86218)"
+       id="path2989"
+       style="fill:#0000ff;stroke-width:6;filter:url(#filter3462)" />
+  </g>
+</svg>
