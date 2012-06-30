@@ -41,7 +41,7 @@ RESOURCES += \
 
 PRE_TARGETDEPS += verphony
 version.target = verphony
-version.commands = "$(DEL_FILE) -f $(strip $(DESTDIR))version$$QMAKE_EXT_OBJ"
+version.commands = "$(DEL_FILE) -f $(strip $(DESTDIR))version$$QMAKE_EXT_OBJ Makefile"
 version.depends =
 QMAKE_EXTRA_TARGETS += version
 
