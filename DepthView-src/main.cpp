@@ -4,6 +4,8 @@
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
 
+    QDir::setCurrent(QDir::homePath());
+
     qDebug() << "DepthView version:" << qPrintable(version::getVersionString()) << "revision:" << qPrintable(version::svn_revision);
 
     a.setOrganizationName("DepthView");
