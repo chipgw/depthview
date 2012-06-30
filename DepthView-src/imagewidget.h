@@ -1,12 +1,13 @@
 #ifndef IMAGEWIDGET_H
 #define IMAGEWIDGET_H
 
-#include <QScrollBar>
+#include "common.h"
 #include "stereorender.h"
 #include "sidebysiderender.h"
 #include "interlacedrender.h"
 #include "checkerboardrender.h"
 #include "singlerender.h"
+#include <QScrollBar>
 
 class ImageWidget : public QWidget {
     Q_OBJECT

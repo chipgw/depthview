@@ -1,6 +1,7 @@
 #ifndef SINGLERENDER_H
 #define SINGLERENDER_H
 
+#include "common.h"
 #include "stereorender.h"
 
 class SingleRender : public StereoRender {

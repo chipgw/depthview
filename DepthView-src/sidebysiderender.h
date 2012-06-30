@@ -1,6 +1,7 @@
 #ifndef SIDEBYSIDERENDER_H
 #define SIDEBYSIDERENDER_H
 
+#include "common.h"
 #include "stereorender.h"
 
 class SideBySideRender : public StereoRender

@@ -1,9 +1,8 @@
 #ifndef STEREORENDER_H
 #define STEREORENDER_H
 
-#include <QImage>
+#include "common.h"
 #include <QTime>
-#include <QDebug>
 
 class StereoRender
 {

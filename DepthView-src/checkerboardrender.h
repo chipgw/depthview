@@ -1,8 +1,8 @@
 #ifndef CHECKERBOARDRENDER_H
 #define CHECKERBOARDRENDER_H
 
+#include "common.h"
 #include "stereorender.h"
-#include "QWidget"
 
 class CheckerBoardRender : public StereoRender
 {

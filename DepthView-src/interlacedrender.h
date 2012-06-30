@@ -1,6 +1,7 @@
 #ifndef INTERLACEDRENDER_H
 #define INTERLACEDRENDER_H
 
+#include "common.h"
 #include "stereorender.h"
 #include "QWidget"
 
