@@ -50,10 +50,12 @@ Section "DepthView (required)"
   
   ; Put file there
   File "DepthView.exe"
+  File "libstdc++-6.dll"
   File "libgcc_s_dw2-1.dll"
   File "mingwm10.dll"
   File "QtCore4.dll"
   File "QtGui4.dll"
+  File "imageformats\qjpeg4.dll"
   
   ; Write the installation path into the registry
   WriteRegStr HKLM SOFTWARE\DepthView "Install_Dir" "$INSTDIR"
