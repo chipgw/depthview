@@ -12,12 +12,12 @@ QImage SideBySideRender::draw(QImage imgL, QImage imgR, int panX, int panY, int 
     }
 
     if(zoom == 0){
-        imgL = imgL.scaledToWidth(finalwidth/2);
-        imgR = imgR.scaledToWidth(finalwidth/2);
+        imgL = imgL.scaledToWidth(finalwidth/2, scaleMode);
+        imgR = imgR.scaledToWidth(finalwidth/2, scaleMode);
     }
     else{
-        imgL = imgL.scaledToWidth(imgL.width()*zoom/2);
-        imgR = imgR.scaledToWidth(imgR.width()*zoom/2);
+        imgL = imgL.scaledToWidth(imgL.width()*zoom/2, scaleMode);
+        imgR = imgR.scaledToWidth(imgR.width()*zoom/2, scaleMode);
     }
     panY += finalheight - imgL.height();
     panY /= 2;

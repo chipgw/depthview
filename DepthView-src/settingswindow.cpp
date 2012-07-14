@@ -24,6 +24,7 @@ SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(p
 
     ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings->value("defaultrender").toString()));
     ui->startFullscreenCheckBox->setChecked(settings->value("startfullscreen").toBool());
+    ui->smoothZoomCheckBox->setChecked(settings->value("smoothzoom").toBool());
 }
 
 SettingsWindow::~SettingsWindow(){
@@ -33,6 +34,7 @@ SettingsWindow::~SettingsWindow(){
 void SettingsWindow::accept(){
     settings->setValue("defaultrender", ui->defaultRendererComboBox->currentText());
     settings->setValue("startfullscreen", ui->startFullscreenCheckBox->checkState() == Qt::Checked);
+    settings->setValue("smoothzoom", ui->smoothZoomCheckBox->checkState() == Qt::Checked);
     QDialog::accept();
 }
 
@@ -50,6 +52,7 @@ void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
 
             ui->defaultRendererComboBox->setCurrentIndex(-1);
             ui->startFullscreenCheckBox->setChecked(false);
+            ui->smoothZoomCheckBox->setChecked(false);
         }
     }
 }

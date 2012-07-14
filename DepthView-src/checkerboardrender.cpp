@@ -23,12 +23,12 @@ QImage CheckerBoardRender::draw(QImage imgL, QImage imgR, int panX, int panY, in
     }
 
     if(zoom == 0.0f){
-        imgL = imgL.scaled(finalwidth,finalheight,Qt::KeepAspectRatio);
-        imgR = imgR.scaled(finalwidth,finalheight,Qt::KeepAspectRatio);
+        imgL = imgL.scaled(finalwidth,finalheight,Qt::KeepAspectRatio, scaleMode);
+        imgR = imgR.scaled(finalwidth,finalheight,Qt::KeepAspectRatio, scaleMode);
     }
     else{
-        imgL = imgL.scaled(imgL.width()*zoom,imgL.height()*zoom,Qt::KeepAspectRatio);
-        imgR = imgR.scaled(imgR.width()*zoom,imgR.height()*zoom,Qt::KeepAspectRatio);
+        imgL = imgL.scaled(imgL.width()*zoom,imgL.height()*zoom,Qt::KeepAspectRatio, scaleMode);
+        imgR = imgR.scaled(imgR.width()*zoom,imgR.height()*zoom,Qt::KeepAspectRatio, scaleMode);
     }
 
     panX += finalwidth/2 - imgL.width()/2;

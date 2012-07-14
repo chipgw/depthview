@@ -281,6 +281,12 @@ void DepthViewWindow::loadSettings(){
     else{
         ui->actionFullscreen->setChecked(false);
     }
+    if(settings.contains("smoothzoom")){
+        ui->actionSmooth_Zoom->setChecked(settings.value("smoothzoom").toBool());
+    }
+    else{
+        ui->actionSmooth_Zoom->setChecked(false);
+    }
 }
 
 void DepthViewWindow::on_actionCheckerboard_triggered(){
@@ -319,4 +325,13 @@ void DepthViewWindow::on_actionZoomIn_triggered(){
 
 void DepthViewWindow::on_actionZoomOut_triggered(){
     ui->imageWidget->zoomOut();
+}
+
+void DepthViewWindow::on_actionSmooth_Zoom_toggled(bool val){
+    if(val){
+        StereoRender::scaleMode = Qt::SmoothTransformation;
+    }
+    else{
+        StereoRender::scaleMode = Qt::FastTransformation;
+    }
 }

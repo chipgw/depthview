@@ -106,6 +106,7 @@
     <addaction name="actionShow_MenuBar"/>
     <addaction name="actionFullscreen"/>
     <addaction name="menuZoom"/>
+    <addaction name="actionSmooth_Zoom"/>
    </widget>
    <widget class="QMenu" name="menuImage">
     <property name="title">
@@ -399,6 +400,17 @@
    </property>
    <property name="shortcut">
     <string>-</string>
+   </property>
+  </action>
+  <action name="actionSmooth_Zoom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Smooth Zoom</string>
+   </property>
+   <property name="toolTip">
+    <string>scales the image smoothly when zooming. (may be slow)</string>
    </property>
   </action>
  </widget>
