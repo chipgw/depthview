@@ -407,7 +407,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Smooth Zoom</string>
+    <string>Smooth Zoom (slow)</string>
    </property>
    <property name="toolTip">
     <string>scales the image smoothly when zooming. (may be slow)</string>

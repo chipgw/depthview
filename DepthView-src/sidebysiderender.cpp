@@ -6,6 +6,9 @@ SideBySideRender::SideBySideRender(){
 QImage SideBySideRender::draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
     QTime starttime = QTime::currentTime();
 
+    // to make the zoom work right.
+    zoom *= 2;
+
     if(finalwidth <= 0 || finalheight <= 0){
         finalwidth = imgL.width();
         finalheight = imgL.height();
