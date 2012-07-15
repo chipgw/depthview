@@ -288,6 +288,11 @@ void DepthViewWindow::loadSettings(){
     else{
         ui->actionSmooth_Zoom->setChecked(false);
     }
+    if(settings.contains("startupdirectory")){
+        if(currentFile == ""){
+            QDir::setCurrent(settings.value("startupdirectory").toString());
+        }
+    }
 }
 
 void DepthViewWindow::on_actionCheckerboard_triggered(){

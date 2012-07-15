@@ -23,6 +23,8 @@ private slots:
 
     void on_buttonBox_clicked(QAbstractButton *button);
 
+    void on_startupDirectoryBrowsePushButton_clicked();
+
 private:
     Ui::SettingsWindow *ui;
     QSettings *settings;

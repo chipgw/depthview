@@ -1,5 +1,6 @@
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
+#include <QFileDialog>
 
 SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(parent), ui(new Ui::SettingsWindow){
     ui->setupUi(this);
@@ -25,6 +26,7 @@ SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(p
     ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings->value("defaultrender").toString()));
     ui->startFullscreenCheckBox->setChecked(settings->value("startfullscreen").toBool());
     ui->smoothZoomCheckBox->setChecked(settings->value("smoothzoom").toBool());
+    ui->startupDirectoryLineEdit->setText(settings->value("startupdirectory").toString());
 }
 
 SettingsWindow::~SettingsWindow(){
@@ -35,6 +37,7 @@ void SettingsWindow::accept(){
     settings->setValue("defaultrender", ui->defaultRendererComboBox->currentText());
     settings->setValue("startfullscreen", ui->startFullscreenCheckBox->checkState() == Qt::Checked);
     settings->setValue("smoothzoom", ui->smoothZoomCheckBox->checkState() == Qt::Checked);
+    settings->setValue("startupdirectory", ui->startupDirectoryLineEdit->text());
     QDialog::accept();
 }
 
@@ -53,6 +56,14 @@ void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
             ui->defaultRendererComboBox->setCurrentIndex(-1);
             ui->startFullscreenCheckBox->setChecked(false);
             ui->smoothZoomCheckBox->setChecked(false);
+            ui->startupDirectoryLineEdit->setText("");
         }
+    }
+}
+
+void SettingsWindow::on_startupDirectoryBrowsePushButton_clicked(){
+    QString directory = QFileDialog::getExistingDirectory(this, tr("Choose Directory"), ui->startupDirectoryLineEdit->text());
+    if(directory != ""){
+        ui->startupDirectoryLineEdit->setText(directory);
     }
 }
