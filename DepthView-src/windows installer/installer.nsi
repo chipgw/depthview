@@ -48,7 +48,6 @@ Section "DepthView (required)"
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
   
-  ; Put file there
   File "DepthView.exe"
   File "libstdc++-6.dll"
   File "libgcc_s_dw2-1.dll"
@@ -97,10 +96,12 @@ Section "Uninstall"
  
   ; Remove files and uninstaller
   Delete $INSTDIR\DepthView.exe
+  Delete $INSTDIR\libstdc++-6.dll
   Delete $INSTDIR\libgcc_s_dw2-1.dll
   Delete $INSTDIR\mingwm10.dll
   Delete $INSTDIR\QtCore4.dll
   Delete $INSTDIR\QtGui4.dll
+  Delete $INSTDIR\imageformats\qjpeg4.dll
   Delete $INSTDIR\uninstall.exe
 
   ; Remove shortcuts, if any
@@ -108,6 +109,7 @@ Section "Uninstall"
 
   ; Remove directories used
   RMDir "$SMPROGRAMS\DepthView"
+  RMDir "$INSTDIR\imageformats"
   RMDir "$INSTDIR"
 
 ${unregisterExtension} ".jps" "Stereo Image"
