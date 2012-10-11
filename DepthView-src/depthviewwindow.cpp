@@ -22,7 +22,7 @@ DepthViewWindow::~DepthViewWindow(){
 
 bool DepthViewWindow::loadImage(QString filename){
     QFileInfo info(filename);
-    if(info.exists() && (info.suffix() == "jps" || info.suffix() == "pns")){
+    if(info.exists() && (info.suffix().toLower() == "jps" || info.suffix().toLower() == "pns")){
         QDir::setCurrent(info.path());
         currentFile = info.fileName();
         ui->imageWidget->loadStereoImage(currentFile);
@@ -127,7 +127,7 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 void DepthViewWindow::on_actionSave_As_triggered(){
     QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
     QImage out;
-    if(filename.contains(".jps") || filename.contains(".pns")){
+    if(filename.contains(".jps", Qt::CaseInsensitive) || filename.contains(".pns", Qt::CaseInsensitive)){
         SideBySideRender renderer;
         bool tempmirrorL = SideBySideRender::mirrorL;
         bool tempmirrorR = SideBySideRender::mirrorR;
@@ -136,12 +136,12 @@ void DepthViewWindow::on_actionSave_As_triggered(){
         out = renderer.draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
         SideBySideRender::mirrorL = tempmirrorL;
         SideBySideRender::mirrorR = tempmirrorR;
-        if(filename.contains(".jps")){
+        if(filename.contains(".jps", Qt::CaseInsensitive)){
             if(!out.isNull()){
                 out.save(filename, "JPG");
             }
         }
-        if(filename.contains(".pns")){
+        if(filename.contains(".pns", Qt::CaseInsensitive)){
             if(!out.isNull()){
                 out.save(filename, "PNG");
             }
