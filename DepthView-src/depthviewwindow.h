@@ -63,6 +63,7 @@ private slots:
     void on_actionZoomIn_triggered();
     void on_actionZoomOut_triggered();
     void on_actionSmooth_Zoom_toggled(bool val);
+    void on_actionSwap_Left_Right_toggled(bool val);
 };
 
 #endif // DEPTHVIEWWINDOW_H

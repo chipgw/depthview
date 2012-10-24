@@ -9,7 +9,8 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
     this->vBar->setMinimum(-100);
     this->setMouseTracking(true);
     zoom = 0;
-    smooth = true;
+    smooth = false;
+    swapLR = false;
     this->renderer = new StereoRender();
     this->recalculatescroolmax();
     connect(this->hBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
@@ -28,8 +29,14 @@ void ImageWidget::resizeEvent(QResizeEvent *e){
 
 void ImageWidget::paintEvent(QPaintEvent *e){
     QPainter painter(this);
-    painter.drawImage(0,0,renderer->draw(imgL,imgR,-hBar->value(),-vBar->value(),this->width(),this->height(), this->zoom));
+    if(swapLR){
+        painter.drawImage(0,0,renderer->draw(imgR,imgL,-hBar->value(),-vBar->value(),this->width(),this->height(), this->zoom));
+    }
+    else{
+        painter.drawImage(0,0,renderer->draw(imgL,imgR,-hBar->value(),-vBar->value(),this->width(),this->height(), this->zoom));
+    }
 }
+
 void ImageWidget::loadStereoImage(QString filename){
     QImage img(filename);
     this->imgL = img.copy(0,0,img.width()/2,img.height());
@@ -57,6 +64,7 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
         this->lastmousepos = e->pos();
     }
 }
+
 void ImageWidget::wheelEvent(QWheelEvent *e){
     if(zoom == 0){
         zoom = this->width()/(imgL.width()*1.0f);

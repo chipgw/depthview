@@ -148,7 +148,13 @@ void DepthViewWindow::on_actionSave_As_triggered(){
         }
     }
     else{
-        out = ui->imageWidget->renderer->draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
+        if(ui->imageWidget->swapLR){
+            out = ui->imageWidget->renderer->draw(ui->imageWidget->imgR,ui->imageWidget->imgL,0,0);
+        }
+        else{
+            out = ui->imageWidget->renderer->draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
+        }
+
         if(!out.isNull()){
             out.save(filename);
         }
@@ -340,4 +346,9 @@ void DepthViewWindow::on_actionSmooth_Zoom_toggled(bool val){
     else{
         StereoRender::scaleMode = Qt::FastTransformation;
     }
+}
+
+void DepthViewWindow::on_actionSwap_Left_Right_toggled(bool val){
+    ui->imageWidget->swapLR = val;
+    ui->imageWidget->repaint();
 }

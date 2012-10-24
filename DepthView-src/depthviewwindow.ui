@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>18</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -107,6 +107,7 @@
     <addaction name="actionFullscreen"/>
     <addaction name="menuZoom"/>
     <addaction name="actionSmooth_Zoom"/>
+    <addaction name="actionSwap_Left_Right"/>
    </widget>
    <widget class="QMenu" name="menuImage">
     <property name="title">
@@ -411,6 +412,14 @@
    </property>
    <property name="toolTip">
     <string>scales the image smoothly when zooming. (may be slow)</string>
+   </property>
+  </action>
+  <action name="actionSwap_Left_Right">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Swap Left/Right</string>
    </property>
   </action>
  </widget>

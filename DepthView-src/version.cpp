@@ -6,7 +6,7 @@
 
 namespace version{
     const int major = 1;
-    const int minor = 01;
+    const int minor = 02;
     const QString svn_revision = SVN_REV_MACRO;
 
     QString getVersionString(){

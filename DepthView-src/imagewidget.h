@@ -19,6 +19,7 @@ public:
     QImage imgL, imgR;
     StereoRender *renderer;
     bool smooth;
+    bool swapLR;
 
     explicit ImageWidget(QWidget *parent = 0);
     void loadStereoImage(QString filename);
