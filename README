@@ -1,0 +1,2 @@
+DepthView is a basic stereoscopic 3D image viewer for .jps and .pns files. 
+It supports anglaph (full-color, half-color, and greyscale), side-by-side (with mirror), interlaced (horizontal and vertical), checkerboard, and single image display.
