@@ -1,13 +1,13 @@
 #include "common.h"
 
-#ifndef SVN_REV_MACRO
-#define SVN_REV_MACRO "unknown"
+#ifndef GIT_REV_MACRO
+#define GIT_REV_MACRO "unknown"
 #endif
 
 namespace version{
     const int major = 1;
     const int minor = 02;
-    const QString svn_revision = SVN_REV_MACRO;
+    const QString git_revision = GIT_REV_MACRO;
 
     QString getVersionString(){
         QString val = "%1.%2";

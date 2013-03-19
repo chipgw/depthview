@@ -233,10 +233,10 @@ void DepthViewWindow::on_actionOptions_triggered(){
 void DepthViewWindow::on_actionAbout_triggered(){
     QMessageBox::about(this, "About DepthView",
                        "<html><head/><body>"
-                       "<h1>DepthView " + version::getVersionString() + " r" + version::svn_revision + "</h1>"
+                       "<h1>DepthView " + version::getVersionString() + "</h1>"
                        "<p>DepthView is a basic application for viewing stereo 3D image files.</p>"
-                       "<p>DepthView website: <a href=\"http://sourceforge.net/projects/depthview/\">sourceforge.net/projects/depthview/</a></p>"
-                       "<p>Please report any bugs at: <a href=\"https://sourceforge.net/p/depthview/discussion/\">sourceforge.net/p/depthview/discussion/</a></p></body></html>");
+                       "<p>DepthView website: <a href=\"https://github.com/chipgw/depthview\">github.com/chipgw/depthview</a></p>"
+                       "<p>Please report any bugs at: <a href=\"https://github.com/chipgw/depthview/issues\">github.com/chipgw/depthview/issues</a></p></body></html>");
 }
 
 void DepthViewWindow::loadSettings(){

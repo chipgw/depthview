@@ -9,7 +9,7 @@
 namespace version{
     extern const int major;
     extern const int minor;
-    extern const QString svn_revision; // not an integer because of possible "#M" for modified or "#:#" for multiple versions.
+    extern const QString git_revision;
     QString getVersionString();
 }
 

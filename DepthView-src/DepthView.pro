@@ -45,5 +45,4 @@ version.commands = "$(DEL_FILE) -f $(strip $(DESTDIR))version$$QMAKE_EXT_OBJ Mak
 version.depends =
 QMAKE_EXTRA_TARGETS += version
 
-DEFINES += SVN_REV_MACRO=\\\"$$system(svnversion)\\\"
-
+DEFINES += GIT_REV_MACRO=\\\"$$system(git rev-parse HEAD)\\\"
