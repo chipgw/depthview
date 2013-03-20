@@ -3,7 +3,7 @@
 
 #include "common.h"
 #include "stereorender.h"
-#include "QWidget"
+#include <QWidget>
 
 class InterlacedRender : public StereoRender
 {
