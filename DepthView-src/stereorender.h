@@ -12,6 +12,7 @@ public:
     static Qt::TransformationMode scaleMode;
 
     StereoRender();
+    virtual ~StereoRender() {}
 
     virtual QImage draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
 };

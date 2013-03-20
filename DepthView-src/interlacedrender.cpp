@@ -44,7 +44,7 @@ QImage InterlacedRender::draw(QImage imgL, QImage imgR, int panX, int panY, int 
     QRgb *line;
 
     if(this->horizontal){
-        QRgb *lineIn;
+        QRgb *lineIn = NULL;
         for(int y=0;y<final.height();y++){
             line = (QRgb *)final.scanLine(y);
             if(y-panY >= 0 && y-panY < imgL.height()){
