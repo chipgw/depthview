@@ -9,7 +9,7 @@ public:
     static bool left;
     SingleRender();
 
-    QImage draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
+    QImage draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
 };
 
 #endif // SINGLERENDER_H

@@ -194,19 +194,19 @@ void DepthViewWindow::on_actionMirror_Both_triggered(){
 }
 
 void DepthViewWindow::on_actionFit_triggered(){
-    ui->imageWidget->setZoom(0);
+    ui->imageWidget->setZoom(0.0f);
 }
 
 void DepthViewWindow::on_actionzoom100_triggered(){
-    ui->imageWidget->setZoom(1);
+    ui->imageWidget->setZoom(1.0f);
 }
 
 void DepthViewWindow::on_actionzoom50_triggered(){
-    ui->imageWidget->setZoom(0.5);
+    ui->imageWidget->setZoom(0.5f);
 }
 
 void DepthViewWindow::on_actionzoom200_triggered(){
-    ui->imageWidget->setZoom(2);
+    ui->imageWidget->setZoom(2.0f);
 }
 
 void DepthViewWindow::on_actionHorizontal_triggered(){
@@ -337,15 +337,6 @@ void DepthViewWindow::on_actionZoomIn_triggered(){
 
 void DepthViewWindow::on_actionZoomOut_triggered(){
     ui->imageWidget->zoomOut();
-}
-
-void DepthViewWindow::on_actionSmooth_Zoom_toggled(bool val){
-    if(val){
-        StereoRender::scaleMode = Qt::SmoothTransformation;
-    }
-    else{
-        StereoRender::scaleMode = Qt::FastTransformation;
-    }
 }
 
 void DepthViewWindow::on_actionSwap_Left_Right_toggled(bool val){

@@ -9,12 +9,10 @@ class StereoRender
 public:
     static float colormult;
 
-    static Qt::TransformationMode scaleMode;
-
     StereoRender();
     virtual ~StereoRender() {}
 
-    virtual QImage draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
+    virtual QImage draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
 };
 
 #endif // STEREORENDER_H

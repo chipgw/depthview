@@ -15,7 +15,7 @@ public:
     InterlacedRender();
     InterlacedRender(QWidget *Parent);
 
-    virtual QImage draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
+    virtual QImage draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
 };
 
 #endif // INTERLACEDRENDER_H

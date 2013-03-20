@@ -4,7 +4,7 @@
 StereoRender::StereoRender(){
 }
 
-QImage StereoRender::draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
+QImage StereoRender::draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
     // Default Stereo Draw is Anglaph
     QTime starttime = QTime::currentTime();
 
@@ -13,19 +13,14 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, int panX, int panY, int fina
         finalheight = imgL.height();
     }
 
-    if(zoom == 0.0f){
-        imgL = imgL.scaled(finalwidth,finalheight,Qt::KeepAspectRatio, scaleMode);
-        imgR = imgR.scaled(finalwidth,finalheight,Qt::KeepAspectRatio, scaleMode);
-    }
-    else{
-        imgL = imgL.scaled(imgL.width()*zoom,imgL.height()*zoom,Qt::KeepAspectRatio, scaleMode);
-        imgR = imgR.scaled(imgR.width()*zoom,imgR.height()*zoom,Qt::KeepAspectRatio, scaleMode);
+    if(zoom <= 0.0f){
+        zoom = qMin((float)finalwidth / (float)imgL.width(), (float)finalheight / (float)imgL.height());
     }
 
-    panX += finalwidth/2 - imgL.width()/2;
-    panY += finalheight/2 - imgL.height()/2;
+    panX += (finalwidth*0.5f  - imgL.width()  * zoom * 0.5f);
+    panY += (finalheight*0.5f - imgL.height() * zoom * 0.5f);
 
-    QImage final(finalwidth,finalheight,QImage::Format_ARGB32);
+    QImage final(finalwidth,finalheight,QImage::Format_RGB32);
 
     QRgb *line;
     QRgb *lineL;
@@ -33,14 +28,16 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, int panX, int panY, int fina
 
     for(int y=0;y<final.height();y++){
         line = (QRgb *)final.scanLine(y);
-        if(y-panY >= 0 && y-panY < imgL.height()){
-            lineL = (QRgb *)imgL.constScanLine(y-panY);
-            lineR = (QRgb *)imgR.constScanLine(y-panY);
+        int cy = (y-panY)/zoom;
+        if(cy >= 0 && cy < imgL.height()){
+            lineL = (QRgb *)imgL.constScanLine(cy);
+            lineR = (QRgb *)imgR.constScanLine(cy);
             for(int x=0;x<final.width();x++){
-                if(imgL.valid(x-panX,y-panY)&&imgR.valid(x-panX,y-panY)){
-                    line[x] = qRgb(qRed(lineR[x-panX])*colormult     + qGray(lineR[x-panX])*(1-colormult),
-                                   qGreen(lineL[x-panX])*colormult   + qGray(lineL[x-panX])*(1-colormult),
-                                   qBlue(lineL[x-panX])*colormult    + qGray(lineL[x-panX])*(1-colormult));
+                int cx = (x-panX)/zoom;
+                if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
+                    line[x] = qRgb(qRed(  lineR[cx])*colormult + qGray(lineR[cx])*(1-colormult),
+                                   qGreen(lineL[cx])*colormult + qGray(lineL[cx])*(1-colormult),
+                                   qBlue( lineL[cx])*colormult + qGray(lineL[cx])*(1-colormult));
                 }
                 else{
                     line[x] = qRgb(0,0,0);
@@ -59,4 +56,3 @@ QImage StereoRender::draw(QImage imgL, QImage imgR, int panX, int panY, int fina
 }
 
 float StereoRender::colormult = 1;
-Qt::TransformationMode StereoRender::scaleMode = Qt::FastTransformation;

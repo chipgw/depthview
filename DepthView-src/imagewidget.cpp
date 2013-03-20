@@ -50,8 +50,8 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
         this->setCursor(Qt::ArrowCursor);
     }
     else if(e->buttons().testFlag(Qt::MiddleButton)){
-        vBar->setValue(vBar->value() - (e->y() - lastmousepos.y() *1.0f)/this->height()*vBar->maximum()*2);
-        hBar->setValue(hBar->value() - (e->x() - lastmousepos.x() *1.0f)/this->width()*hBar->maximum()*2);
+        vBar->setValue(vBar->value() - (float)(e->y() - lastmousepos.y())/this->height()*vBar->maximum()*2.0f);
+        hBar->setValue(hBar->value() - (float)(e->x() - lastmousepos.x())/this->width()*hBar->maximum()*2.0f);
 
         this->setCursor(Qt::SizeAllCursor);
         this->lastmousepos = e->pos();

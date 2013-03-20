@@ -6,7 +6,7 @@ CheckerBoardRender::CheckerBoardRender(QWidget * Parent){
     parent = Parent;
 }
 
-QImage CheckerBoardRender::draw(QImage imgL, QImage imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
+QImage CheckerBoardRender::draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
     // Default Stereo Draw is Anglaph
     QTime starttime = QTime::currentTime();
 
@@ -22,34 +22,31 @@ QImage CheckerBoardRender::draw(QImage imgL, QImage imgR, int panX, int panY, in
         finalheight = imgL.height();
     }
 
-    if(zoom == 0.0f){
-        imgL = imgL.scaled(finalwidth,finalheight,Qt::KeepAspectRatio, scaleMode);
-        imgR = imgR.scaled(finalwidth,finalheight,Qt::KeepAspectRatio, scaleMode);
-    }
-    else{
-        imgL = imgL.scaled(imgL.width()*zoom,imgL.height()*zoom,Qt::KeepAspectRatio, scaleMode);
-        imgR = imgR.scaled(imgR.width()*zoom,imgR.height()*zoom,Qt::KeepAspectRatio, scaleMode);
+    if(zoom <= 0.0f){
+        zoom = qMin((float)finalwidth / (float)imgL.width(), (float)finalheight / (float)imgL.height());
     }
 
-    panX += finalwidth/2 - imgL.width()/2;
-    panY += finalheight/2 - imgL.height()/2;
+    panX += (finalwidth*0.5f  - imgL.width()  * zoom * 0.5f);
+    panY += (finalheight*0.5f - imgL.height() * zoom * 0.5f);
 
-    QImage final(finalwidth,finalheight,QImage::Format_ARGB32);
+    QImage final(finalwidth,finalheight,QImage::Format_RGB32);
 
     QRgb *line;
     QRgb *lineL;
     QRgb *lineR;
     for(int y=0;y<final.height();y++){
         line = (QRgb *)final.scanLine(y);
-        if(y-panY >= 0 && y-panY < imgL.height()){
-            lineL = (QRgb *)imgL.constScanLine(y-panY);
-            lineR = (QRgb *)imgR.constScanLine(y-panY);
+        int cy = (y-panY)/zoom;
+        if(cy >= 0 && cy < imgL.height()){
+            lineL = (QRgb *)imgL.constScanLine(cy);
+            lineR = (QRgb *)imgR.constScanLine(cy);
             for(int x=0;x<final.width();x++){
-                if(imgL.valid(x-panX,y-panY)&&imgR.valid(x-panX,y-panY)){
+                int cx = (x-panX)/zoom;
+                if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
                     if(x%2 == y%2){
-                        line[x]=lineR[x-panX];
+                        line[x]=lineR[cx];
                     }else{
-                        line[x]=lineL[x-panX];
+                        line[x]=lineL[cx];
                     }
                 }
                 else{

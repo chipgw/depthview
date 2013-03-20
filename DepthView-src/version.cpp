@@ -6,7 +6,7 @@
 
 namespace version{
     const int major = 1;
-    const int minor = 02;
+    const int minor = 03;
     const QString git_revision = GIT_REV_MACRO;
 
     QString getVersionString(){
