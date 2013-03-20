@@ -6,7 +6,7 @@ int main(int argc, char *argv[]){
 
     QDir::setCurrent(QDir::homePath());
 
-    qDebug() << "DepthView version:" << qPrintable(version::getVersionString()) << "revision:" << qPrintable(version::git_revision);
+    qDebug() << "DepthView version:" << qPrintable(version::getVersionString()) << "revision:" << qPrintable(version::git_revision) << "build type:" << version::build_type;
 
     a.setOrganizationName("DepthView");
     a.setApplicationName("DepthView");

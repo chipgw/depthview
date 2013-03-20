@@ -13,4 +13,9 @@ namespace version{
         QString val = "%1.%2";
         return val.arg(major).arg(minor, 2, 10, QLatin1Char('0'));
     }
+#ifdef QT_DEBUG
+    const QString build_type = "Debug";
+#else
+    const QString build_type = "Release";
+#endif
 }

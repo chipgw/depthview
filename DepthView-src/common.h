@@ -11,6 +11,7 @@ namespace version{
     extern const int minor;
     extern const QString git_revision;
     QString getVersionString();
+    extern const QString build_type;
 }
 
 #endif // COMMON_H
