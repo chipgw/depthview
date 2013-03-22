@@ -45,23 +45,18 @@ void ImageWidget::loadStereoImage(QString filename){
 }
 
 void ImageWidget::mouseMoveEvent(QMouseEvent *e){
-    if(e->buttons().testFlag(Qt::LeftButton)){
-        this->lastmousepos = e->pos();
-        this->setCursor(Qt::ArrowCursor);
-    }
-    else if(e->buttons().testFlag(Qt::MiddleButton)){
+    if(e->buttons().testFlag(Qt::MiddleButton)){
         vBar->setValue(vBar->value() - (float)(e->y() - lastmousepos.y())/this->height()*vBar->maximum()*2.0f);
         hBar->setValue(hBar->value() - (float)(e->x() - lastmousepos.x())/this->width()*hBar->maximum()*2.0f);
 
         this->setCursor(Qt::SizeAllCursor);
-        this->lastmousepos = e->pos();
     }
-    else if(e->buttons().testFlag(Qt::RightButton)){
+    this->lastmousepos = e->pos();
+}
+
+void ImageWidget::mouseReleaseEvent(QMouseEvent *e){
+    if(e->button() == Qt::MiddleButton){
         this->setCursor(Qt::ArrowCursor);
-    }
-    else{
-        this->setCursor(Qt::ArrowCursor);
-        this->lastmousepos = e->pos();
     }
 }
 
