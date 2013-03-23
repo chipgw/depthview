@@ -27,6 +27,7 @@ public:
     float getZoom();
     void zoomIn();
     void zoomOut();
+    void addZoom(float amount);
 
 signals:
 

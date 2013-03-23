@@ -24,7 +24,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -106,7 +106,6 @@
     <addaction name="actionShow_MenuBar"/>
     <addaction name="actionFullscreen"/>
     <addaction name="menuZoom"/>
-    <addaction name="actionSmooth_Zoom"/>
     <addaction name="actionSwap_Left_Right"/>
    </widget>
    <widget class="QMenu" name="menuImage">
