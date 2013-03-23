@@ -15,6 +15,10 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
     this->recalculatescroolmax();
     connect(this->hBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
     connect(this->vBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
+
+    mouseTimer = new QTimer(this);
+    mouseTimer->setSingleShot(true);
+    connect(mouseTimer, SIGNAL(timeout()), this, SLOT(hideCursor()));
 }
 
 void ImageWidget::resizeEvent(QResizeEvent *e){
@@ -50,7 +54,10 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
         hBar->setValue(hBar->value() + lastmousepos.x() - e->x());
 
         this->setCursor(Qt::SizeAllCursor);
+    }else{
+        this->setCursor(Qt::ArrowCursor);
     }
+    mouseTimer->start(4000);
     this->lastmousepos = e->pos();
 }
 
@@ -107,4 +114,8 @@ void ImageWidget::addZoom(float amount){
     vBar->setValue(vBar->value()*zoom/zoomorig);
     hBar->setValue(hBar->value()*zoom/zoomorig);
     this->repaint();
+}
+
+void ImageWidget::hideCursor(){
+    this->setCursor(Qt::BlankCursor);
 }

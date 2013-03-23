@@ -8,6 +8,7 @@
 #include "checkerboardrender.h"
 #include "singlerender.h"
 #include <QScrollBar>
+#include <QTimer>
 
 class ImageWidget : public QWidget {
     Q_OBJECT
@@ -15,6 +16,8 @@ class ImageWidget : public QWidget {
     QScrollBar *vBar;
     QPoint lastmousepos;
     float zoom;
+
+    QTimer* mouseTimer;
 public:
     QImage imgL, imgR;
     StereoRender *renderer;
@@ -29,9 +32,8 @@ public:
     void zoomOut();
     void addZoom(float amount);
 
-signals:
-
 public slots:
+    void hideCursor();
 
 protected:
     void resizeEvent(QResizeEvent * e);
