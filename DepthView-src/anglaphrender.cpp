@@ -1,11 +1,7 @@
-#include "stereorender.h"
-#include "imagewidget.h"
+#include "anglaphrender.h"
+#include <QTime>
 
-StereoRender::StereoRender(){
-}
-
-QImage StereoRender::draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
-    // Default Stereo Draw is Anglaph
+QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, float colormult){
     QTime starttime = QTime::currentTime();
 
     if(finalwidth <= 0 || finalheight <= 0){
@@ -55,4 +51,3 @@ QImage StereoRender::draw(const QImage &imgL, const QImage &imgR, int panX, int 
     return final;
 }
 
-float StereoRender::colormult = 1;

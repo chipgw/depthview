@@ -1,10 +1,12 @@
 #include "depthviewwindow.h"
 #include "ui_depthviewwindow.h"
+#include "exportdialog.h"
+#include "settingswindow.h"
 #include <QKeyEvent>
 #include <QFileDialog>
 #include <QDebug>
 #include <QMessageBox>
-#include <settingswindow.h>
+#include <QTime>
 
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow){
     ui->setupUi(this);
@@ -52,23 +54,17 @@ void DepthViewWindow::on_actionOpen_triggered(){
 }
 
 void DepthViewWindow::on_actionFull_Color_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new StereoRender();
-    StereoRender::colormult = 1;
+    ui->imageWidget->mode = ImageWidget::AnglaphFull;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionHalf_Color_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new StereoRender();
-    StereoRender::colormult = 0.5;
+    ui->imageWidget->mode = ImageWidget::AnglaphHalf;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionGreyscale_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new StereoRender();
-    StereoRender::colormult = 0;
+    ui->imageWidget->mode = ImageWidget::AnglaphGreyscale;
     ui->imageWidget->repaint();
 }
 
@@ -126,16 +122,10 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 
 void DepthViewWindow::on_actionSave_As_triggered(){
     QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
-    QImage out;
+
     if(filename.contains(".jps", Qt::CaseInsensitive) || filename.contains(".pns", Qt::CaseInsensitive)){
-        SideBySideRender renderer;
-        bool tempmirrorL = SideBySideRender::mirrorL;
-        bool tempmirrorR = SideBySideRender::mirrorR;
-        SideBySideRender::mirrorL = false;
-        SideBySideRender::mirrorR = false;
-        out = renderer.draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
-        SideBySideRender::mirrorL = tempmirrorL;
-        SideBySideRender::mirrorR = tempmirrorR;
+        QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
+
         if(filename.contains(".jps", Qt::CaseInsensitive)){
             if(!out.isNull()){
                 out.save(filename, "JPG");
@@ -147,49 +137,63 @@ void DepthViewWindow::on_actionSave_As_triggered(){
             }
         }
     }
-    else{
-        if(ui->imageWidget->swapLR){
-            out = ui->imageWidget->renderer->draw(ui->imageWidget->imgR,ui->imageWidget->imgL,0,0);
-        }
-        else{
-            out = ui->imageWidget->renderer->draw(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
-        }
+    else if(!filename.isNull()){
+        ExportDialog dialog(this);
 
-        if(!out.isNull()){
-            out.save(filename);
+        if(dialog.exec() == QDialog::Accepted){
+            if(dialog.anglaph){
+                QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 1, dialog.colormult);
+
+                if(!out.isNull()){
+                    out.save(filename);
+                }
+            }else if(dialog.sidebyside){
+                QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 0, dialog.mirrorL, dialog.mirrorR);
+
+                if(!out.isNull()){
+                    out.save(filename);
+                }
+            }else{
+                if(dialog.saveL && dialog.saveR){
+                    if(!ui->imageWidget->imgL.isNull()){
+                        QString filenameL = filename;
+                        ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'));
+                    }
+                    if(!ui->imageWidget->imgR.isNull()){
+                        QString filenameR = filename;
+                        ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'));
+                    }
+                }else if(dialog.saveL){
+                    if(!ui->imageWidget->imgL.isNull()){
+                        ui->imageWidget->imgL.save(filename);
+                    }
+                }else if(dialog.saveR){
+                    if(!ui->imageWidget->imgR.isNull()){
+                        ui->imageWidget->imgR.save(filename);
+                    }
+                }
+            }
         }
     }
 }
 
 void DepthViewWindow::on_actionNo_Mirror_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new SideBySideRender();
-    SideBySideRender::mirrorL = false;
-    SideBySideRender::mirrorR = false;
+    ui->imageWidget->mode = ImageWidget::SidebySide;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionMirror_Left_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new SideBySideRender();
-    SideBySideRender::mirrorL = true;
-    SideBySideRender::mirrorR = false;
+    ui->imageWidget->mode = ImageWidget::SidebySideMLeft;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionMirror_Right_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new SideBySideRender();
-    SideBySideRender::mirrorL = false;
-    SideBySideRender::mirrorR = true;
+    ui->imageWidget->mode = ImageWidget::SidebySideMRight;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionMirror_Both_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new SideBySideRender();
-    SideBySideRender::mirrorL = true;
-    SideBySideRender::mirrorR = true;
+    ui->imageWidget->mode = ImageWidget::SidebySideMBoth;
     ui->imageWidget->repaint();
 }
 
@@ -210,16 +214,12 @@ void DepthViewWindow::on_actionzoom200_triggered(){
 }
 
 void DepthViewWindow::on_actionHorizontal_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new InterlacedRender(this);
-    InterlacedRender::horizontal = true;
+    ui->imageWidget->mode = ImageWidget::InterlacedHorizontal;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionVertical_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new InterlacedRender(this);
-    InterlacedRender::horizontal = false;
+    ui->imageWidget->mode = ImageWidget::InterlacedVertical;
     ui->imageWidget->repaint();
 }
 
@@ -302,22 +302,17 @@ void DepthViewWindow::loadSettings(){
 }
 
 void DepthViewWindow::on_actionCheckerboard_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new CheckerBoardRender(this);
+    ui->imageWidget->mode = ImageWidget::Checkerboard;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionLeft_Image_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new SingleRender();
-    SingleRender::left = true;
+    ui->imageWidget->mode = ImageWidget::MonoLeft;
     ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionRight_Image_triggered(){
-    delete ui->imageWidget->renderer;
-    ui->imageWidget->renderer = new SingleRender();
-    SingleRender::left = false;
+    ui->imageWidget->mode = ImageWidget::MonoRight;
     ui->imageWidget->repaint();
 }
 

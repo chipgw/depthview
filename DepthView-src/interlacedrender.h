@@ -2,20 +2,7 @@
 #define INTERLACEDRENDER_H
 
 #include "common.h"
-#include "stereorender.h"
-#include <QWidget>
 
-class InterlacedRender : public StereoRender
-{
-public:
-    static bool lFirst;
-    static bool horizontal;
-    QWidget *parent;
-
-    InterlacedRender();
-    InterlacedRender(QWidget *Parent);
-
-    virtual QImage draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
-};
+QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0, bool horizontal = false, QWidget *parent = NULL);
 
 #endif // INTERLACEDRENDER_H

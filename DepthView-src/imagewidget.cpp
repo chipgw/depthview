@@ -11,7 +11,6 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
     zoom = 0;
     smooth = false;
     swapLR = false;
-    this->renderer = new StereoRender();
     this->recalculatescroolmax();
     connect(this->hBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
     connect(this->vBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
@@ -34,10 +33,10 @@ void ImageWidget::resizeEvent(QResizeEvent *e){
 void ImageWidget::paintEvent(QPaintEvent *e){
     QPainter painter(this);
     if(swapLR){
-        painter.drawImage(0 ,0, renderer->draw(imgR, imgL, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom));
+        painter.drawImage(0 ,0, draw(imgR, imgL));
     }
     else{
-        painter.drawImage(0, 0, renderer->draw(imgL, imgR, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom));
+        painter.drawImage(0, 0, draw(imgL, imgR));
     }
 }
 
@@ -118,4 +117,46 @@ void ImageWidget::addZoom(float amount){
 
 void ImageWidget::hideCursor(){
     this->setCursor(Qt::BlankCursor);
+}
+
+QImage ImageWidget::draw(const QImage &L, const QImage &R){
+    switch(mode){
+    case AnglaphFull:
+        return drawAnglaph(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, 1.0f);
+        break;
+    case AnglaphHalf:
+        return drawAnglaph(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, 0.5f);
+        break;
+    case AnglaphGreyscale:
+        return drawAnglaph(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, 0.0f);
+        break;
+    case SidebySide:
+        return drawSideBySide(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom);
+        break;
+    case SidebySideMLeft:
+        return drawSideBySide(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, true);
+        break;
+    case SidebySideMRight:
+        return drawSideBySide(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, false, true);
+        break;
+    case SidebySideMBoth:
+        return drawSideBySide(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, true, true);
+        break;
+    case InterlacedHorizontal:
+        return drawInterlaced(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, true, this);
+        break;
+    case InterlacedVertical:
+        return drawInterlaced(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, false, this);
+        break;
+    case Checkerboard:
+        return drawCheckerboard(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, this);
+        break;
+    case MonoLeft:
+        return drawSingle(L, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom);
+        break;
+    case MonoRight:
+        return drawSingle(R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom);
+        break;
+    }
+    return QImage();
 }

@@ -1,13 +1,11 @@
 #include "sidebysiderender.h"
+#include <QTime>
 
-SideBySideRender::SideBySideRender(){
-}
-
-QImage SideBySideRender::draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
+QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, bool mirrorL, bool mirrorR){
     QTime starttime = QTime::currentTime();
 
     if(finalwidth <= 0 || finalheight <= 0){
-        finalwidth = imgL.width();
+        finalwidth = imgL.width() + imgR.width();
         finalheight = imgL.height();
     }
 
@@ -38,10 +36,10 @@ QImage SideBySideRender::draw(const QImage &imgL, const QImage &imgR, int panX, 
             for(int x=0;x<finalwidth;x++){
                 int cxl = x;
                 int cxr = x;
-                if(SideBySideRender::mirrorL){
+                if(mirrorL){
                     cxl = (finalwidth * 0.5f) - cxl;
                 }
-                if(SideBySideRender::mirrorR){
+                if(mirrorR){
                     cxr = (finalwidth * 0.5f) - cxr;
                     cxr += finalwidth / 2;
                 }else{
@@ -71,5 +69,3 @@ QImage SideBySideRender::draw(const QImage &imgL, const QImage &imgR, int panX, 
     return final;
 }
 
-bool SideBySideRender::mirrorL = false;
-bool SideBySideRender::mirrorR = false;

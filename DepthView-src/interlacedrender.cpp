@@ -1,25 +1,17 @@
 #include "interlacedrender.h"
+#include <QTime>
 
-InterlacedRender::InterlacedRender(){
-}
-InterlacedRender::InterlacedRender(QWidget * Parent){
-    parent = Parent;
-}
-
-QImage InterlacedRender::draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
+QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, bool horizontal, QWidget *parent){
     // Default Stereo Draw is Anglaph
     QTime starttime = QTime::currentTime();
 
-    bool first = lFirst;
+    bool first = 1;
     if(parent){
         if(horizontal){
             first = parent->pos().x()%2;
         }
         else{
             first = parent->pos().y()%2;
-        }
-        if(first != lFirst){
-            first = ! first;
         }
     }
     if(finalwidth <= 0 || finalheight <= 0){
@@ -38,7 +30,7 @@ QImage InterlacedRender::draw(const QImage &imgL, const QImage &imgR, int panX, 
 
     QRgb *line;
 
-    if(this->horizontal){
+    if(horizontal){
         QRgb *lineIn = NULL;
         for(int y=0;y<final.height();y++){
             line = (QRgb *)final.scanLine(y);
@@ -99,5 +91,3 @@ QImage InterlacedRender::draw(const QImage &imgL, const QImage &imgR, int panX, 
     return final;
 }
 
-bool InterlacedRender::horizontal=true;
-bool InterlacedRender::lFirst=true;

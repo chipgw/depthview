@@ -2,7 +2,7 @@
 #define IMAGEWIDGET_H
 
 #include "common.h"
-#include "stereorender.h"
+#include "anglaphrender.h"
 #include "sidebysiderender.h"
 #include "interlacedrender.h"
 #include "checkerboardrender.h"
@@ -19,10 +19,25 @@ class ImageWidget : public QWidget {
 
     QTimer* mouseTimer;
 public:
+    enum DrawMode{
+        AnglaphFull,
+        AnglaphHalf,
+        AnglaphGreyscale,
+        SidebySide,
+        SidebySideMLeft,
+        SidebySideMRight,
+        SidebySideMBoth,
+        InterlacedHorizontal,
+        InterlacedVertical,
+        Checkerboard,
+        MonoLeft,
+        MonoRight
+    };
+
     QImage imgL, imgR;
-    StereoRender *renderer;
     bool smooth;
     bool swapLR;
+    DrawMode mode;
 
     explicit ImageWidget(QWidget *parent = 0);
     void loadStereoImage(QString filename);
@@ -31,6 +46,8 @@ public:
     void zoomIn();
     void zoomOut();
     void addZoom(float amount);
+
+    QImage draw(const QImage &L, const QImage &R);
 
 public slots:
     void hideCursor();

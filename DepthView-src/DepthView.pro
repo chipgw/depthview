@@ -14,27 +14,30 @@ TEMPLATE = app
 SOURCES += main.cpp\
         depthviewwindow.cpp \
     imagewidget.cpp \
-    stereorender.cpp \
     sidebysiderender.cpp \
     interlacedrender.cpp \
     settingswindow.cpp \
     checkerboardrender.cpp \
     singlerender.cpp \
-    version.cpp
+    version.cpp \
+    anglaphrender.cpp \
+    exportdialog.cpp
 
 HEADERS  += depthviewwindow.h \
     imagewidget.h \
-    stereorender.h \
     sidebysiderender.h \
     interlacedrender.h \
     settingswindow.h \
     checkerboardrender.h \
     singlerender.h \
-    common.h
+    common.h \
+    anglaphrender.h \
+    exportdialog.h
 
 FORMS    += \
     depthviewwindow.ui \
-    settingswindow.ui
+    settingswindow.ui \
+    exportdialog.ui
 
 RC_FILE = DepthView.rc
 

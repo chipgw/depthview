@@ -1,21 +1,13 @@
 #include "checkerboardrender.h"
+#include <QTime>
 
-CheckerBoardRender::CheckerBoardRender(){
-}
-CheckerBoardRender::CheckerBoardRender(QWidget * Parent){
-    parent = Parent;
-}
-
-QImage CheckerBoardRender::draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom){
+QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, QWidget *parent){
     // Default Stereo Draw is Anglaph
     QTime starttime = QTime::currentTime();
 
-    bool first = lFirst;
+    bool first = 1;
     if(parent){
         first = parent->pos().x()%2 == parent->pos().y()%2;
-        if(first != lFirst){
-            first = !first;
-        }
     }
     if(finalwidth <= 0 || finalheight <= 0){
         finalwidth = imgL.width();
@@ -65,4 +57,3 @@ QImage CheckerBoardRender::draw(const QImage &imgL, const QImage &imgR, int panX
     return final;
 }
 
-bool CheckerBoardRender::lFirst=true;

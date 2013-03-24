@@ -2,14 +2,7 @@
 #define SINGLERENDER_H
 
 #include "common.h"
-#include "stereorender.h"
 
-class SingleRender : public StereoRender {
-public:
-    static bool left;
-    SingleRender();
-
-    QImage draw(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
-};
+QImage drawSingle(const QImage &img, int panX, int panY, int finalwidth = 0, int finalheight = 0, float zoom = 0);
 
 #endif // SINGLERENDER_H
