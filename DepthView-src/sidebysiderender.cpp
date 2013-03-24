@@ -9,15 +9,11 @@ QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY
         finalheight = imgL.height();
     }
 
-    // to make the zoom work right.
-    zoom *= 0.5f;
-
     if(zoom <= 0.0f){
         zoom = qMin((float)finalwidth / (float)imgL.width() * 0.5f, (float)finalheight / (float)imgL.height());
     }
 
     panX *= 0.5f;
-    panY *= 0.5f;
     panX += finalwidth * 0.25f - imgL.width()  * zoom * 0.5f;
     panY += finalheight * 0.5f - imgL.height() * zoom * 0.5f;
 

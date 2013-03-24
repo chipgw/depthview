@@ -71,7 +71,11 @@ void ImageWidget::wheelEvent(QWheelEvent *e){
 }
 
 void ImageWidget::recalculatescroolmax(){
-    int hmax = qMax((imgL.width()  * zoom - this->width())  / 2.0f, 0.0f);
+    int width = imgL.width();
+    if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
+        width *= 2;
+    }
+    int hmax = qMax((width  * zoom - this->width())  / 2.0f, 0.0f);
     this->hBar->setMaximum( hmax);
     this->hBar->setMinimum(-hmax);
 
