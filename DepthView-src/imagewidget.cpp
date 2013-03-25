@@ -107,7 +107,11 @@ void ImageWidget::zoomOut(){
 
 void ImageWidget::addZoom(float amount){
     if(zoom == 0){
-        zoom = this->width() / (imgL.width() * 1.0f);
+        if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
+            zoom = qMin((float)this->width() / (imgL.width() * 2.0f), (float)this->height() / (float)imgL.height());
+        }else{
+            zoom = qMin((float)this->width() / (float)imgL.width(), (float)this->height() / (float)imgL.height());
+        }
     }
     float zoomorig = zoom;
     zoom += amount * zoom;
