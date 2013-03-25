@@ -33,7 +33,6 @@
 ._*
 .Spotlight-V100
 .Trashes
-Icon?
 ehthumbs.db
 Thumbs.db
 
@@ -49,3 +48,7 @@ Thumbs.db
 # build directories #
 #####################
 build*
+
+# generated at build time #
+###########################
+src/version.cpp
