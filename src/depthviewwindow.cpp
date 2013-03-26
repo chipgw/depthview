@@ -288,12 +288,6 @@ void DepthViewWindow::loadSettings(){
     else{
         ui->actionFullscreen->setChecked(false);
     }
-    if(settings.contains("smoothzoom")){
-        ui->actionSmooth_Zoom->setChecked(settings.value("smoothzoom").toBool());
-    }
-    else{
-        ui->actionSmooth_Zoom->setChecked(false);
-    }
     if(settings.contains("startupdirectory")){
         if(currentFile == ""){
             QDir::setCurrent(settings.value("startupdirectory").toString());

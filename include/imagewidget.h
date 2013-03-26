@@ -35,7 +35,6 @@ public:
     };
 
     QImage imgL, imgR;
-    bool smooth;
     bool swapLR;
     DrawMode mode;
 

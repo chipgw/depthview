@@ -9,7 +9,6 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
     this->vBar->setMinimum(-100);
     this->setMouseTracking(true);
     zoom = 0;
-    smooth = false;
     swapLR = false;
     this->recalculatescroolmax();
     connect(this->hBar, SIGNAL(valueChanged(int)),this,SLOT(update()));

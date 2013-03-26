@@ -14,7 +14,7 @@
    <string>DepthView</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons.qrc">
+   <iconset resource="../icons.qrc">
     <normaloff>:/icons/MainIcon.png</normaloff>:/icons/MainIcon.png</iconset>
   </property>
   <widget class="ImageWidget" name="imageWidget"/>
@@ -92,7 +92,7 @@
       <string>Zoom</string>
      </property>
      <property name="icon">
-      <iconset resource="icons.qrc">
+      <iconset resource="../icons.qrc">
        <normaloff>:/icons/silk/16x16/zoom.png</normaloff>:/icons/silk/16x16/zoom.png</iconset>
      </property>
      <addaction name="actionZoomIn"/>
@@ -132,7 +132,7 @@
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/folder-image.png</normaloff>:/icons/silk/16x16/folder-image.png</iconset>
    </property>
    <property name="text">
@@ -144,7 +144,7 @@
   </action>
   <action name="actionAbout">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/information.png</normaloff>:/icons/silk/16x16/information.png</iconset>
    </property>
    <property name="text">
@@ -161,7 +161,7 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/cross.png</normaloff>:/icons/silk/16x16/cross.png</iconset>
    </property>
    <property name="text">
@@ -173,7 +173,7 @@
   </action>
   <action name="actionSave_As">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/disk.png</normaloff>:/icons/silk/16x16/disk.png</iconset>
    </property>
    <property name="text">
@@ -234,7 +234,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/arrow_out.png</normaloff>:/icons/silk/16x16/arrow_out.png</iconset>
    </property>
    <property name="text">
@@ -246,7 +246,7 @@
   </action>
   <action name="actionNext">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/resultset_next.png</normaloff>:/icons/silk/16x16/resultset_next.png</iconset>
    </property>
    <property name="text">
@@ -258,7 +258,7 @@
   </action>
   <action name="actionPrevious">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/resultset_previous.png</normaloff>:/icons/silk/16x16/resultset_previous.png</iconset>
    </property>
    <property name="text">
@@ -332,7 +332,7 @@
   </action>
   <action name="actionOptions">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/wrench.png</normaloff>:/icons/silk/16x16/wrench.png</iconset>
    </property>
    <property name="text">
@@ -356,7 +356,7 @@
   </action>
   <action name="actionFirst">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/resultset_first.png</normaloff>:/icons/silk/16x16/resultset_first.png</iconset>
    </property>
    <property name="text">
@@ -365,7 +365,7 @@
   </action>
   <action name="actionLast">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/resultset_last.png</normaloff>:/icons/silk/16x16/resultset_last.png</iconset>
    </property>
    <property name="text">
@@ -374,7 +374,7 @@
   </action>
   <action name="actionZoomIn">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/zoom_in.png</normaloff>:/icons/silk/16x16/zoom_in.png</iconset>
    </property>
    <property name="text">
@@ -389,7 +389,7 @@
   </action>
   <action name="actionZoomOut">
    <property name="icon">
-    <iconset resource="icons.qrc">
+    <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/zoom_out.png</normaloff>:/icons/silk/16x16/zoom_out.png</iconset>
    </property>
    <property name="text">
@@ -400,17 +400,6 @@
    </property>
    <property name="shortcut">
     <string>-</string>
-   </property>
-  </action>
-  <action name="actionSmooth_Zoom">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Smooth Zoom (slow)</string>
-   </property>
-   <property name="toolTip">
-    <string>scales the image smoothly when zooming. (may be slow)</string>
    </property>
   </action>
   <action name="actionSwap_Left_Right">
@@ -431,7 +420,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="icons.qrc"/>
+  <include location="../icons.qrc"/>
  </resources>
  <connections/>
 </ui>

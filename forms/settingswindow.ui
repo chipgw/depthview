@@ -14,7 +14,7 @@
    <string>DepthView Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons.qrc">
+   <iconset resource="../icons.qrc">
     <normaloff>:/icons/silk/16x16/wrench.png</normaloff>:/icons/silk/16x16/wrench.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -43,34 +43,7 @@
      <item row="1" column="1">
       <widget class="QCheckBox" name="startFullscreenCheckBox"/>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="smoothZoomLabel">
-       <property name="toolTip">
-        <string>scales the image smoothly when zooming. (may be slow)</string>
-       </property>
-       <property name="text">
-        <string>Smooth Zoom</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="1">
-      <widget class="QCheckBox" name="smoothZoomCheckBox">
-       <property name="toolTip">
-        <string>scales the image smoothly when zooming. (may be slow)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="startupDirectoryLabel">
-       <property name="toolTip">
-        <string>the directory in which DepthView starts up if no command line arguments are supplied. (leave blank for home directory)</string>
-       </property>
-       <property name="text">
-        <string>Startup Directory</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLineEdit" name="startupDirectoryLineEdit">
@@ -94,6 +67,16 @@
        </item>
       </layout>
      </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="startupDirectoryLabel">
+       <property name="toolTip">
+        <string>the directory in which DepthView starts up if no command line arguments are supplied. (leave blank for home directory)</string>
+       </property>
+       <property name="text">
+        <string>Startup Directory</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -109,7 +92,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="icons.qrc"/>
+  <include location="../icons.qrc"/>
  </resources>
  <connections>
   <connection>
