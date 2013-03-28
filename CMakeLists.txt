@@ -2,7 +2,7 @@ project(DepthView)
 cmake_minimum_required(VERSION 2.8)
 
 set(DepthView_VERSION_MAJOR 1)
-set(DepthView_VERSION_MINOR 4)
+set(DepthView_VERSION_MINOR 04)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
@@ -20,6 +20,8 @@ file(GLOB HEADERS "include/*.h")
 file(GLOB SOURCES "src/*.cpp")
 file(GLOB FORMS "forms/*.ui")
 set(RESOURCES "icons.qrc")
+
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc.in" "${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc" @ONLY)
 set(WINDRES "DepthView.rc")
 
 find_package(Qt5Widgets)

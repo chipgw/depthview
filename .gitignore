@@ -52,3 +52,4 @@ build*
 # generated at build time #
 ###########################
 src/version.cpp
+DepthView.rc
