@@ -51,10 +51,14 @@ public:
 public slots:
     void hideCursor();
 
+signals:
+    void doubleClicked();
+
 protected:
     void resizeEvent(QResizeEvent * e);
     void paintEvent(QPaintEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
+    void mouseDoubleClickEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void wheelEvent(QWheelEvent *e);
     void recalculatescroolmax();

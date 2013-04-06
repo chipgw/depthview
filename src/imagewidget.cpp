@@ -167,3 +167,9 @@ QImage ImageWidget::draw(const QImage &L, const QImage &R){
     }
     return QImage();
 }
+
+void ImageWidget::mouseDoubleClickEvent(QMouseEvent *e){
+    if(e->button() == Qt::LeftButton){
+        emit doubleClicked();
+    }
+}
