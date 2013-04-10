@@ -3,6 +3,7 @@
 #include <QPainter>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
+    this->mode = AnglaphFull;
     this->hBar = new QScrollBar(Qt::Horizontal, this);
     this->vBar = new QScrollBar(Qt::Vertical, this);
     this->hBar->setMinimum(-100);
