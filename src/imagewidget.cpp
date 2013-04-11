@@ -32,11 +32,21 @@ void ImageWidget::resizeEvent(QResizeEvent *e){
 
 void ImageWidget::paintEvent(QPaintEvent *e){
     QPainter painter(this);
-    if(swapLR){
-        painter.drawImage(0 ,0, draw(imgR, imgL));
+    if(imgL.isNull() && imgR.isNull()){
+        painter.setBrush(QBrush(Qt::black));
+        painter.drawRect(e->rect());
+
+        painter.setPen(Qt::gray);
+        painter.setFont(QFont("Arial", 24));
+        painter.drawText(rect(), Qt::AlignCenter, tr("No Image Loaded"));
     }
     else{
-        painter.drawImage(0, 0, draw(imgL, imgR));
+        if(swapLR){
+            painter.drawImage(0 ,0, draw(imgR, imgL));
+        }
+        else{
+            painter.drawImage(0, 0, draw(imgL, imgR));
+        }
     }
 }
 
