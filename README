@@ -3,4 +3,4 @@ It supports anglaph (full-color, half-color, and greyscale), side-by-side (with 
 
 Binary releases: http://sourceforge.net/projects/depthview/files/
 Build using CMake (http://www.cmake.org)
-Dependancies: Qt 5 (http://qt-project.org)
+Dependencies: Qt 5 (http://qt-project.org)
