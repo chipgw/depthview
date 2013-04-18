@@ -293,6 +293,12 @@ void DepthViewWindow::loadSettings(){
     else{
         ui->actionFullscreen->setChecked(false);
     }
+    if(settings.contains("swapLR")){
+        ui->actionSwap_Left_Right->setChecked(settings.value("swapLR").toBool());
+    }
+    else{
+        ui->actionSwap_Left_Right->setChecked(false);
+    }
     if(settings.contains("startupdirectory")){
         if(currentFile == ""){
             QDir::setCurrent(settings.value("startupdirectory").toString());

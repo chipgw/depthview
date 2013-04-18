@@ -77,6 +77,16 @@
        </property>
       </widget>
      </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="swapLeftRightLabel">
+       <property name="text">
+        <string>Swap Left/Right</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="swapLeftRightCheckBox"/>
+     </item>
     </layout>
    </item>
    <item>

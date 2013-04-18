@@ -25,6 +25,7 @@ SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(p
 
     ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings->value("defaultrender").toString()));
     ui->startFullscreenCheckBox->setChecked(settings->value("startfullscreen").toBool());
+    ui->swapLeftRightCheckBox->setChecked(settings->value("swapLR").toBool());
     ui->startupDirectoryLineEdit->setText(settings->value("startupdirectory").toString());
 }
 
@@ -34,7 +35,8 @@ SettingsWindow::~SettingsWindow(){
 
 void SettingsWindow::accept(){
     settings->setValue("defaultrender", ui->defaultRendererComboBox->currentText());
-    settings->setValue("startfullscreen", ui->startFullscreenCheckBox->checkState() == Qt::Checked);
+    settings->setValue("startfullscreen", ui->startFullscreenCheckBox->isChecked());
+    settings->setValue("swapLR", ui->swapLeftRightCheckBox->isChecked());
     settings->setValue("startupdirectory", ui->startupDirectoryLineEdit->text());
     QDialog::accept();
 }
