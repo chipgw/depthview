@@ -299,6 +299,12 @@ void DepthViewWindow::loadSettings(){
     else{
         ui->actionSwap_Left_Right->setChecked(false);
     }
+    if(settings.contains("showmenubar")){
+        ui->actionShow_MenuBar->setChecked(settings.value("showmenubar").toBool());
+    }
+    else{
+        ui->actionShow_MenuBar->setChecked(true);
+    }
     if(settings.contains("startupdirectory")){
         if(currentFile == ""){
             QDir::setCurrent(settings.value("startupdirectory").toString());

@@ -27,6 +27,11 @@ SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(p
     ui->startFullscreenCheckBox->setChecked(settings->value("startfullscreen").toBool());
     ui->swapLeftRightCheckBox->setChecked(settings->value("swapLR").toBool());
     ui->startupDirectoryLineEdit->setText(settings->value("startupdirectory").toString());
+
+    // check if it exists so that it will default to true if it does not.
+    if(settings->contains("showmenubar")){
+        ui->showMenuBarCheckBox->setChecked(settings->value("showmenubar").toBool());
+    }
 }
 
 SettingsWindow::~SettingsWindow(){
@@ -38,6 +43,7 @@ void SettingsWindow::accept(){
     settings->setValue("startfullscreen", ui->startFullscreenCheckBox->isChecked());
     settings->setValue("swapLR", ui->swapLeftRightCheckBox->isChecked());
     settings->setValue("startupdirectory", ui->startupDirectoryLineEdit->text());
+    settings->setValue("showmenubar", ui->showMenuBarCheckBox->isChecked());
     QDialog::accept();
 }
 
@@ -55,6 +61,8 @@ void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
 
             ui->defaultRendererComboBox->setCurrentIndex(-1);
             ui->startFullscreenCheckBox->setChecked(false);
+            ui->swapLeftRightCheckBox->setChecked(false);
+            ui->showMenuBarCheckBox->setChecked(true);
             ui->startupDirectoryLineEdit->setText("");
         }
     }
