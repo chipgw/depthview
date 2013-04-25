@@ -13,15 +13,7 @@ int main(int argc, char *argv[]){
 
     DepthViewWindow w;
     w.show();
-
-    if (argc > 1){
-        if(!w.loadImage(argv[1])){
-            w.showLoadImageDialog();
-        }
-    }
-    else{
-        w.showLoadImageDialog();
-    }
+    w.parseCommandLine(a.arguments());
 
     return a.exec();
 }

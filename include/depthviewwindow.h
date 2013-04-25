@@ -25,6 +25,8 @@ public:
 
     void loadSettings();
 
+    void parseCommandLine(const QStringList &args);
+
 private:
     Ui::DepthViewWindow *ui;
 

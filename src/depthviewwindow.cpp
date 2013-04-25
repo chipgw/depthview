@@ -349,3 +349,19 @@ void DepthViewWindow::on_actionSwap_Left_Right_toggled(bool val){
     ui->imageWidget->swapLR = val;
     ui->imageWidget->repaint();
 }
+
+void DepthViewWindow::parseCommandLine(const QStringList &args){
+    bool loaded = !this->currentFile.isEmpty();
+
+    for(QStringListIterator i(args); i.hasNext();){
+        const QString &arg = i.next();
+        if(arg == "--fullscreen"){
+            ui->actionFullscreen->setChecked(true);
+        }else if(!loaded){
+            loaded = loadImage(arg);
+        }
+    }
+    if(!loaded){
+        showLoadImageDialog();
+    }
+}
