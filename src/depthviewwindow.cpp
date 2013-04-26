@@ -88,7 +88,6 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
 void DepthViewWindow::on_actionNext_triggered(){
     QStringList entryList = QDir::current().entryList(fileFilters);
     if(!entryList.empty()){
-
         int index = entryList.indexOf(currentFile) + 1;
         if(index < 0){
             index = entryList.count()-1;
@@ -329,12 +328,16 @@ void DepthViewWindow::on_actionRight_Image_triggered(){
 
 void DepthViewWindow::on_actionFirst_triggered(){
     QStringList entryList = QDir::current().entryList(fileFilters);
-    loadImage(entryList[0]);
+    if(!entryList.isEmpty()){
+        loadImage(entryList[0]);
+    }
 }
 
 void DepthViewWindow::on_actionLast_triggered(){
     QStringList entryList = QDir::current().entryList(fileFilters);
-    loadImage(entryList[entryList.count()-1]);
+    if(!entryList.isEmpty()){
+        loadImage(entryList[entryList.count()-1]);
+    }
 }
 
 void DepthViewWindow::on_actionZoomIn_triggered(){
@@ -357,6 +360,12 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
         const QString &arg = i.next();
         if(arg == "--fullscreen"){
             ui->actionFullscreen->setChecked(true);
+        }else if(arg == "--startdir"){
+            if(i.hasNext()){
+                QDir::setCurrent(i.next());
+            }else{
+                qDebug() << "WARNING: argument --startdir passed with no argument after it!";
+            }
         }else if(!loaded){
             loaded = loadImage(arg);
         }
