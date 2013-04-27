@@ -1,5 +1,6 @@
 #include "interlacedrender.h"
 #include <QTime>
+#include <QWidget>
 
 QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, bool horizontal, QWidget *parent){
     // Default Stereo Draw is Anglaph

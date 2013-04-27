@@ -3,8 +3,6 @@
 
 #include <QImage>
 #include <QDebug>
-#include <QWidget>
-#include <QDir>
 
 namespace version{
     extern const int major;

@@ -1,5 +1,6 @@
 #include "checkerboardrender.h"
 #include <QTime>
+#include <QWidget>
 
 QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, QWidget *parent){
     QTime starttime = QTime::currentTime();

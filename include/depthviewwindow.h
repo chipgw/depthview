@@ -65,6 +65,9 @@ private slots:
     void on_actionZoomIn_triggered();
     void on_actionZoomOut_triggered();
     void on_actionSwap_Left_Right_toggled(bool val);
+
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
 };
 
 #endif // DEPTHVIEWWINDOW_H

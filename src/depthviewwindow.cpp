@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QTime>
+#include <QMimeData>
 
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow){
     ui->setupUi(this);
@@ -17,6 +18,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->imageWidget, SIGNAL(doubleClicked()), ui->actionFullscreen, SLOT(toggle()));
 
     this->loadSettings();
+    setAcceptDrops(true);
 }
 
 DepthViewWindow::~DepthViewWindow(){
@@ -146,13 +148,13 @@ void DepthViewWindow::on_actionSave_As_triggered(){
 
         if(dialog.exec() == QDialog::Accepted){
             if(dialog.anglaph){
-                QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 1, dialog.colormult);
+                QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 1.0f, dialog.colormult);
 
                 if(!out.isNull()){
                     out.save(filename);
                 }
             }else if(dialog.sidebyside){
-                QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 0, dialog.mirrorL, dialog.mirrorR);
+                QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 1.0f, dialog.mirrorL, dialog.mirrorR);
 
                 if(!out.isNull()){
                     out.save(filename);
@@ -336,7 +338,7 @@ void DepthViewWindow::on_actionFirst_triggered(){
 void DepthViewWindow::on_actionLast_triggered(){
     QStringList entryList = QDir::current().entryList(fileFilters);
     if(!entryList.isEmpty()){
-        loadImage(entryList[entryList.count()-1]);
+        loadImage(entryList[entryList.count() - 1]);
     }
 }
 
@@ -372,5 +374,25 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
     }
     if(!loaded){
         showLoadImageDialog();
+    }
+}
+
+void DepthViewWindow::dragEnterEvent(QDragEnterEvent *event){
+    if (event->mimeData()->hasUrls()){
+        foreach(QUrl url, event->mimeData()->urls()){
+            QFileInfo info(url.toLocalFile());
+            if(info.exists() && (info.suffix().toLower() == "jps" || info.suffix().toLower() == "pns")){
+                return event->acceptProposedAction();
+            }
+        }
+    }
+}
+
+void DepthViewWindow::dropEvent(QDropEvent *event){
+    if (event->mimeData()->hasUrls()){
+        foreach(QUrl url, event->mimeData()->urls()){
+            if(loadImage(url.toLocalFile())) break;
+        }
+        event->acceptProposedAction();
     }
 }
