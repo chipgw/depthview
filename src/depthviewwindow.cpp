@@ -18,7 +18,6 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->imageWidget, SIGNAL(doubleClicked()), ui->actionFullscreen, SLOT(toggle()));
 
     this->loadSettings();
-    setAcceptDrops(true);
 }
 
 DepthViewWindow::~DepthViewWindow(){
@@ -305,6 +304,12 @@ void DepthViewWindow::loadSettings(){
     }
     else{
         ui->actionShow_MenuBar->setChecked(true);
+    }
+    if(settings.contains("disabledragdrop")){
+        setAcceptDrops(!settings.value("disabledragdrop").toBool());
+    }
+    else{
+        setAcceptDrops(true);
     }
     if(settings.contains("startupdirectory")){
         if(currentFile == ""){
