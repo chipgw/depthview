@@ -40,8 +40,11 @@ bool DepthViewWindow::loadImage(QString filename){
     }
 }
 bool DepthViewWindow::showLoadImageDialog(){
-    QString filename = QFileDialog::getOpenFileName(this,tr("Open Image"), "", tr("Stereo Image Files (*.jps *.pns)"));
-    return loadImage(filename);
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Stereo Image Files (*.jps *.pns)"));
+    if(!filename.isEmpty()){
+        return loadImage(filename);
+    }
+    return false;
 }
 
 void DepthViewWindow::on_actionAbout_Qt_triggered(){
@@ -91,7 +94,7 @@ void DepthViewWindow::on_actionNext_triggered(){
     if(!entryList.empty()){
         int index = entryList.indexOf(currentFile) + 1;
         if(index < 0){
-            index = entryList.count()-1;
+            index = entryList.count() - 1;
         }
         else if(index >= entryList.count()){
             index = 0;
@@ -103,9 +106,9 @@ void DepthViewWindow::on_actionNext_triggered(){
 void DepthViewWindow::on_actionPrevious_triggered(){
     QStringList entryList = QDir::current().entryList(fileFilters);
     if(!entryList.empty()){
-        int index = entryList.indexOf(currentFile)-1;
+        int index = entryList.indexOf(currentFile) - 1;
         if(index < 0){
-            index = entryList.count()-1;
+            index = entryList.count() - 1;
         }
         else if(index >= entryList.count()){
             index = 0;
@@ -314,10 +317,8 @@ void DepthViewWindow::loadSettings(){
     else{
         setAcceptDrops(true);
     }
-    if(settings.contains("startupdirectory")){
-        if(currentFile == ""){
-            QDir::setCurrent(settings.value("startupdirectory").toString());
-        }
+    if(settings.contains("startupdirectory") && currentFile.isEmpty() && !settings.value("startupdirectory").toString().isEmpty()){
+        QDir::setCurrent(settings.value("startupdirectory").toString());
     }
 }
 
