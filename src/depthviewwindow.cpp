@@ -244,48 +244,51 @@ void DepthViewWindow::on_actionAbout_triggered(){
                        "<p>Please report any bugs at: <a href=\"https://github.com/chipgw/depthview/issues\">github.com/chipgw/depthview/issues</a></p></body></html>");
 }
 
+void DepthViewWindow::setRendererFromString(const QString &renderer){
+    if(renderer == "Anglaph, Full Color"){
+        this->on_actionFull_Color_triggered();
+    }
+    else if(renderer == "Anglaph, Half Color"){
+        this->on_actionHalf_Color_triggered();
+    }
+    else if(renderer == "Anglaph, Greyscale"){
+        this->on_actionGreyscale_triggered();
+    }
+    else if(renderer == "Side by Side, No Mirror"){
+        this->on_actionNo_Mirror_triggered();
+    }
+    else if(renderer == "Side by Side, Mirror Left"){
+        this->on_actionMirror_Left_triggered();
+    }
+    else if(renderer == "Side by Side, Mirror Right"){
+        this->on_actionMirror_Right_triggered();
+    }
+    else if(renderer == "Side by Side, Mirror Both"){
+        this->on_actionMirror_Both_triggered();
+    }
+    else if(renderer == "Interlaced, Horizontal"){
+        this->on_actionHorizontal_triggered();
+    }
+    else if(renderer == "Interlaced, Vertical"){
+        this->on_actionVertical_triggered();
+    }
+    else if(renderer == "Checkerboard"){
+        this->on_actionCheckerboard_triggered();
+    }
+    else if(renderer == "Mono, Left"){
+        this->on_actionLeft_Image_triggered();
+    }
+    else if(renderer == "Mono, Right"){
+        this->on_actionRight_Image_triggered();
+    }
+    else{
+        this->on_actionFull_Color_triggered();
+    }
+}
+
 void DepthViewWindow::loadSettings(){
     if(settings.contains("defaultrender")){
-        QString renderer = settings.value("defaultrender").toString();
-        if(renderer == "Anglaph, Full Color"){
-            this->on_actionFull_Color_triggered();
-        }
-        else if(renderer == "Anglaph, Half Color"){
-            this->on_actionHalf_Color_triggered();
-        }
-        else if(renderer == "Anglaph, Greyscale"){
-            this->on_actionGreyscale_triggered();
-        }
-        else if(renderer == "Side by Side, No Mirror"){
-            this->on_actionNo_Mirror_triggered();
-        }
-        else if(renderer == "Side by Side, Mirror Left"){
-            this->on_actionMirror_Left_triggered();
-        }
-        else if(renderer == "Side by Side, Mirror Right"){
-            this->on_actionMirror_Right_triggered();
-        }
-        else if(renderer == "Side by Side, Mirror Both"){
-            this->on_actionMirror_Both_triggered();
-        }
-        else if(renderer == "Interlaced, Horizontal"){
-            this->on_actionHorizontal_triggered();
-        }
-        else if(renderer == "Interlaced, Vertical"){
-            this->on_actionVertical_triggered();
-        }
-        else if(renderer == "Checkerboard"){
-            this->on_actionCheckerboard_triggered();
-        }
-        else if(renderer == "Mono, Left"){
-            this->on_actionLeft_Image_triggered();
-        }
-        else if(renderer == "Mono, Right"){
-            this->on_actionRight_Image_triggered();
-        }
-        else{
-            this->on_actionFull_Color_triggered();
-        }
+        setRendererFromString(settings.value("defaultrender").toString());
     }
     if(settings.contains("startfullscreen")){
         ui->actionFullscreen->setChecked(settings.value("startfullscreen").toBool());
@@ -372,6 +375,12 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
                 QDir::setCurrent(i.next());
             }else{
                 qDebug() << "WARNING: argument --startdir passed with no argument after it!";
+            }
+        }else if(arg == "--renderer"){
+            if(i.hasNext()){
+                setRendererFromString(i.next());
+            }else{
+                qDebug() << "WARNING: argument --renderer passed with no argument after it!";
             }
         }else if(!loaded){
             loaded = loadImage(arg);
