@@ -1,7 +1,6 @@
 #ifndef IMAGEWIDGET_H
 #define IMAGEWIDGET_H
 
-#include "common.h"
 #include "anglaphrender.h"
 #include "sidebysiderender.h"
 #include "interlacedrender.h"

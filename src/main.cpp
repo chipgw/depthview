@@ -1,6 +1,8 @@
+#include "depthviewwindow.h"
+#include "version.h"
 #include <QApplication>
 #include <QDir>
-#include "depthviewwindow.h"
+#include <QDebug>
 
 int main(int argc, char *argv[]){
     QApplication app(argc, argv);

@@ -1,7 +1,6 @@
 #ifndef SETTINGSWINDOW_H
 #define SETTINGSWINDOW_H
 
-#include "common.h"
 #include <QDialog>
 #include <QSettings>
 #include <QAbstractButton>

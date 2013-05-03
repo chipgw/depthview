@@ -1,7 +1,6 @@
 #ifndef DEPTHVIEWWINDOW_H
 #define DEPTHVIEWWINDOW_H
 
-#include "common.h"
 #include "imagewidget.h"
 #include <QMainWindow>
 #include <QSettings>

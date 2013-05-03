@@ -1,8 +1,7 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef VERSION_H
+#define VERSION_H
 
-#include <QImage>
-#include <QDebug>
+#include <QString>
 
 namespace version{
     extern const int major;
@@ -12,4 +11,4 @@ namespace version{
     extern const QString build_type;
 }
 
-#endif // COMMON_H
+#endif // VERSION_H

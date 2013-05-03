@@ -1,5 +1,6 @@
 #include "anglaphrender.h"
 #include <QTime>
+#include <QDebug>
 
 QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, float colormult){
     QTime starttime = QTime::currentTime();

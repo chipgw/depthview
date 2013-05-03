@@ -1,5 +1,6 @@
 #include "singlerender.h"
 #include <QTime>
+#include <QDebug>
 
 QImage drawSingle(const QImage &img, int panX, int panY, int finalwidth, int finalheight, float zoom){
     QTime starttime = QTime::currentTime();
