@@ -11,6 +11,7 @@ class ExportDialog : public QDialog{
     Q_OBJECT
     
 public:
+    int quality;
     bool anglaph;
     bool sidebyside;
     float colormult;

@@ -24,6 +24,7 @@ void ExportDialog::accept(){
         this->saveL = ui->radioButtonLeft->isChecked() || ui->radioButtonBoth->isChecked();
         this->saveR = ui->radioButtonRight->isChecked() || ui->radioButtonBoth->isChecked();
     }
+    quality = ui->qualitySpinBox->value();
 
     QDialog::accept();
 }

@@ -133,7 +133,7 @@ void DepthViewWindow::on_actionSave_As_triggered(){
     QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
 
     if(filename.contains(".jps", Qt::CaseInsensitive) || filename.contains(".pns", Qt::CaseInsensitive)){
-        QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR,0,0);
+        QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR, 0, 0);
 
         if(filename.contains(".jps", Qt::CaseInsensitive)){
             if(!out.isNull()){
@@ -154,31 +154,31 @@ void DepthViewWindow::on_actionSave_As_triggered(){
                 QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 1.0f, dialog.colormult);
 
                 if(!out.isNull()){
-                    out.save(filename);
+                    out.save(filename, NULL, dialog.quality);
                 }
             }else if(dialog.sidebyside){
                 QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 1.0f, dialog.mirrorL, dialog.mirrorR);
 
                 if(!out.isNull()){
-                    out.save(filename);
+                    out.save(filename, NULL, dialog.quality);
                 }
             }else{
                 if(dialog.saveL && dialog.saveR){
                     if(!ui->imageWidget->imgL.isNull()){
                         QString filenameL = filename;
-                        ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'));
+                        ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'), NULL, dialog.quality);
                     }
                     if(!ui->imageWidget->imgR.isNull()){
                         QString filenameR = filename;
-                        ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'));
+                        ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'), NULL, dialog.quality);
                     }
                 }else if(dialog.saveL){
                     if(!ui->imageWidget->imgL.isNull()){
-                        ui->imageWidget->imgL.save(filename);
+                        ui->imageWidget->imgL.save(filename, NULL, dialog.quality);
                     }
                 }else if(dialog.saveR){
                     if(!ui->imageWidget->imgR.isNull()){
-                        ui->imageWidget->imgR.save(filename);
+                        ui->imageWidget->imgR.save(filename, NULL, dialog.quality);
                     }
                 }
             }
