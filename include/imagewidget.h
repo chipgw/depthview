@@ -1,11 +1,7 @@
 #ifndef IMAGEWIDGET_H
 #define IMAGEWIDGET_H
 
-#include "anglaphrender.h"
-#include "sidebysiderender.h"
-#include "interlacedrender.h"
-#include "checkerboardrender.h"
-#include "singlerender.h"
+#include "renderers.h"
 #include <QScrollBar>
 #include <QTimer>
 

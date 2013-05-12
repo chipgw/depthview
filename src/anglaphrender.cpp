@@ -1,4 +1,4 @@
-#include "anglaphrender.h"
+#include "renderers.h"
 #include <QTime>
 #include <QDebug>
 
@@ -11,13 +11,13 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, i
     }
 
     if(zoom <= 0.0f){
-        zoom = qMin((float)finalwidth / (float)imgL.width(), (float)finalheight / (float)imgL.height());
+        zoom = qMin(float(finalwidth) / float(imgL.width()), float(finalheight) / float(imgL.height()));
     }
 
     panX += (finalwidth  * 0.5f - imgL.width()  * zoom * 0.5f);
     panY += (finalheight * 0.5f - imgL.height() * zoom * 0.5f);
 
-    QImage final(finalwidth,finalheight,QImage::Format_RGB32);
+    QImage final(finalwidth, finalheight, QImage::Format_RGB32);
 
     QRgb *line;
     QRgb *lineL;

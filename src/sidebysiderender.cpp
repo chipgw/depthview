@@ -1,4 +1,4 @@
-#include "sidebysiderender.h"
+#include "renderers.h"
 #include <QTime>
 #include <QDebug>
 
@@ -11,26 +11,26 @@ QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY
     }
 
     if(zoom <= 0.0f){
-        zoom = qMin((float)finalwidth / (float)imgL.width() * 0.5f, (float)finalheight / (float)imgL.height());
+        zoom = qMin(float(finalwidth) / float(imgL.width()) * 0.5f, float(finalheight) / float(imgL.height()));
     }
 
     panX *= 0.5f;
     panX += finalwidth * 0.25f - imgL.width()  * zoom * 0.5f;
     panY += finalheight * 0.5f - imgL.height() * zoom * 0.5f;
 
-    QImage final(finalwidth,finalheight,QImage::Format_RGB32);
+    QImage final(finalwidth, finalheight, QImage::Format_RGB32);
 
     QRgb *line;
     QRgb *lineL;
     QRgb *lineR;
 
-    for(int y=0;y<finalheight;y++){
+    for(int y = 0; y < finalheight; y++){
         line = (QRgb *)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
             lineL = (QRgb *)imgL.constScanLine(cy);
             lineR = (QRgb *)imgR.constScanLine(cy);
-            for(int x=0;x<finalwidth;x++){
+            for(int x = 0; x < finalwidth; x++){
                 int cxl = x;
                 int cxr = x;
                 if(mirrorL){
@@ -56,7 +56,7 @@ QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY
                 }
             }
         }else{
-            for(int x=0;x<final.width();x++)
+            for(int x = 0; x < final.width(); x++)
                 line[x] = qRgb(0,0,0);
         }
     }

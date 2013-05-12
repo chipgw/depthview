@@ -1,4 +1,4 @@
-#include "singlerender.h"
+#include "renderers.h"
 #include <QTime>
 #include <QDebug>
 
@@ -6,17 +6,18 @@ QImage drawSingle(const QImage &img, int panX, int panY, int finalwidth, int fin
     QTime starttime = QTime::currentTime();
 
     if(finalwidth <= 0 || finalheight <= 0){
-        finalwidth = img.width();
+        finalwidth  = img.width();
         finalheight = img.height();
     }
 
     QImage in;
     if(zoom == 0.0f){
-        in = img.scaled(finalwidth,finalheight,Qt::KeepAspectRatio);
+        in = img.scaled(finalwidth,finalheight, Qt::KeepAspectRatio);
     }
     else{
-        in = img.scaled(img.width()*zoom,img.height()*zoom,Qt::KeepAspectRatio);
+        in = img.scaled(img.width() * zoom, img.height() * zoom, Qt::KeepAspectRatio);
     }
+
     panX += finalwidth  * 0.5f - in.width()  * 0.5f;
     panY += finalheight * 0.5f - in.height() * 0.5f;
 

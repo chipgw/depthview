@@ -1,4 +1,4 @@
-#include "checkerboardrender.h"
+#include "renderers.h"
 #include <QTime>
 #include <QWidget>
 #include <QDebug>
@@ -7,9 +7,9 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
     QTime starttime = QTime::currentTime();
 
     if(zoom <= 0.0f){
-        zoom = qMin((float)finalwidth / (float)imgL.width(), (float)finalheight / (float)imgL.height());
+        zoom = qMin(float(finalwidth) / float(imgL.width()), float(finalheight) / float(imgL.height()));
     }
-    QPoint pos = parent->mapToGlobal(QPoint(0,0));
+    QPoint pos = parent->mapToGlobal(QPoint());
 
     panX += (finalwidth  * 0.5f - imgL.width()  * zoom * 0.5f);
     panY += (finalheight * 0.5f - imgL.height() * zoom * 0.5f);
@@ -21,11 +21,11 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
     QRgb *lineR;
 
     for(int y = 0; y < final.height(); y++){
-        line = (QRgb *)final.scanLine(y);
+        line = (QRgb*)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
-            lineL = (QRgb *)imgL.constScanLine(cy);
-            lineR = (QRgb *)imgR.constScanLine(cy);
+            lineL = (QRgb*)imgL.constScanLine(cy);
+            lineR = (QRgb*)imgR.constScanLine(cy);
             for(int x = 0; x < final.width(); x++){
                 int cx = ( x - panX) / zoom;
                 if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
