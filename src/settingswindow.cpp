@@ -32,6 +32,10 @@ SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(p
     if(settings->contains("showmenubar")){
         ui->showMenuBarCheckBox->setChecked(settings->value("showmenubar").toBool());
     }
+    if(settings->contains("filedialogstartup")){
+        ui->fileDialogStartupCheckBox->setChecked(settings->value("filedialogstartup").toBool());
+    }
+
     ui->disableDragDropCheckBox->setChecked(settings->value("disabledragdrop").toBool());
 }
 
@@ -45,6 +49,7 @@ void SettingsWindow::accept(){
     settings->setValue("swapLR", ui->swapLeftRightCheckBox->isChecked());
     settings->setValue("startupdirectory", ui->startupDirectoryLineEdit->text());
     settings->setValue("showmenubar", ui->showMenuBarCheckBox->isChecked());
+    settings->setValue("filedialogstartup", ui->fileDialogStartupCheckBox->isChecked());
     settings->setValue("disabledragdrop", ui->disableDragDropCheckBox->isChecked());
     QDialog::accept();
 }
@@ -65,6 +70,7 @@ void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
             ui->startFullscreenCheckBox->setChecked(false);
             ui->swapLeftRightCheckBox->setChecked(false);
             ui->showMenuBarCheckBox->setChecked(true);
+            ui->fileDialogStartupCheckBox->setChecked(true);
             ui->disableDragDropCheckBox->setChecked(false);
             ui->startupDirectoryLineEdit->setText("");
         }

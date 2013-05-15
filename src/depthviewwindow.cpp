@@ -389,7 +389,7 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
             loaded = loadImage(arg);
         }
     }
-    if(!loaded){
+    if(!loaded && (!settings.contains("filedialogstartup") || settings.value("filedialogstartup").toBool())){
         showLoadImageDialog();
     }
 }

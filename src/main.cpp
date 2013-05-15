@@ -9,10 +9,13 @@ int main(int argc, char *argv[]){
 
     QDir::setCurrent(QDir::homePath());
 
-    qDebug() << "DepthView version:" << qPrintable(version::getVersionString()) << "revision:" << qPrintable(version::git_revision) << "build type:" << version::build_type;
+    qDebug() << "DepthView version:" << qPrintable(version::getVersionString())
+             << "revision:" << qPrintable(version::git_revision)
+             << "build type:" << version::build_type;
 
     app.setOrganizationName("DepthView");
     app.setApplicationName("DepthView");
+    app.setApplicationVersion(version::getVersionString());
 
     DepthViewWindow window;
     window.show();
