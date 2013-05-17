@@ -48,9 +48,6 @@ bool DepthViewWindow::showLoadImageDialog(){
     return false;
 }
 
-void DepthViewWindow::on_actionAboutQt_triggered(){
-    QMessageBox::aboutQt(this);
-}
 
 void DepthViewWindow::on_actionExit_triggered(){
     this->close();
@@ -72,6 +69,51 @@ void DepthViewWindow::on_actionAnglaphHalfColor_triggered(){
 
 void DepthViewWindow::on_actionAnglaphGreyscale_triggered(){
     ui->imageWidget->mode = ImageWidget::AnglaphGreyscale;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionSideBySideNoMirror_triggered(){
+    ui->imageWidget->mode = ImageWidget::SidebySide;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionSideBySideMirrorLeft_triggered(){
+    ui->imageWidget->mode = ImageWidget::SidebySideMLeft;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionSideBySideMirrorRight_triggered(){
+    ui->imageWidget->mode = ImageWidget::SidebySideMRight;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionSideBySideMirrorBoth_triggered(){
+    ui->imageWidget->mode = ImageWidget::SidebySideMBoth;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionInterlacedHorizontal_triggered(){
+    ui->imageWidget->mode = ImageWidget::InterlacedHorizontal;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionInterlacedVertical_triggered(){
+    ui->imageWidget->mode = ImageWidget::InterlacedVertical;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionCheckerboard_triggered(){
+    ui->imageWidget->mode = ImageWidget::Checkerboard;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionSingleLeft_triggered(){
+    ui->imageWidget->mode = ImageWidget::MonoLeft;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionSingleRight_triggered(){
+    ui->imageWidget->mode = ImageWidget::MonoRight;
     ui->imageWidget->repaint();
 }
 
@@ -118,6 +160,20 @@ void DepthViewWindow::on_actionPrevious_triggered(){
     }
 }
 
+void DepthViewWindow::on_actionFirst_triggered(){
+    QStringList entryList = QDir::current().entryList(fileFilters);
+    if(!entryList.isEmpty()){
+        loadImage(entryList[0]);
+    }
+}
+
+void DepthViewWindow::on_actionLast_triggered(){
+    QStringList entryList = QDir::current().entryList(fileFilters);
+    if(!entryList.isEmpty()){
+        loadImage(entryList[entryList.count() - 1]);
+    }
+}
+
 void DepthViewWindow::mousePressEvent(QMouseEvent *e){
     if(e->buttons() == Qt::XButton2)
         this->on_actionNext_triggered();
@@ -126,12 +182,13 @@ void DepthViewWindow::mousePressEvent(QMouseEvent *e){
 }
 
 void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
-    if(e->button() == Qt::LeftButton)
+    if(e->button() == Qt::LeftButton){
         ui->actionFullscreen->toggle();
+    }
 }
 
 void DepthViewWindow::on_actionSaveAs_triggered(){
-    QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
 
     if(filename.contains(".jps", Qt::CaseInsensitive) || filename.contains(".pns", Qt::CaseInsensitive)){
         QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR, 0, 0);
@@ -187,26 +244,6 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
     }
 }
 
-void DepthViewWindow::on_actionSideBySideNoMirror_triggered(){
-    ui->imageWidget->mode = ImageWidget::SidebySide;
-    ui->imageWidget->repaint();
-}
-
-void DepthViewWindow::on_actionSideBySideMirrorLeft_triggered(){
-    ui->imageWidget->mode = ImageWidget::SidebySideMLeft;
-    ui->imageWidget->repaint();
-}
-
-void DepthViewWindow::on_actionSideBySideMirrorRight_triggered(){
-    ui->imageWidget->mode = ImageWidget::SidebySideMRight;
-    ui->imageWidget->repaint();
-}
-
-void DepthViewWindow::on_actionSideBySideMirrorBoth_triggered(){
-    ui->imageWidget->mode = ImageWidget::SidebySideMBoth;
-    ui->imageWidget->repaint();
-}
-
 void DepthViewWindow::on_actionFit_triggered(){
     ui->imageWidget->setZoom(0.0f);
 }
@@ -223,14 +260,12 @@ void DepthViewWindow::on_actionzoom200_triggered(){
     ui->imageWidget->setZoom(2.0f);
 }
 
-void DepthViewWindow::on_actionInterlacedHorizontal_triggered(){
-    ui->imageWidget->mode = ImageWidget::InterlacedHorizontal;
-    ui->imageWidget->repaint();
+void DepthViewWindow::on_actionZoomIn_triggered(){
+    ui->imageWidget->zoomIn();
 }
 
-void DepthViewWindow::on_actionInterlacedVertical_triggered(){
-    ui->imageWidget->mode = ImageWidget::InterlacedVertical;
-    ui->imageWidget->repaint();
+void DepthViewWindow::on_actionZoomOut_triggered(){
+    ui->imageWidget->zoomOut();
 }
 
 void DepthViewWindow::on_actionOptions_triggered(){
@@ -238,6 +273,11 @@ void DepthViewWindow::on_actionOptions_triggered(){
     if(settingsdialog.exec() == QDialog::Accepted){
         this->loadSettings();
     }
+}
+
+void DepthViewWindow::on_actionSwap_Left_Right_toggled(bool val){
+    ui->imageWidget->swapLR = val;
+    ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::on_actionAbout_triggered(){
@@ -248,6 +288,10 @@ void DepthViewWindow::on_actionAbout_triggered(){
                           "<p>DepthView website: <a href=\"https://github.com/chipgw/depthview\">github.com/chipgw/depthview</a></p>"
                           "<p>Please report any bugs at: <a href=\"https://github.com/chipgw/depthview/issues\">github.com/chipgw/depthview/issues</a></p>"
                           "</body></html>").arg(version::getVersionString()).arg(version::git_revision.left(7)));
+}
+
+void DepthViewWindow::on_actionAboutQt_triggered(){
+    QMessageBox::aboutQt(this);
 }
 
 void DepthViewWindow::setRendererFromString(const QString &renderer){
@@ -323,48 +367,6 @@ void DepthViewWindow::loadSettings(){
     if(settings.contains("startupdirectory") && currentFile.isEmpty() && !settings.value("startupdirectory").toString().isEmpty()){
         QDir::setCurrent(settings.value("startupdirectory").toString());
     }
-}
-
-void DepthViewWindow::on_actionCheckerboard_triggered(){
-    ui->imageWidget->mode = ImageWidget::Checkerboard;
-    ui->imageWidget->repaint();
-}
-
-void DepthViewWindow::on_actionSingleLeft_triggered(){
-    ui->imageWidget->mode = ImageWidget::MonoLeft;
-    ui->imageWidget->repaint();
-}
-
-void DepthViewWindow::on_actionSingleRight_triggered(){
-    ui->imageWidget->mode = ImageWidget::MonoRight;
-    ui->imageWidget->repaint();
-}
-
-void DepthViewWindow::on_actionFirst_triggered(){
-    QStringList entryList = QDir::current().entryList(fileFilters);
-    if(!entryList.isEmpty()){
-        loadImage(entryList[0]);
-    }
-}
-
-void DepthViewWindow::on_actionLast_triggered(){
-    QStringList entryList = QDir::current().entryList(fileFilters);
-    if(!entryList.isEmpty()){
-        loadImage(entryList[entryList.count() - 1]);
-    }
-}
-
-void DepthViewWindow::on_actionZoomIn_triggered(){
-    ui->imageWidget->zoomIn();
-}
-
-void DepthViewWindow::on_actionZoomOut_triggered(){
-    ui->imageWidget->zoomOut();
-}
-
-void DepthViewWindow::on_actionSwap_Left_Right_toggled(bool val){
-    ui->imageWidget->swapLR = val;
-    ui->imageWidget->repaint();
 }
 
 void DepthViewWindow::parseCommandLine(const QStringList &args){
