@@ -32,7 +32,7 @@
      <string>File</string>
     </property>
     <addaction name="actionOpen"/>
-    <addaction name="actionSave_As"/>
+    <addaction name="actionSaveAs"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -40,7 +40,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
-    <addaction name="actionAbout_Qt"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <widget class="QMenu" name="menuStereo_Mode">
     <property name="title">
@@ -50,35 +50,36 @@
      <property name="title">
       <string>Anglaph</string>
      </property>
-     <addaction name="actionFull_Color"/>
-     <addaction name="actionHalf_Color"/>
-     <addaction name="actionGreyscale"/>
+     <addaction name="actionAnglaphFullColor"/>
+     <addaction name="actionAnglaphHalfColor"/>
+     <addaction name="actionAnglaphGreyscale"/>
     </widget>
     <widget class="QMenu" name="menuSide_By_Side">
      <property name="title">
       <string>Side By Side</string>
      </property>
-     <addaction name="actionNo_Mirror"/>
-     <addaction name="actionMirror_Left"/>
-     <addaction name="actionMirror_Right"/>
-     <addaction name="actionMirror_Both"/>
+     <addaction name="actionSideBySideNoMirror"/>
+     <addaction name="actionSideBySideMirrorLeft"/>
+     <addaction name="actionSideBySideMirrorRight"/>
+     <addaction name="actionSideBySideMirrorBoth"/>
     </widget>
     <widget class="QMenu" name="menuInterlaced">
      <property name="title">
       <string>Interlaced</string>
      </property>
-     <addaction name="actionHorizontal"/>
-     <addaction name="actionVertical"/>
+     <addaction name="actionInterlacedHorizontal"/>
+     <addaction name="actionInterlacedVertical"/>
     </widget>
     <widget class="QMenu" name="menuSingle">
      <property name="title">
       <string>Mono View (No 3D Effect)</string>
      </property>
-     <addaction name="actionLeft_Image"/>
-     <addaction name="actionRight_Image"/>
+     <addaction name="actionSingleLeft"/>
+     <addaction name="actionSingleRight"/>
     </widget>
     <addaction name="menuAnglaph"/>
     <addaction name="menuSide_By_Side"/>
+    <addaction name="menuTop_Bottom"/>
     <addaction name="menuInterlaced"/>
     <addaction name="actionCheckerboard"/>
     <addaction name="menuSingle"/>
@@ -103,7 +104,7 @@
      <addaction name="actionzoom100"/>
      <addaction name="actionzoom50"/>
     </widget>
-    <addaction name="actionShow_MenuBar"/>
+    <addaction name="actionShowMenuBar"/>
     <addaction name="actionFullscreen"/>
     <addaction name="menuZoom"/>
     <addaction name="actionSwap_Left_Right"/>
@@ -154,7 +155,7 @@
     <string>F1</string>
    </property>
   </action>
-  <action name="actionAbout_Qt">
+  <action name="actionAboutQt">
    <property name="text">
     <string>About Qt</string>
    </property>
@@ -171,7 +172,7 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
-  <action name="actionSave_As">
+  <action name="actionSaveAs">
    <property name="icon">
     <iconset resource="../icons.qrc">
      <normaloff>:/icons/silk/16x16/disk.png</normaloff>:/icons/silk/16x16/disk.png</iconset>
@@ -183,17 +184,17 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionFull_Color">
+  <action name="actionAnglaphFullColor">
    <property name="text">
     <string>Full Color (Red/Cyan)</string>
    </property>
   </action>
-  <action name="actionHalf_Color">
+  <action name="actionAnglaphHalfColor">
    <property name="text">
     <string>Half Color (Red/Cyan)</string>
    </property>
   </action>
-  <action name="actionGreyscale">
+  <action name="actionAnglaphGreyscale">
    <property name="text">
     <string>Greyscale (Red/Cyan)</string>
    </property>
@@ -212,7 +213,7 @@
     <string>Ctrl+B</string>
    </property>
   </action>
-  <action name="actionShow_MenuBar">
+  <action name="actionShowMenuBar">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -268,22 +269,22 @@
     <string>Left</string>
    </property>
   </action>
-  <action name="actionNo_Mirror">
+  <action name="actionSideBySideNoMirror">
    <property name="text">
     <string>No Mirror</string>
    </property>
   </action>
-  <action name="actionMirror_Left">
+  <action name="actionSideBySideMirrorLeft">
    <property name="text">
     <string>Mirror Left</string>
    </property>
   </action>
-  <action name="actionMirror_Right">
+  <action name="actionSideBySideMirrorRight">
    <property name="text">
     <string>Mirror Right</string>
    </property>
   </action>
-  <action name="actionMirror_Both">
+  <action name="actionSideBySideMirrorBoth">
    <property name="text">
     <string>Mirror Both</string>
    </property>
@@ -320,12 +321,12 @@
     <string>2</string>
    </property>
   </action>
-  <action name="actionVertical">
+  <action name="actionInterlacedVertical">
    <property name="text">
     <string>Vertical</string>
    </property>
   </action>
-  <action name="actionHorizontal">
+  <action name="actionInterlacedHorizontal">
    <property name="text">
     <string>Horizontal</string>
    </property>
@@ -344,12 +345,12 @@
     <string>Checkerboard</string>
    </property>
   </action>
-  <action name="actionLeft_Image">
+  <action name="actionSingleLeft">
    <property name="text">
     <string>Left Image</string>
    </property>
   </action>
-  <action name="actionRight_Image">
+  <action name="actionSingleRight">
    <property name="text">
     <string>Right Image</string>
    </property>

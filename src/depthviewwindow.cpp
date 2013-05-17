@@ -48,7 +48,7 @@ bool DepthViewWindow::showLoadImageDialog(){
     return false;
 }
 
-void DepthViewWindow::on_actionAbout_Qt_triggered(){
+void DepthViewWindow::on_actionAboutQt_triggered(){
     QMessageBox::aboutQt(this);
 }
 
@@ -60,33 +60,33 @@ void DepthViewWindow::on_actionOpen_triggered(){
     this->showLoadImageDialog();
 }
 
-void DepthViewWindow::on_actionFull_Color_triggered(){
+void DepthViewWindow::on_actionAnglaphFullColor_triggered(){
     ui->imageWidget->mode = ImageWidget::AnglaphFull;
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionHalf_Color_triggered(){
+void DepthViewWindow::on_actionAnglaphHalfColor_triggered(){
     ui->imageWidget->mode = ImageWidget::AnglaphHalf;
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionGreyscale_triggered(){
+void DepthViewWindow::on_actionAnglaphGreyscale_triggered(){
     ui->imageWidget->mode = ImageWidget::AnglaphGreyscale;
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionShow_MenuBar_toggled(bool val){
+void DepthViewWindow::on_actionShowMenuBar_toggled(bool val){
     ui->menubar->setVisible(val);
 }
 
 void DepthViewWindow::on_actionFullscreen_toggled(bool val){
     if(val){
         setWindowState(windowState() | Qt::WindowFullScreen);
-        ui->actionShow_MenuBar->setChecked(false);
+        ui->actionShowMenuBar->setChecked(false);
     }
     else{
         setWindowState(windowState() & ~Qt::WindowFullScreen);
-        ui->actionShow_MenuBar->setChecked(true);
+        ui->actionShowMenuBar->setChecked(true);
     }
 }
 
@@ -124,12 +124,13 @@ void DepthViewWindow::mousePressEvent(QMouseEvent *e){
     if(e->buttons() == Qt::XButton1)
         this->on_actionPrevious_triggered();
 }
+
 void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
     if(e->button() == Qt::LeftButton)
         ui->actionFullscreen->toggle();
 }
 
-void DepthViewWindow::on_actionSave_As_triggered(){
+void DepthViewWindow::on_actionSaveAs_triggered(){
     QString filename = QFileDialog::getSaveFileName(this,tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
 
     if(filename.contains(".jps", Qt::CaseInsensitive) || filename.contains(".pns", Qt::CaseInsensitive)){
@@ -186,22 +187,22 @@ void DepthViewWindow::on_actionSave_As_triggered(){
     }
 }
 
-void DepthViewWindow::on_actionNo_Mirror_triggered(){
+void DepthViewWindow::on_actionSideBySideNoMirror_triggered(){
     ui->imageWidget->mode = ImageWidget::SidebySide;
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionMirror_Left_triggered(){
+void DepthViewWindow::on_actionSideBySideMirrorLeft_triggered(){
     ui->imageWidget->mode = ImageWidget::SidebySideMLeft;
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionMirror_Right_triggered(){
+void DepthViewWindow::on_actionSideBySideMirrorRight_triggered(){
     ui->imageWidget->mode = ImageWidget::SidebySideMRight;
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionMirror_Both_triggered(){
+void DepthViewWindow::on_actionSideBySideMirrorBoth_triggered(){
     ui->imageWidget->mode = ImageWidget::SidebySideMBoth;
     ui->imageWidget->repaint();
 }
@@ -222,12 +223,12 @@ void DepthViewWindow::on_actionzoom200_triggered(){
     ui->imageWidget->setZoom(2.0f);
 }
 
-void DepthViewWindow::on_actionHorizontal_triggered(){
+void DepthViewWindow::on_actionInterlacedHorizontal_triggered(){
     ui->imageWidget->mode = ImageWidget::InterlacedHorizontal;
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionVertical_triggered(){
+void DepthViewWindow::on_actionInterlacedVertical_triggered(){
     ui->imageWidget->mode = ImageWidget::InterlacedVertical;
     ui->imageWidget->repaint();
 }
@@ -251,43 +252,43 @@ void DepthViewWindow::on_actionAbout_triggered(){
 
 void DepthViewWindow::setRendererFromString(const QString &renderer){
     if(renderer == "Anglaph, Full Color"){
-        this->on_actionFull_Color_triggered();
+        this->on_actionAnglaphFullColor_triggered();
     }
     else if(renderer == "Anglaph, Half Color"){
-        this->on_actionHalf_Color_triggered();
+        this->on_actionAnglaphHalfColor_triggered();
     }
     else if(renderer == "Anglaph, Greyscale"){
-        this->on_actionGreyscale_triggered();
+        this->on_actionAnglaphGreyscale_triggered();
     }
     else if(renderer == "Side by Side, No Mirror"){
-        this->on_actionNo_Mirror_triggered();
+        this->on_actionSideBySideNoMirror_triggered();
     }
     else if(renderer == "Side by Side, Mirror Left"){
-        this->on_actionMirror_Left_triggered();
+        this->on_actionSideBySideMirrorLeft_triggered();
     }
     else if(renderer == "Side by Side, Mirror Right"){
-        this->on_actionMirror_Right_triggered();
+        this->on_actionSideBySideMirrorRight_triggered();
     }
     else if(renderer == "Side by Side, Mirror Both"){
-        this->on_actionMirror_Both_triggered();
+        this->on_actionSideBySideMirrorBoth_triggered();
     }
     else if(renderer == "Interlaced, Horizontal"){
-        this->on_actionHorizontal_triggered();
+        this->on_actionInterlacedHorizontal_triggered();
     }
     else if(renderer == "Interlaced, Vertical"){
-        this->on_actionVertical_triggered();
+        this->on_actionInterlacedVertical_triggered();
     }
     else if(renderer == "Checkerboard"){
         this->on_actionCheckerboard_triggered();
     }
     else if(renderer == "Mono, Left"){
-        this->on_actionLeft_Image_triggered();
+        this->on_actionSingleLeft_triggered();
     }
     else if(renderer == "Mono, Right"){
-        this->on_actionRight_Image_triggered();
+        this->on_actionSingleRight_triggered();
     }
     else{
-        this->on_actionFull_Color_triggered();
+        this->on_actionAnglaphFullColor_triggered();
     }
 }
 
@@ -308,10 +309,10 @@ void DepthViewWindow::loadSettings(){
         ui->actionSwap_Left_Right->setChecked(false);
     }
     if(settings.contains("showmenubar")){
-        ui->actionShow_MenuBar->setChecked(settings.value("showmenubar").toBool());
+        ui->actionShowMenuBar->setChecked(settings.value("showmenubar").toBool());
     }
     else{
-        ui->actionShow_MenuBar->setChecked(true);
+        ui->actionShowMenuBar->setChecked(true);
     }
     if(settings.contains("disabledragdrop")){
         setAcceptDrops(!settings.value("disabledragdrop").toBool());
@@ -329,12 +330,12 @@ void DepthViewWindow::on_actionCheckerboard_triggered(){
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionLeft_Image_triggered(){
+void DepthViewWindow::on_actionSingleLeft_triggered(){
     ui->imageWidget->mode = ImageWidget::MonoLeft;
     ui->imageWidget->repaint();
 }
 
-void DepthViewWindow::on_actionRight_Image_triggered(){
+void DepthViewWindow::on_actionSingleRight_triggered(){
     ui->imageWidget->mode = ImageWidget::MonoRight;
     ui->imageWidget->repaint();
 }
