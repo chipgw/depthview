@@ -92,6 +92,26 @@ void DepthViewWindow::on_actionSideBySideMirrorBoth_triggered(){
     ui->imageWidget->repaint();
 }
 
+void DepthViewWindow::on_actionTopBottomNoMirror_triggered(){
+    ui->imageWidget->mode = ImageWidget::TopBottom;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionTopBottomMirrorTop_triggered(){
+    ui->imageWidget->mode = ImageWidget::TopBottomMTop;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionTopBottomMirrorBottom_triggered(){
+    ui->imageWidget->mode = ImageWidget::TopBottomMBottom;
+    ui->imageWidget->repaint();
+}
+
+void DepthViewWindow::on_actionTopBottomMirrorBoth_triggered(){
+    ui->imageWidget->mode = ImageWidget::TopBottomMBoth;
+    ui->imageWidget->repaint();
+}
+
 void DepthViewWindow::on_actionInterlacedHorizontal_triggered(){
     ui->imageWidget->mode = ImageWidget::InterlacedHorizontal;
     ui->imageWidget->repaint();

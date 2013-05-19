@@ -59,6 +59,10 @@ private slots:
     void on_actionSideBySideMirrorLeft_triggered();
     void on_actionSideBySideMirrorRight_triggered();
     void on_actionSideBySideMirrorBoth_triggered();
+    void on_actionTopBottomNoMirror_triggered();
+    void on_actionTopBottomMirrorTop_triggered();
+    void on_actionTopBottomMirrorBottom_triggered();
+    void on_actionTopBottomMirrorBoth_triggered();
     void on_actionInterlacedHorizontal_triggered();
     void on_actionInterlacedVertical_triggered();
     void on_actionCheckerboard_triggered();

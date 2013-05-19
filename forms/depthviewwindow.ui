@@ -77,6 +77,15 @@
      <addaction name="actionSingleLeft"/>
      <addaction name="actionSingleRight"/>
     </widget>
+    <widget class="QMenu" name="menuTop_Bottom">
+     <property name="title">
+      <string>Top/Bottom</string>
+     </property>
+     <addaction name="actionTopBottomNoMirror"/>
+     <addaction name="actionTopBottomMirrorTop"/>
+     <addaction name="actionTopBottomMirrorBottom"/>
+     <addaction name="actionTopBottomMirrorBoth"/>
+    </widget>
     <addaction name="menuAnglaph"/>
     <addaction name="menuSide_By_Side"/>
     <addaction name="menuTop_Bottom"/>
@@ -409,6 +418,26 @@
    </property>
    <property name="text">
     <string>Swap Left/Right</string>
+   </property>
+  </action>
+  <action name="actionTopBottomNoMirror">
+   <property name="text">
+    <string>No Mirror</string>
+   </property>
+  </action>
+  <action name="actionTopBottomMirrorTop">
+   <property name="text">
+    <string>Mirror Top</string>
+   </property>
+  </action>
+  <action name="actionTopBottomMirrorBottom">
+   <property name="text">
+    <string>Mirror Bottom</string>
+   </property>
+  </action>
+  <action name="actionTopBottomMirrorBoth">
+   <property name="text">
+    <string>Mirror Both</string>
    </property>
   </action>
  </widget>

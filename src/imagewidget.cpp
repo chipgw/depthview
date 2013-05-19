@@ -81,15 +81,19 @@ void ImageWidget::wheelEvent(QWheelEvent *e){
 }
 
 void ImageWidget::recalculatescroolmax(){
-    int width = imgL.width();
+    float width = imgL.width();
+    float height = imgL.height();
     if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
-        width *= 2;
+        width *= 2.0f;
     }
-    int hmax = qMax((width  * zoom - this->width())  / 2.0f, 0.0f);
+    if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
+        height *= 2.0f;
+    }
+    int hmax = qMax((width  * zoom - this->width()) / 2.0f, 0.0f);
     this->hBar->setMaximum( hmax);
     this->hBar->setMinimum(-hmax);
 
-    int vmax = qMax((imgL.height() * zoom - this->height()) / 2.0f, 0.0f);
+    int vmax = qMax((height * zoom - this->height()) / 2.0f, 0.0f);
     this->vBar->setMaximum( vmax);
     this->vBar->setMinimum(-vmax);
 
@@ -119,6 +123,8 @@ void ImageWidget::addZoom(float amount){
     if(zoom == 0){
         if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
             zoom = qMin((float)this->width() / (imgL.width() * 2.0f), (float)this->height() / (float)imgL.height());
+        }else if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
+            zoom = qMin((float)this->width() / imgL.width(), (float)this->height() / ((float)imgL.height() * 2.0f));
         }else{
             zoom = qMin((float)this->width() / (float)imgL.width(), (float)this->height() / (float)imgL.height());
         }
@@ -159,6 +165,18 @@ QImage ImageWidget::draw(const QImage &L, const QImage &R){
         break;
     case SidebySideMBoth:
         return drawSideBySide(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, true, true);
+        break;
+    case TopBottom:
+        return drawTopBottom(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom);
+        break;
+    case TopBottomMTop:
+        return drawTopBottom(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, true);
+        break;
+    case TopBottomMBottom:
+        return drawTopBottom(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, false, true);
+        break;
+    case TopBottomMBoth:
+        return drawTopBottom(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, true, true);
         break;
     case InterlacedHorizontal:
         return drawInterlaced(L, R, -hBar->value(), -vBar->value(), this->width(), this->height(), this->zoom, true, this);
