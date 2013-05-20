@@ -336,6 +336,18 @@ void DepthViewWindow::setRendererFromString(const QString &renderer){
     else if(renderer == "Side by Side, Mirror Both"){
         this->on_actionSideBySideMirrorBoth_triggered();
     }
+    else if(renderer == "Top/Bottom, No Mirror"){
+        this->on_actionTopBottomNoMirror_triggered();
+    }
+    else if(renderer == "Top/Bottom, Mirror Top"){
+        this->on_actionTopBottomMirrorTop_triggered();
+    }
+    else if(renderer == "Top/Bottom, Mirror Bottom"){
+        this->on_actionTopBottomMirrorBottom_triggered();
+    }
+    else if(renderer == "Top/Bottom, Mirror Both"){
+        this->on_actionTopBottomMirrorBoth_triggered();
+    }
     else if(renderer == "Interlaced, Horizontal"){
         this->on_actionInterlacedHorizontal_triggered();
     }

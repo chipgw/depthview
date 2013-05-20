@@ -15,6 +15,11 @@ SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(p
     ui->defaultRendererComboBox->addItem("Side by Side, Mirror Right");
     ui->defaultRendererComboBox->addItem("Side by Side, Mirror Both");
 
+    ui->defaultRendererComboBox->addItem("Top/Bottom, No Mirror");
+    ui->defaultRendererComboBox->addItem("Top/Bottom, Mirror Top");
+    ui->defaultRendererComboBox->addItem("Top/Bottom, Mirror Bottom");
+    ui->defaultRendererComboBox->addItem("Top/Bottom, Mirror Both");
+
     ui->defaultRendererComboBox->addItem("Interlaced, Horizontal");
     ui->defaultRendererComboBox->addItem("Interlaced, Vertical");
 
