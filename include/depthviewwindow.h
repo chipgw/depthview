@@ -26,7 +26,7 @@ public:
 
     void parseCommandLine(const QStringList &args);
 
-    void setRendererFromString(const QString &renderer);
+    bool setRendererFromString(const QString &renderer);
 
 private:
     Ui::DepthViewWindow *ui;

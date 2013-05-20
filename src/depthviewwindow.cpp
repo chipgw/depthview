@@ -314,7 +314,7 @@ void DepthViewWindow::on_actionAboutQt_triggered(){
     QMessageBox::aboutQt(this);
 }
 
-void DepthViewWindow::setRendererFromString(const QString &renderer){
+bool DepthViewWindow::setRendererFromString(const QString &renderer){
     if(renderer == "Anglaph, Full Color"){
         this->on_actionAnglaphFullColor_triggered();
     }
@@ -364,8 +364,9 @@ void DepthViewWindow::setRendererFromString(const QString &renderer){
         this->on_actionSingleRight_triggered();
     }
     else{
-        this->on_actionAnglaphFullColor_triggered();
+        return false;
     }
+    return true;
 }
 
 void DepthViewWindow::loadSettings(){
@@ -416,7 +417,10 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
             }
         }else if(arg == "--renderer"){
             if(i.hasNext()){
-                setRendererFromString(i.next());
+                const QString &renderer = i.next();
+                if(!setRendererFromString(renderer)){
+                    qDebug() << "WARNING: invalid renderer" << renderer << "passed to --renderer argument!";
+                }
             }else{
                 qDebug() << "WARNING: argument --renderer passed with no argument after it!";
             }
