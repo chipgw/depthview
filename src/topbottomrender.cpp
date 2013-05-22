@@ -43,6 +43,8 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
 
                     if(imgR.valid(cx, cy)){
                         lineOut[x] = lineIn[cx];
+                    }else{
+                        lineOut[x] = qRgb(0,0,0);
                     }
                 }
             }
@@ -61,6 +63,8 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
 
                     if(imgL.valid(cx, cy)){
                         lineOut[x] = lineIn[cx];
+                    }else{
+                        lineOut[x] = qRgb(0,0,0);
                     }
                 }
             }
