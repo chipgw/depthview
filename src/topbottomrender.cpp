@@ -6,8 +6,8 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
     QTime starttime = QTime::currentTime();
 
     if(finalwidth <= 0 || finalheight <= 0){
-        finalwidth = imgL.width() + imgR.width();
-        finalheight = imgL.height();
+        finalwidth = imgL.width();
+        finalheight = imgL.height() + imgR.height();
     }
 
     if(zoom <= 0.0f){
