@@ -49,8 +49,6 @@ private slots:
     void on_actionzoom200_triggered();
     void on_actionzoom100_triggered();
     void on_actionzoom50_triggered();
-    void on_actionZoomIn_triggered();
-    void on_actionZoomOut_triggered();
 
     void on_actionAnglaphFullColor_triggered();
     void on_actionAnglaphHalfColor_triggered();

@@ -41,14 +41,14 @@ public:
     void loadStereoImage(QString filename);
     void setZoom(float val);
     float getZoom();
-    void zoomIn();
-    void zoomOut();
     void addZoom(float amount);
 
     QImage draw(const QImage &L, const QImage &R);
 
 public slots:
     void hideCursor();
+    void zoomIn();
+    void zoomOut();
 
 signals:
     void doubleClicked();

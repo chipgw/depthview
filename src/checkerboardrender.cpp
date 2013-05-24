@@ -34,15 +34,14 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
                     }else{
                         line[x] = lineL[cx];
                     }
-                }
-                else{
+                }else{
                     line[x] = qRgb(0,0,0);
                 }
             }
-        }
-        else{
-            for(int x = 0; x < final.width(); x++)
+        }else{
+            for(int x = 0; x < final.width(); x++){
                 line[x] = qRgb(0,0,0);
+            }
         }
     }
 

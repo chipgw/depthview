@@ -33,11 +33,11 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, i
     float greymult = 1.0f - colormult;
 
     for(int y = 0; y < final.height(); y++){
-        line = (QRgb *)final.scanLine(y);
+        line = (QRgb*)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
-            lineL = (QRgb *)imgL.constScanLine(cy);
-            lineR = (QRgb *)imgR.constScanLine(cy);
+            lineL = (QRgb*)imgL.constScanLine(cy);
+            lineR = (QRgb*)imgR.constScanLine(cy);
             for(int x = 0; x < final.width(); x++){
                 int cx = (x - panX) / zoom;
                 if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
@@ -49,15 +49,15 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, i
                                    (qGreen(lineR[cx]) * colormult + gR) * greenR,
                                    (qBlue( lineL[cx]) * colormult + gL) * blueL +
                                    (qBlue( lineR[cx]) * colormult + gR) * blueR);
-                }
-                else{
+                }else{
                     line[x] = 0;
                 }
             }
         }
         else{
-            for(int x = 0; x < final.width(); x++)
+            for(int x = 0; x < final.width(); x++){
                 line[x] = 0;
+            }
         }
     }
 

@@ -12,9 +12,8 @@ QImage drawSingle(const QImage &img, int panX, int panY, int finalwidth, int fin
 
     QImage in;
     if(zoom == 0.0f){
-        in = img.scaled(finalwidth,finalheight, Qt::KeepAspectRatio);
-    }
-    else{
+        in = img.scaled(finalwidth, finalheight, Qt::KeepAspectRatio);
+    }else{
         in = img.scaled(img.width() * zoom, img.height() * zoom, Qt::KeepAspectRatio);
     }
 

@@ -18,6 +18,9 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 
     connect(ui->imageWidget, SIGNAL(doubleClicked()), ui->actionFullscreen, SLOT(toggle()));
 
+    connect(ui->actionZoomIn,  SIGNAL(triggered()), ui->imageWidget, SLOT(zoomIn()));
+    connect(ui->actionZoomOut, SIGNAL(triggered()), ui->imageWidget, SLOT(zoomOut()));
+
     this->loadSettings();
 }
 
@@ -145,8 +148,7 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
     if(val){
         setWindowState(windowState() | Qt::WindowFullScreen);
         ui->actionShowMenuBar->setChecked(false);
-    }
-    else{
+    }else{
         setWindowState(windowState() & ~Qt::WindowFullScreen);
         ui->actionShowMenuBar->setChecked(true);
     }
@@ -158,8 +160,7 @@ void DepthViewWindow::on_actionNext_triggered(){
         int index = entryList.indexOf(currentFile) + 1;
         if(index < 0){
             index = entryList.count() - 1;
-        }
-        else if(index >= entryList.count()){
+        }else if(index >= entryList.count()){
             index = 0;
         }
         loadImage(entryList[index]);
@@ -172,8 +173,7 @@ void DepthViewWindow::on_actionPrevious_triggered(){
         int index = entryList.indexOf(currentFile) - 1;
         if(index < 0){
             index = entryList.count() - 1;
-        }
-        else if(index >= entryList.count()){
+        }else if(index >= entryList.count()){
             index = 0;
         }
         loadImage(entryList[index]);
@@ -195,10 +195,12 @@ void DepthViewWindow::on_actionLast_triggered(){
 }
 
 void DepthViewWindow::mousePressEvent(QMouseEvent *e){
-    if(e->buttons() == Qt::XButton2)
+    if(e->buttons() == Qt::XButton2){
         this->on_actionNext_triggered();
-    if(e->buttons() == Qt::XButton1)
+    }
+    if(e->buttons() == Qt::XButton1){
         this->on_actionPrevious_triggered();
+    }
 }
 
 void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
@@ -213,13 +215,11 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
     if(filename.contains(".jps", Qt::CaseInsensitive) || filename.contains(".pns", Qt::CaseInsensitive)){
         QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR, 0, 0);
 
-        if(filename.contains(".jps", Qt::CaseInsensitive)){
-            if(!out.isNull()){
+        if(!out.isNull()){
+            if(filename.contains(".jps", Qt::CaseInsensitive)){
                 out.save(filename, "JPG");
             }
-        }
-        if(filename.contains(".pns", Qt::CaseInsensitive)){
-            if(!out.isNull()){
+            if(filename.contains(".pns", Qt::CaseInsensitive)){
                 out.save(filename, "PNG");
             }
         }
@@ -280,14 +280,6 @@ void DepthViewWindow::on_actionzoom200_triggered(){
     ui->imageWidget->setZoom(2.0f);
 }
 
-void DepthViewWindow::on_actionZoomIn_triggered(){
-    ui->imageWidget->zoomIn();
-}
-
-void DepthViewWindow::on_actionZoomOut_triggered(){
-    ui->imageWidget->zoomOut();
-}
-
 void DepthViewWindow::on_actionOptions_triggered(){
     SettingsWindow settingsdialog(&settings, this);
     if(settingsdialog.exec() == QDialog::Accepted){
@@ -317,53 +309,37 @@ void DepthViewWindow::on_actionAboutQt_triggered(){
 bool DepthViewWindow::setRendererFromString(const QString &renderer){
     if(renderer == "Anglaph, Full Color"){
         this->on_actionAnglaphFullColor_triggered();
-    }
-    else if(renderer == "Anglaph, Half Color"){
+    }else if(renderer == "Anglaph, Half Color"){
         this->on_actionAnglaphHalfColor_triggered();
-    }
-    else if(renderer == "Anglaph, Greyscale"){
+    }else if(renderer == "Anglaph, Greyscale"){
         this->on_actionAnglaphGreyscale_triggered();
-    }
-    else if(renderer == "Side by Side, No Mirror"){
+    }else if(renderer == "Side by Side, No Mirror"){
         this->on_actionSideBySideNoMirror_triggered();
-    }
-    else if(renderer == "Side by Side, Mirror Left"){
+    }else if(renderer == "Side by Side, Mirror Left"){
         this->on_actionSideBySideMirrorLeft_triggered();
-    }
-    else if(renderer == "Side by Side, Mirror Right"){
+    }else if(renderer == "Side by Side, Mirror Right"){
         this->on_actionSideBySideMirrorRight_triggered();
-    }
-    else if(renderer == "Side by Side, Mirror Both"){
+    }else if(renderer == "Side by Side, Mirror Both"){
         this->on_actionSideBySideMirrorBoth_triggered();
-    }
-    else if(renderer == "Top/Bottom, No Mirror"){
+    }else if(renderer == "Top/Bottom, No Mirror"){
         this->on_actionTopBottomNoMirror_triggered();
-    }
-    else if(renderer == "Top/Bottom, Mirror Top"){
+    }else if(renderer == "Top/Bottom, Mirror Top"){
         this->on_actionTopBottomMirrorTop_triggered();
-    }
-    else if(renderer == "Top/Bottom, Mirror Bottom"){
+    }else if(renderer == "Top/Bottom, Mirror Bottom"){
         this->on_actionTopBottomMirrorBottom_triggered();
-    }
-    else if(renderer == "Top/Bottom, Mirror Both"){
+    }else if(renderer == "Top/Bottom, Mirror Both"){
         this->on_actionTopBottomMirrorBoth_triggered();
-    }
-    else if(renderer == "Interlaced, Horizontal"){
+    }else if(renderer == "Interlaced, Horizontal"){
         this->on_actionInterlacedHorizontal_triggered();
-    }
-    else if(renderer == "Interlaced, Vertical"){
+    }else if(renderer == "Interlaced, Vertical"){
         this->on_actionInterlacedVertical_triggered();
-    }
-    else if(renderer == "Checkerboard"){
+    }else if(renderer == "Checkerboard"){
         this->on_actionCheckerboard_triggered();
-    }
-    else if(renderer == "Mono, Left"){
+    }else if(renderer == "Mono, Left"){
         this->on_actionSingleLeft_triggered();
-    }
-    else if(renderer == "Mono, Right"){
+    }else if(renderer == "Mono, Right"){
         this->on_actionSingleRight_triggered();
-    }
-    else{
+    }else{
         return false;
     }
     return true;
@@ -375,26 +351,22 @@ void DepthViewWindow::loadSettings(){
     }
     if(settings.contains("startfullscreen")){
         ui->actionFullscreen->setChecked(settings.value("startfullscreen").toBool());
-    }
-    else{
+    }else{
         ui->actionFullscreen->setChecked(false);
     }
     if(settings.contains("swapLR")){
         ui->actionSwap_Left_Right->setChecked(settings.value("swapLR").toBool());
-    }
-    else{
+    }else{
         ui->actionSwap_Left_Right->setChecked(false);
     }
     if(settings.contains("showmenubar")){
         ui->actionShowMenuBar->setChecked(settings.value("showmenubar").toBool());
-    }
-    else{
+    }else{
         ui->actionShowMenuBar->setChecked(true);
     }
     if(settings.contains("disabledragdrop")){
         setAcceptDrops(!settings.value("disabledragdrop").toBool());
-    }
-    else{
+    }else{
         setAcceptDrops(true);
     }
     if(settings.contains("startupdirectory") && currentFile.isEmpty() && !settings.value("startupdirectory").toString().isEmpty()){
@@ -434,7 +406,7 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
 }
 
 void DepthViewWindow::dragEnterEvent(QDragEnterEvent *event){
-    if (event->mimeData()->hasUrls()){
+    if(event->mimeData()->hasUrls()){
         foreach(QUrl url, event->mimeData()->urls()){
             QFileInfo info(url.toLocalFile());
             if(info.exists() && (info.suffix().toLower() == "jps" || info.suffix().toLower() == "pns")){

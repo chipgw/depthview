@@ -50,8 +50,7 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
                 int cx = (x - panX) / zoom;
                 if(imgL.valid(cx, cy) && imgR.valid(cx, cy)){
                     line[x] = lineIn[cx];
-                }
-                else{
+                }else{
                     line[x] = qRgb(0,0,0);
                 }
             }
@@ -74,13 +73,11 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
                         }else{
                             line[x] = lineL[cx];
                         }
-                    }
-                    else{
+                    }else{
                         line[x] = qRgb(0,0,0);
                     }
                 }
-            }
-            else{
+            }else{
                 for(int x = 0; x < final.width(); x++){
                     line[x] = qRgb(0,0,0);
                 }

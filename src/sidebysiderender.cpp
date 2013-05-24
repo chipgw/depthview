@@ -25,11 +25,11 @@ QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY
     QRgb *lineR;
 
     for(int y = 0; y < finalheight; y++){
-        line = (QRgb *)final.scanLine(y);
+        line = (QRgb*)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
-            lineL = (QRgb *)imgL.constScanLine(cy);
-            lineR = (QRgb *)imgR.constScanLine(cy);
+            lineL = (QRgb*)imgL.constScanLine(cy);
+            lineR = (QRgb*)imgR.constScanLine(cy);
             for(int x = 0; x < finalwidth; x++){
                 int cxl = x;
                 int cxr = x;
@@ -47,11 +47,9 @@ QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY
 
                 if(x > finalwidth / 2 && imgR.valid(cxr,cy)){
                     line[x]=lineR[cxr];
-                }
-                else if(x < finalwidth / 2 && imgL.valid(cxl,cy)){
+                }else if(x < finalwidth / 2 && imgL.valid(cxl,cy)){
                     line[x]=lineL[cxl];
-                }
-                else{
+                }else{
                     line[x] = qRgb(0,0,0);
                 }
             }
