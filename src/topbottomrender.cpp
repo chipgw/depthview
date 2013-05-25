@@ -37,15 +37,14 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
             cy = (cy - panY) / zoom;
             if(cy >= 0 && cy < imgR.height()){
                 lineIn = (QRgb*)imgR.constScanLine(cy);
+            }
+            for(int x = 0; x < finalwidth; x++){
+                int cx = (x - panX) / zoom;
 
-                for(int x = 0; x < finalwidth; x++){
-                    int cx = (x - panX) / zoom;
-
-                    if(imgR.valid(cx, cy)){
-                        lineOut[x] = lineIn[cx];
-                    }else{
-                        lineOut[x] = qRgb(0,0,0);
-                    }
+                if(imgR.valid(cx, cy)){
+                    lineOut[x] = lineIn[cx];
+                }else{
+                    lineOut[x] = qRgb(0,0,0);
                 }
             }
         }
@@ -57,15 +56,14 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
 
             if(cy >= 0 && cy < imgL.height()){
                 lineIn = (QRgb*)imgL.constScanLine(cy);
+            }
+            for(int x = 0; x < finalwidth; x++){
+                int cx = (x - panX) / zoom;
 
-                for(int x = 0; x < finalwidth; x++){
-                    int cx = (x - panX) / zoom;
-
-                    if(imgL.valid(cx, cy)){
-                        lineOut[x] = lineIn[cx];
-                    }else{
-                        lineOut[x] = qRgb(0,0,0);
-                    }
+                if(imgL.valid(cx, cy)){
+                    lineOut[x] = lineIn[cx];
+                }else{
+                    lineOut[x] = qRgb(0,0,0);
                 }
             }
         }else{
