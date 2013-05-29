@@ -1,5 +1,5 @@
 DepthView is a basic stereoscopic 3D image viewer for .jps and .pns files. 
-It supports anglaph (full-color, half-color, and greyscale), side-by-side (with mirror), interlaced (horizontal and vertical, not fully tested), checkerboard (also not fully tested), and single image display.
+It supports anglaph (full-color, half-color, and greyscale), side-by-side (with mirror), top/bottom (also with mirror), interlaced (horizontal and vertical, not fully tested), checkerboard (also not fully tested), and single image display.
 
 Binary releases: http://sourceforge.net/projects/depthview/files/
 Build using CMake (http://www.cmake.org)
