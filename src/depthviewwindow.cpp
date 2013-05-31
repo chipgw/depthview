@@ -385,16 +385,16 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
             if(i.hasNext()){
                 QDir::setCurrent(i.next());
             }else{
-                qDebug() << "WARNING: argument --startdir passed with no argument after it!";
+                QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("Argument \"--startdir\" passed with no argument after it!"));
             }
         }else if(arg == "--renderer"){
             if(i.hasNext()){
                 const QString &renderer = i.next();
                 if(!setRendererFromString(renderer)){
-                    qDebug() << "WARNING: invalid renderer" << renderer << "passed to --renderer argument!";
+                    QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("Invalid renderer \"%1\" passed to \"--renderer\" argument!").arg(renderer));
                 }
             }else{
-                qDebug() << "WARNING: argument --renderer passed with no argument after it!";
+                QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("argument \"--renderer\" passed with no argument after it!"));
             }
         }else if(!loaded){
             loaded = loadImage(arg);
