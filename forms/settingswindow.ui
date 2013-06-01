@@ -19,34 +19,48 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QFormLayout" name="formLayout_2">
+    <layout class="QFormLayout" name="formLayout">
      <property name="fieldGrowthPolicy">
       <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="defaultRendererLabel">
+       <property name="toolTip">
+        <string>The render mode used when DepthView is started.</string>
+       </property>
        <property name="text">
         <string>Default Rendering Mode:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="defaultRendererComboBox"/>
+      <widget class="QComboBox" name="defaultRendererComboBox">
+       <property name="toolTip">
+        <string>The render mode used when DepthView is started.</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="startFullscreenLabel">
+       <property name="toolTip">
+        <string>Run DepthView fullscreen</string>
+       </property>
        <property name="text">
         <string>Start Fullscreen</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QCheckBox" name="startFullscreenCheckBox"/>
+      <widget class="QCheckBox" name="startFullscreenCheckBox">
+       <property name="toolTip">
+        <string>Run DepthView fullscreen</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="startupDirectoryLabel">
        <property name="toolTip">
-        <string>the directory in which DepthView starts up if no command line arguments are supplied. (leave blank for home directory)</string>
+        <string>The directory in which DepthView starts up if no command line arguments are supplied. (leave blank for home directory)</string>
        </property>
        <property name="text">
         <string>Startup Directory</string>
@@ -79,16 +93,26 @@
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="swapLeftRightLabel">
+       <property name="toolTip">
+        <string>Swap the left and right images by default</string>
+       </property>
        <property name="text">
         <string>Swap Left/Right</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QCheckBox" name="swapLeftRightCheckBox"/>
+      <widget class="QCheckBox" name="swapLeftRightCheckBox">
+       <property name="toolTip">
+        <string>Swap the left and right images by default</string>
+       </property>
+      </widget>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="showMenuBarLabel">
+       <property name="toolTip">
+        <string>Show the menu bar when DepthView is started. (has no effect if start fullscreen is enabled)</string>
+       </property>
        <property name="text">
         <string>Show Menu Bar</string>
        </property>
@@ -96,6 +120,9 @@
      </item>
      <item row="4" column="1">
       <widget class="QCheckBox" name="showMenuBarCheckBox">
+       <property name="toolTip">
+        <string>Show the menu bar when DepthView is started. (has no effect if start fullscreen is enabled)</string>
+       </property>
        <property name="checked">
         <bool>true</bool>
        </property>
@@ -103,16 +130,26 @@
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="disableDragDropLabel">
+       <property name="toolTip">
+        <string>disables droping images into window to open them.</string>
+       </property>
        <property name="text">
         <string>Disable Drag/Drop</string>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QCheckBox" name="disableDragDropCheckBox"/>
+      <widget class="QCheckBox" name="disableDragDropCheckBox">
+       <property name="toolTip">
+        <string>disables droping images into window to open them.</string>
+       </property>
+      </widget>
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="fileDialogStartupLabel">
+       <property name="toolTip">
+        <string>Enables showing an &quot;Open File&quot; dialog when DepthView starts and has no command line arguments.</string>
+       </property>
        <property name="text">
         <string>Show Open File Dialog at Startup</string>
        </property>
@@ -120,6 +157,9 @@
      </item>
      <item row="6" column="1">
       <widget class="QCheckBox" name="fileDialogStartupCheckBox">
+       <property name="toolTip">
+        <string>Enables showing an &quot;Open File&quot; dialog when DepthView starts and has no command line arguments.</string>
+       </property>
        <property name="checked">
         <bool>true</bool>
        </property>
