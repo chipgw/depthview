@@ -383,7 +383,10 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
             ui->actionFullscreen->setChecked(true);
         }else if(arg == "--startdir"){
             if(i.hasNext()){
-                QDir::setCurrent(i.next());
+                const QString &dir = i.next();
+                if(!QDir::setCurrent(dir)){
+                    QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("Invalid directory \"\%1\" passed to \"--startdir\" argument!").arg(dir));
+                }
             }else{
                 QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("Argument \"--startdir\" passed with no argument after it!"));
             }
