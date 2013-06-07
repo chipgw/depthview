@@ -377,6 +377,8 @@ void DepthViewWindow::loadSettings(){
 void DepthViewWindow::parseCommandLine(const QStringList &args){
     bool loaded = !this->currentFile.isEmpty();
 
+    QString warning;
+
     for(QStringListIterator i(args); i.hasNext();){
         const QString &arg = i.next();
         if(arg == "--fullscreen"){
@@ -385,24 +387,28 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
             if(i.hasNext()){
                 const QString &dir = i.next();
                 if(!QDir::setCurrent(dir)){
-                    QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("Invalid directory \"\%1\" passed to \"--startdir\" argument!").arg(dir));
+                    warning.append(tr("<p>Invalid directory \"\%1\" passed to \"--startdir\" argument!</p>").arg(dir));
                 }
             }else{
-                QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("Argument \"--startdir\" passed with no argument after it!"));
+                warning.append(tr("<p>Argument \"--startdir\" passed with no argument after it!</p>"));
             }
         }else if(arg == "--renderer"){
             if(i.hasNext()){
                 const QString &renderer = i.next();
                 if(!setRendererFromString(renderer)){
-                    QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("Invalid renderer \"%1\" passed to \"--renderer\" argument!").arg(renderer));
+                    warning.append(tr("<p>Invalid renderer \"%1\" passed to \"--renderer\" argument!</p>").arg(renderer));
                 }
             }else{
-                QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), tr("argument \"--renderer\" passed with no argument after it!"));
+                warning.append(tr("<p>Argument \"--renderer\" passed with no argument after it!</p>"));
             }
         }else if(!loaded){
             loaded = loadImage(arg);
         }
     }
+    if(!warning.isEmpty()){
+        QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), warning);
+    }
+
     if(!loaded && (!settings.contains("filedialogstartup") || settings.value("filedialogstartup").toBool())){
         showLoadImageDialog();
     }
