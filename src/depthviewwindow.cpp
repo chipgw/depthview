@@ -150,7 +150,12 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
         ui->actionShowMenuBar->setChecked(false);
     }else{
         setWindowState(windowState() & ~Qt::WindowFullScreen);
-        ui->actionShowMenuBar->setChecked(true);
+
+        if(settings.contains("showmenubar")){
+            ui->actionShowMenuBar->setChecked(settings.value("showmenubar").toBool());
+        }else{
+            ui->actionShowMenuBar->setChecked(true);
+        }
     }
 }
 

@@ -2,22 +2,19 @@
 #include <QResizeEvent>
 #include <QPainter>
 
-ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent){
-    this->mode = AnglaphFull;
+ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false), mouseTimer(this) {
     this->hBar = new QScrollBar(Qt::Horizontal, this);
     this->vBar = new QScrollBar(Qt::Vertical, this);
     this->hBar->setMinimum(-100);
     this->vBar->setMinimum(-100);
     this->setMouseTracking(true);
-    zoom = 0;
-    swapLR = false;
     this->recalculatescroolmax();
     connect(this->hBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
     connect(this->vBar, SIGNAL(valueChanged(int)),this,SLOT(update()));
 
-    mouseTimer = new QTimer(this);
-    mouseTimer->setSingleShot(true);
-    connect(mouseTimer, SIGNAL(timeout()), this, SLOT(hideCursor()));
+
+    mouseTimer.setSingleShot(true);
+    connect(&mouseTimer, SIGNAL(timeout()), this, SLOT(hideCursor()));
 }
 
 void ImageWidget::resizeEvent(QResizeEvent *e){
@@ -64,7 +61,7 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
     }else{
         this->setCursor(Qt::ArrowCursor);
     }
-    mouseTimer->start(4000);
+    mouseTimer.start(4000);
     this->lastmousepos = e->pos();
 }
 

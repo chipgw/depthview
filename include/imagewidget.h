@@ -12,7 +12,7 @@ class ImageWidget : public QWidget {
     QPoint lastmousepos;
     float zoom;
 
-    QTimer* mouseTimer;
+    QTimer mouseTimer;
 public:
     enum DrawMode{
         AnglaphFull,

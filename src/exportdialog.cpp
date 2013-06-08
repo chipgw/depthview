@@ -1,11 +1,8 @@
 #include "exportdialog.h"
 #include "ui_exportdialog.h"
 
-ExportDialog::ExportDialog(QWidget *parent) : QDialog(parent), ui(new Ui::ExportDialog){
+ExportDialog::ExportDialog(QWidget *parent) : QDialog(parent), ui(new Ui::ExportDialog), anglaph(false), sidebyside(false){
     ui->setupUi(this);
-
-    this->anglaph = false;
-    this->sidebyside = false;
 }
 
 ExportDialog::~ExportDialog(){
