@@ -34,11 +34,13 @@ private:
     void mouseDoubleClickEvent(QMouseEvent *e);
     void mousePressEvent(QMouseEvent *e);
 
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
 private slots:
     void on_actionFullscreen_toggled(bool val);
     void on_actionShowMenuBar_toggled(bool val);
     void on_actionOpen_triggered();
-    void on_actionExit_triggered();
     void on_actionSaveAs_triggered();
     void on_actionOptions_triggered();
     void on_actionAbout_triggered();
@@ -71,9 +73,6 @@ private slots:
     void on_actionPrevious_triggered();
     void on_actionFirst_triggered();
     void on_actionLast_triggered();
-
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
 };
 
 #endif // DEPTHVIEWWINDOW_H
