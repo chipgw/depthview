@@ -14,7 +14,7 @@ class SettingsWindow : public QDialog {
     Q_OBJECT
     
 public:
-    explicit SettingsWindow(QSettings *Settings, QWidget *parent = 0);
+    explicit SettingsWindow(QSettings &Settings, QWidget *parent = 0);
     ~SettingsWindow();
     
 private slots:
@@ -26,7 +26,7 @@ private slots:
 
 private:
     Ui::SettingsWindow *ui;
-    QSettings *settings;
+    QSettings &settings;
 };
 
 #endif // SETTINGSWINDOW_H

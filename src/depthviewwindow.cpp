@@ -284,7 +284,7 @@ void DepthViewWindow::on_actionzoom200_triggered(){
 }
 
 void DepthViewWindow::on_actionOptions_triggered(){
-    SettingsWindow settingsdialog(&settings, this);
+    SettingsWindow settingsdialog(settings, this);
     if(settingsdialog.exec() == QDialog::Accepted){
         this->loadSettings();
     }

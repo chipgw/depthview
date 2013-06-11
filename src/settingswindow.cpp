@@ -2,9 +2,8 @@
 #include "ui_settingswindow.h"
 #include <QFileDialog>
 
-SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(parent), ui(new Ui::SettingsWindow){
+SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(parent), ui(new Ui::SettingsWindow), settings(Settings){
     ui->setupUi(this);
-    settings = Settings;
 
     ui->defaultRendererComboBox->addItem("Anglaph, Full Color");
     ui->defaultRendererComboBox->addItem("Anglaph, Half Color");
@@ -28,20 +27,20 @@ SettingsWindow::SettingsWindow(QSettings *Settings, QWidget *parent) : QDialog(p
     ui->defaultRendererComboBox->addItem("Mono, Left");
     ui->defaultRendererComboBox->addItem("Mono, Right");
 
-    ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings->value("defaultrender").toString()));
-    ui->startFullscreenCheckBox->setChecked(settings->value("startfullscreen").toBool());
-    ui->swapLeftRightCheckBox->setChecked(settings->value("swapLR").toBool());
-    ui->startupDirectoryLineEdit->setText(settings->value("startupdirectory").toString());
+    ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings.value("defaultrender").toString()));
+    ui->startFullscreenCheckBox->setChecked(settings.value("startfullscreen").toBool());
+    ui->swapLeftRightCheckBox->setChecked(settings.value("swapLR").toBool());
+    ui->startupDirectoryLineEdit->setText(settings.value("startupdirectory").toString());
 
     // check if it exists so that it will default to true if it does not.
-    if(settings->contains("showmenubar")){
-        ui->showMenuBarCheckBox->setChecked(settings->value("showmenubar").toBool());
+    if(settings.contains("showmenubar")){
+        ui->showMenuBarCheckBox->setChecked(settings.value("showmenubar").toBool());
     }
-    if(settings->contains("filedialogstartup")){
-        ui->fileDialogStartupCheckBox->setChecked(settings->value("filedialogstartup").toBool());
+    if(settings.contains("filedialogstartup")){
+        ui->fileDialogStartupCheckBox->setChecked(settings.value("filedialogstartup").toBool());
     }
 
-    ui->disableDragDropCheckBox->setChecked(settings->value("disabledragdrop").toBool());
+    ui->disableDragDropCheckBox->setChecked(settings.value("disabledragdrop").toBool());
 }
 
 SettingsWindow::~SettingsWindow(){
@@ -49,13 +48,13 @@ SettingsWindow::~SettingsWindow(){
 }
 
 void SettingsWindow::accept(){
-    settings->setValue("defaultrender", ui->defaultRendererComboBox->currentText());
-    settings->setValue("startfullscreen", ui->startFullscreenCheckBox->isChecked());
-    settings->setValue("swapLR", ui->swapLeftRightCheckBox->isChecked());
-    settings->setValue("startupdirectory", ui->startupDirectoryLineEdit->text());
-    settings->setValue("showmenubar", ui->showMenuBarCheckBox->isChecked());
-    settings->setValue("filedialogstartup", ui->fileDialogStartupCheckBox->isChecked());
-    settings->setValue("disabledragdrop", ui->disableDragDropCheckBox->isChecked());
+    settings.setValue("defaultrender", ui->defaultRendererComboBox->currentText());
+    settings.setValue("startfullscreen", ui->startFullscreenCheckBox->isChecked());
+    settings.setValue("swapLR", ui->swapLeftRightCheckBox->isChecked());
+    settings.setValue("startupdirectory", ui->startupDirectoryLineEdit->text());
+    settings.setValue("showmenubar", ui->showMenuBarCheckBox->isChecked());
+    settings.setValue("filedialogstartup", ui->fileDialogStartupCheckBox->isChecked());
+    settings.setValue("disabledragdrop", ui->disableDragDropCheckBox->isChecked());
     QDialog::accept();
 }
 
@@ -69,7 +68,7 @@ void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
         msgbox.setIcon(QMessageBox::Warning);
 
         if(msgbox.exec() == QMessageBox::Yes){
-            settings->clear();
+            settings.clear();
 
             ui->defaultRendererComboBox->setCurrentIndex(-1);
             ui->startFullscreenCheckBox->setChecked(false);
