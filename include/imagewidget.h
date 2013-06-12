@@ -32,6 +32,7 @@ public:
         MonoLeft,
         MonoRight
     };
+    const static QMap<QString, DrawMode> drawModeNames;
 
     QImage imgL, imgR;
     bool swapLR;

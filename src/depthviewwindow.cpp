@@ -310,42 +310,11 @@ void DepthViewWindow::on_actionAboutQt_triggered(){
 }
 
 bool DepthViewWindow::setRendererFromString(const QString &renderer){
-    if(renderer == "Anglaph, Full Color"){
-        this->on_actionAnglaphFullColor_triggered();
-    }else if(renderer == "Anglaph, Half Color"){
-        this->on_actionAnglaphHalfColor_triggered();
-    }else if(renderer == "Anglaph, Greyscale"){
-        this->on_actionAnglaphGreyscale_triggered();
-    }else if(renderer == "Side by Side, No Mirror"){
-        this->on_actionSideBySideNoMirror_triggered();
-    }else if(renderer == "Side by Side, Mirror Left"){
-        this->on_actionSideBySideMirrorLeft_triggered();
-    }else if(renderer == "Side by Side, Mirror Right"){
-        this->on_actionSideBySideMirrorRight_triggered();
-    }else if(renderer == "Side by Side, Mirror Both"){
-        this->on_actionSideBySideMirrorBoth_triggered();
-    }else if(renderer == "Top/Bottom, No Mirror"){
-        this->on_actionTopBottomNoMirror_triggered();
-    }else if(renderer == "Top/Bottom, Mirror Top"){
-        this->on_actionTopBottomMirrorTop_triggered();
-    }else if(renderer == "Top/Bottom, Mirror Bottom"){
-        this->on_actionTopBottomMirrorBottom_triggered();
-    }else if(renderer == "Top/Bottom, Mirror Both"){
-        this->on_actionTopBottomMirrorBoth_triggered();
-    }else if(renderer == "Interlaced, Horizontal"){
-        this->on_actionInterlacedHorizontal_triggered();
-    }else if(renderer == "Interlaced, Vertical"){
-        this->on_actionInterlacedVertical_triggered();
-    }else if(renderer == "Checkerboard"){
-        this->on_actionCheckerboard_triggered();
-    }else if(renderer == "Mono, Left"){
-        this->on_actionSingleLeft_triggered();
-    }else if(renderer == "Mono, Right"){
-        this->on_actionSingleRight_triggered();
-    }else{
-        return false;
+    if(ImageWidget::drawModeNames.contains(renderer)){
+        ui->imageWidget->mode = ImageWidget::drawModeNames.value(renderer);
+        return true;
     }
-    return true;
+    return false;
 }
 
 void DepthViewWindow::loadSettings(){

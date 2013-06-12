@@ -1,31 +1,12 @@
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
+#include "imagewidget.h"
 #include <QFileDialog>
 
 SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(parent), ui(new Ui::SettingsWindow), settings(Settings){
     ui->setupUi(this);
 
-    ui->defaultRendererComboBox->addItem("Anglaph, Full Color");
-    ui->defaultRendererComboBox->addItem("Anglaph, Half Color");
-    ui->defaultRendererComboBox->addItem("Anglaph, Greyscale");
-
-    ui->defaultRendererComboBox->addItem("Side by Side, No Mirror");
-    ui->defaultRendererComboBox->addItem("Side by Side, Mirror Left");
-    ui->defaultRendererComboBox->addItem("Side by Side, Mirror Right");
-    ui->defaultRendererComboBox->addItem("Side by Side, Mirror Both");
-
-    ui->defaultRendererComboBox->addItem("Top/Bottom, No Mirror");
-    ui->defaultRendererComboBox->addItem("Top/Bottom, Mirror Top");
-    ui->defaultRendererComboBox->addItem("Top/Bottom, Mirror Bottom");
-    ui->defaultRendererComboBox->addItem("Top/Bottom, Mirror Both");
-
-    ui->defaultRendererComboBox->addItem("Interlaced, Horizontal");
-    ui->defaultRendererComboBox->addItem("Interlaced, Vertical");
-
-    ui->defaultRendererComboBox->addItem("Checkerboard");
-
-    ui->defaultRendererComboBox->addItem("Mono, Left");
-    ui->defaultRendererComboBox->addItem("Mono, Right");
+    ui->defaultRendererComboBox->addItems(ImageWidget::drawModeNames.keys());
 
     ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings.value("defaultrender").toString()));
     ui->startFullscreenCheckBox->setChecked(settings.value("startfullscreen").toBool());

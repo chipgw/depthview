@@ -197,3 +197,25 @@ void ImageWidget::mouseDoubleClickEvent(QMouseEvent *e){
         emit doubleClicked();
     }
 }
+QMap<QString, ImageWidget::DrawMode> initDrawModeList(){
+    QMap<QString, ImageWidget::DrawMode> list;
+    list.insert("Anglaph, Full Color",          ImageWidget::AnglaphFull);
+    list.insert("Anglaph, Half Color",          ImageWidget::AnglaphHalf);
+    list.insert("Anglaph, Greyscale",           ImageWidget::AnglaphGreyscale);
+    list.insert("Side by Side, No Mirror",      ImageWidget::SidebySide);
+    list.insert("Side by Side, Mirror Left",    ImageWidget::SidebySideMLeft);
+    list.insert("Side by Side, Mirror Right",   ImageWidget::SidebySideMRight);
+    list.insert("Side by Side, Mirror Both",    ImageWidget::SidebySideMBoth);
+    list.insert("Top/Bottom, No Mirror",        ImageWidget::TopBottom);
+    list.insert("Top/Bottom, Mirror Top",       ImageWidget::TopBottomMTop);
+    list.insert("Top/Bottom, Mirror Bottom",    ImageWidget::TopBottomMBottom);
+    list.insert("Top/Bottom, Mirror Both",      ImageWidget::TopBottomMBoth);
+    list.insert("Interlaced, Horizontal",       ImageWidget::InterlacedHorizontal);
+    list.insert("Interlaced, Vertical",         ImageWidget::InterlacedVertical);
+    list.insert("Checkerboard",                 ImageWidget::Checkerboard);
+    list.insert("Mono, Left",                   ImageWidget::MonoLeft);
+    list.insert("Mono, Right",                  ImageWidget::MonoRight);
+    return list;
+}
+
+const QMap<QString, ImageWidget::DrawMode> ImageWidget::drawModeNames = initDrawModeList();
