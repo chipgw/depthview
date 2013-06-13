@@ -149,8 +149,8 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
     }else{
         setWindowState(windowState() & ~Qt::WindowFullScreen);
 
-        if(settings.contains("showmenubar")){
-            ui->actionShowMenuBar->setChecked(settings.value("showmenubar").toBool());
+        if(settings.contains(SettingsWindow::showmenubar)){
+            ui->actionShowMenuBar->setChecked(settings.value(SettingsWindow::showmenubar).toBool());
         }else{
             ui->actionShowMenuBar->setChecked(true);
         }
@@ -312,37 +312,38 @@ void DepthViewWindow::on_actionAboutQt_triggered(){
 bool DepthViewWindow::setRendererFromString(const QString &renderer){
     if(ImageWidget::drawModeNames.contains(renderer)){
         ui->imageWidget->mode = ImageWidget::drawModeNames.value(renderer);
+        ui->imageWidget->repaint();
         return true;
     }
     return false;
 }
 
 void DepthViewWindow::loadSettings(){
-    if(settings.contains("defaultrender")){
-        setRendererFromString(settings.value("defaultrender").toString());
+    if(settings.contains(SettingsWindow::defaultrender)){
+        setRendererFromString(settings.value(SettingsWindow::defaultrender).toString());
     }
-    if(settings.contains("startfullscreen")){
-        ui->actionFullscreen->setChecked(settings.value("startfullscreen").toBool());
+    if(settings.contains(SettingsWindow::startfullscreen)){
+        ui->actionFullscreen->setChecked(settings.value(SettingsWindow::startfullscreen).toBool());
     }else{
         ui->actionFullscreen->setChecked(false);
     }
-    if(settings.contains("swapLR")){
-        ui->actionSwap_Left_Right->setChecked(settings.value("swapLR").toBool());
+    if(settings.contains(SettingsWindow::swapLR)){
+        ui->actionSwap_Left_Right->setChecked(settings.value(SettingsWindow::swapLR).toBool());
     }else{
         ui->actionSwap_Left_Right->setChecked(false);
     }
-    if(settings.contains("showmenubar")){
-        ui->actionShowMenuBar->setChecked(settings.value("showmenubar").toBool());
+    if(settings.contains(SettingsWindow::showmenubar)){
+        ui->actionShowMenuBar->setChecked(settings.value(SettingsWindow::showmenubar).toBool());
     }else{
         ui->actionShowMenuBar->setChecked(true);
     }
-    if(settings.contains("disabledragdrop")){
-        setAcceptDrops(!settings.value("disabledragdrop").toBool());
+    if(settings.contains(SettingsWindow::disabledragdrop)){
+        setAcceptDrops(!settings.value(SettingsWindow::disabledragdrop).toBool());
     }else{
         setAcceptDrops(true);
     }
-    if(settings.contains("startupdirectory") && currentFile.isEmpty() && !settings.value("startupdirectory").toString().isEmpty()){
-        QDir::setCurrent(settings.value("startupdirectory").toString());
+    if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && !settings.value(SettingsWindow::startupdirectory).toString().isEmpty()){
+        QDir::setCurrent(settings.value(SettingsWindow::startupdirectory).toString());
     }
 }
 
@@ -381,7 +382,7 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
         QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), warning);
     }
 
-    if(!loaded && (!settings.contains("filedialogstartup") || settings.value("filedialogstartup").toBool())){
+    if(!loaded && (!settings.contains(SettingsWindow::filedialogstartup) || settings.value(SettingsWindow::filedialogstartup).toBool())){
         showLoadImageDialog();
     }
 }

@@ -17,6 +17,14 @@ public:
     explicit SettingsWindow(QSettings &Settings, QWidget *parent = 0);
     ~SettingsWindow();
     
+    const static QString defaultrender;
+    const static QString startfullscreen;
+    const static QString swapLR;
+    const static QString startupdirectory;
+    const static QString showmenubar;
+    const static QString filedialogstartup;
+    const static QString disabledragdrop;
+
 private slots:
     void accept();
 
