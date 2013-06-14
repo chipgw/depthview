@@ -41,14 +41,8 @@ void SettingsWindow::accept(){
 
 void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
     if(button->text() == "Restore Defaults"){
-        QMessageBox msgbox(this);
-        msgbox.setText("Are you sure you wish to reset to default settings?");
-        msgbox.setWindowTitle("Are You Sure?");
-        msgbox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        msgbox.setDefaultButton(QMessageBox::Yes);
-        msgbox.setIcon(QMessageBox::Warning);
-
-        if(msgbox.exec() == QMessageBox::Yes){
+        if(QMessageBox::warning(this, tr("Are You Sure?"), tr("Are you sure you wish to reset to default settings?"),
+                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
             settings.clear();
 
             ui->defaultRendererComboBox->setCurrentIndex(-1);
