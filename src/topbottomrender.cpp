@@ -35,9 +35,11 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
                 cy -= finalheight / 2;
             }
             cy = (cy - panY) / zoom;
+
             if(cy >= 0 && cy < imgR.height()){
                 lineIn = (QRgb*)imgR.constScanLine(cy);
             }
+
             for(int x = 0; x < finalwidth; x++){
                 int cx = (x - panX) / zoom;
 
@@ -57,6 +59,7 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
             if(cy >= 0 && cy < imgL.height()){
                 lineIn = (QRgb*)imgL.constScanLine(cy);
             }
+
             for(int x = 0; x < finalwidth; x++){
                 int cx = (x - panX) / zoom;
 

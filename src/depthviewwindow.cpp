@@ -40,8 +40,7 @@ bool DepthViewWindow::loadImage(QString filename){
         this->setWindowTitle(currentFile);
         ui->imageWidget->repaint();
         return true;
-    }
-    else{
+    }else{
         return false;
     }
 }
@@ -213,7 +212,8 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 }
 
 void DepthViewWindow::on_actionSaveAs_triggered(){
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "", tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "",
+                                                    tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
 
     if(filename.contains(".jps", Qt::CaseInsensitive) || filename.contains(".pns", Qt::CaseInsensitive)){
         QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR, 0, 0);

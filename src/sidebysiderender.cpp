@@ -54,8 +54,9 @@ QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY
                 }
             }
         }else{
-            for(int x = 0; x < final.width(); x++)
+            for(int x = 0; x < final.width(); x++){
                 line[x] = qRgb(0,0,0);
+            }
         }
     }
 
