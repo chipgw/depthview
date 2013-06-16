@@ -57,12 +57,31 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
         vBar->setValue(vBar->value() + lastmousepos.y() - e->y());
         hBar->setValue(hBar->value() + lastmousepos.x() - e->x());
 
+        QPoint warpto = e->pos();
+
+        if(e->x() < 0){
+            warpto.setX(this->width());
+        }else if(e->x() > this->width()){
+            warpto.setX(0);
+        }
+        if(e->y() < 0){
+            warpto.setY(this->height());
+        }else if(e->y() > this->height()){
+            warpto.setY(0);
+        }
+
+        if(warpto != e->pos()){
+            QCursor::setPos(this->mapToGlobal(warpto));
+        }
+        this->lastmousepos = warpto;
+
         this->setCursor(Qt::SizeAllCursor);
     }else{
         this->setCursor(Qt::ArrowCursor);
+
+        this->lastmousepos = e->pos();
     }
     mouseTimer.start(4000);
-    this->lastmousepos = e->pos();
 }
 
 void ImageWidget::mouseReleaseEvent(QMouseEvent *e){
