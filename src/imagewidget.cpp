@@ -34,8 +34,10 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         painter.drawRect(e->rect());
 
         painter.setPen(Qt::gray);
-        painter.setFont(QFont("Arial", 24));
-        painter.drawText(rect(), Qt::AlignCenter, tr("No Image Loaded"));
+        QFont font;
+        font.setPointSize(32);
+        painter.setFont(font);
+        painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("No Image Loaded"));
     }else{
         if(swapLR){
             painter.drawImage(0 ,0, draw(imgR, imgL));
