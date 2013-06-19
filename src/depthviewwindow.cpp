@@ -21,6 +21,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->actionZoomIn,  SIGNAL(triggered()), ui->imageWidget, SLOT(zoomIn()));
     connect(ui->actionZoomOut, SIGNAL(triggered()), ui->imageWidget, SLOT(zoomOut()));
 
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(showLoadImageDialog()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
 
     this->loadSettings();
@@ -50,14 +51,7 @@ bool DepthViewWindow::loadImage(const QString &filename){
 
 bool DepthViewWindow::showLoadImageDialog(){
     QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Stereo Image Files (*.jps *.pns)"));
-    if(!filename.isEmpty()){
-        return loadImage(filename);
-    }
-    return false;
-}
-
-void DepthViewWindow::on_actionOpen_triggered(){
-    this->showLoadImageDialog();
+    return loadImage(filename);
 }
 
 void DepthViewWindow::on_actionAnglaphFullColor_triggered(){

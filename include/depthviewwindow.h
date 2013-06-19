@@ -20,7 +20,6 @@ public:
     ~DepthViewWindow();
 
     bool loadImage(const QString &filename);
-    bool showLoadImageDialog();
 
     void loadSettings();
 
@@ -37,10 +36,12 @@ private:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
 
+public slots:
+    bool showLoadImageDialog();
+
 private slots:
     void on_actionFullscreen_toggled(bool val);
     void on_actionShowMenuBar_toggled(bool val);
-    void on_actionOpen_triggered();
     void on_actionSaveAs_triggered();
     void on_actionOptions_triggered();
     void on_actionAbout_triggered();
