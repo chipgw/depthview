@@ -31,18 +31,21 @@ DepthViewWindow::~DepthViewWindow(){
     delete ui;
 }
 
-bool DepthViewWindow::loadImage(QString filename){
+bool DepthViewWindow::loadImage(const QString &filename){
     QFileInfo info(filename);
     if(info.exists() && (info.suffix().toLower() == "jps" || info.suffix().toLower() == "pns")){
         QDir::setCurrent(info.path());
         currentFile = info.fileName();
-        ui->imageWidget->loadStereoImage(currentFile);
-        this->setWindowTitle(currentFile);
-        ui->imageWidget->repaint();
-        return true;
-    }else{
-        return false;
+        if(ui->imageWidget->loadStereoImage(currentFile)){
+            this->setWindowTitle(currentFile);
+            ui->imageWidget->repaint();
+            return true;
+        }else{
+            currentFile.clear();
+            this->setWindowTitle("DepthView");
+        }
     }
+    return false;
 }
 
 bool DepthViewWindow::showLoadImageDialog(){

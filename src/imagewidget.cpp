@@ -47,11 +47,14 @@ void ImageWidget::paintEvent(QPaintEvent *e){
     }
 }
 
-void ImageWidget::loadStereoImage(QString filename){
+bool ImageWidget::loadStereoImage(const QString &filename){
     QImage img(filename);
+
     this->imgL = img.copy(0,               0, img.width() / 2, img.height());
     this->imgR = img.copy(img.width() / 2, 0, img.width() / 2, img.height());
     this->recalculatescroolmax();
+
+    return !img.isNull();
 }
 
 void ImageWidget::mouseMoveEvent(QMouseEvent *e){

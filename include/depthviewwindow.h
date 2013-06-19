@@ -19,7 +19,7 @@ public:
     explicit DepthViewWindow(QWidget *parent = 0);
     ~DepthViewWindow();
 
-    bool loadImage(QString filename);
+    bool loadImage(const QString &filename);
     bool showLoadImageDialog();
 
     void loadSettings();

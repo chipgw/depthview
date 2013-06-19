@@ -39,7 +39,7 @@ public:
     DrawMode mode;
 
     explicit ImageWidget(QWidget *parent = 0);
-    void loadStereoImage(QString filename);
+    bool loadStereoImage(const QString &filename);
     void setZoom(float val);
     float getZoom();
     void addZoom(float amount);
