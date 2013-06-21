@@ -12,7 +12,6 @@
 
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow){
     ui->setupUi(this);
-    fileFilters << "*.jps" << "*.pns";
     ui->imageWidget->addActions(ui->menubar->actions());
     ui->imageWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
 
@@ -403,3 +402,5 @@ void DepthViewWindow::dropEvent(QDropEvent *event){
         event->acceptProposedAction();
     }
 }
+
+const QStringList DepthViewWindow::fileFilters = QStringList() << "*.jps" << "*.pns";

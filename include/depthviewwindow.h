@@ -12,7 +12,8 @@ namespace Ui {
 class DepthViewWindow : public QMainWindow {
     Q_OBJECT
 public:
-    QStringList fileFilters;
+    const static QStringList fileFilters;
+
     QString currentFile;
     QSettings settings;
 
