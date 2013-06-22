@@ -101,19 +101,18 @@ void ImageWidget::wheelEvent(QWheelEvent *e){
 }
 
 void ImageWidget::recalculatescroolmax(){
-    float width = imgL.width();
-    float height = imgL.height();
+    int width = imgL.width();
+    int height = imgL.height();
     if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
-        width *= 2.0f;
+        width *= 2;
+    }else if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
+        height *= 2;
     }
-    if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
-        height *= 2.0f;
-    }
-    int hmax = qMax((width  * zoom - this->width()) / 2.0f, 0.0f);
+    int hmax = qMax(int(width  * zoom - this->width())  / 2, 0);
     hBar.setMaximum( hmax);
     hBar.setMinimum(-hmax);
 
-    int vmax = qMax((height * zoom - this->height()) / 2.0f, 0.0f);
+    int vmax = qMax(int(height * zoom - this->height()) / 2, 0);
     vBar.setMaximum( vmax);
     vBar.setMinimum(-vmax);
 
@@ -140,7 +139,7 @@ void ImageWidget::zoomOut(){
 }
 
 void ImageWidget::addZoom(float amount){
-    if(zoom == 0){
+    if(zoom <= 0.0f){
         if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
             zoom = qMin((float)this->width() / (imgL.width() * 2.0f), (float)this->height() / (float)imgL.height());
         }else if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
@@ -222,6 +221,7 @@ void ImageWidget::mouseDoubleClickEvent(QMouseEvent *e){
         emit doubleClicked();
     }
 }
+
 QMap<QString, ImageWidget::DrawMode> initDrawModeList(){
     QMap<QString, ImageWidget::DrawMode> list;
     list.insert("Anglaph, Full Color",          ImageWidget::AnglaphFull);
