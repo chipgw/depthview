@@ -395,11 +395,13 @@ void DepthViewWindow::dragEnterEvent(QDragEnterEvent *event){
 }
 
 void DepthViewWindow::dropEvent(QDropEvent *event){
-    if (event->mimeData()->hasUrls()){
+    if(event->mimeData()->hasUrls()){
         foreach(QUrl url, event->mimeData()->urls()){
-            if(loadImage(url.toLocalFile())) break;
+            if(loadImage(url.toLocalFile())){
+                event->acceptProposedAction();
+                break;
+            }
         }
-        event->acceptProposedAction();
     }
 }
 

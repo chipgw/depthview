@@ -7,8 +7,8 @@
 
 class ImageWidget : public QWidget {
     Q_OBJECT
-    QScrollBar *hBar;
-    QScrollBar *vBar;
+    QScrollBar hBar;
+    QScrollBar vBar;
     QPoint lastmousepos;
     float zoom;
 
