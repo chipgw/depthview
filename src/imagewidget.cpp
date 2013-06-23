@@ -65,20 +65,21 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
 
         QPoint warpto = e->pos();
 
-        if(e->x() < 0){
-            warpto.setX(this->width());
-        }else if(e->x() > this->width()){
-            warpto.setX(0);
+        if(e->x() <= 0){
+            warpto.setX(this->width() - 3);
+        }else if(e->x() >= this->width() - 1){
+            warpto.setX(2);
         }
-        if(e->y() < 0){
-            warpto.setY(this->height());
-        }else if(e->y() > this->height()){
-            warpto.setY(0);
+        if(e->y() <= 0){
+            warpto.setY(this->height() - 3);
+        }else if(e->y() >= this->height() - 1){
+            warpto.setY(2);
         }
 
         if(warpto != e->pos()){
             QCursor::setPos(this->mapToGlobal(warpto));
         }
+
         this->lastmousepos = warpto;
 
         this->setCursor(Qt::SizeAllCursor);
