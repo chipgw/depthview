@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QTime>
 #include <QMimeData>
+#include <QUrl>
 
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow){
     ui->setupUi(this);

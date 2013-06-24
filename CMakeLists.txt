@@ -1,6 +1,8 @@
 project(DepthView)
 cmake_minimum_required(VERSION 2.8)
 
+option(DEPTHVIEW_USE_QT4 "use Qt 4 rather than Qt 5." OFF)
+
 set(DepthView_VERSION_MAJOR 1)
 set(DepthView_VERSION_MINOR 04)
 
@@ -24,18 +26,29 @@ set(RESOURCES "icons.qrc")
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc.in" "${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc" @ONLY)
 set(WINDRES "DepthView.rc")
 
-find_package(Qt5Widgets)
-include_directories(${Qt5Widgets_INCLUDE_DIRS})
-add_definitions(${Qt5Widgets_DEFINITIONS})
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
+if(DEPTHVIEW_USE_QT4)
+    find_package(Qt4 REQUIRED)
+    include(${QT_USE_FILE})
 
-qt5_wrap_ui(FORM_HEADERS ${FORMS})
-qt5_add_resources(RESOURCES_RCC ${RESOURCES})
+    qt4_add_resources(RESOURCES_RCC ${RESOURCES})
+    qt4_wrap_ui(FORM_HEADERS ${FORMS})
+else(DEPTHVIEW_USE_QT4)
+    find_package(Qt5Widgets)
+    include_directories(${Qt5Widgets_INCLUDE_DIRS})
+    add_definitions(${Qt5Widgets_DEFINITIONS})
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
+    qt5_wrap_ui(FORM_HEADERS ${FORMS})
+    qt5_add_resources(RESOURCES_RCC ${RESOURCES})
+endif(DEPTHVIEW_USE_QT4)
 
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${FORM_HEADERS} ${HEADERS} ${RESOURCES_RCC} ${WINDRES})
 
-qt5_use_modules(${PROJECT_NAME} Widgets)
+if(DEPTHVIEW_USE_QT4)
+    target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
+else(DEPTHVIEW_USE_QT4)
+    qt5_use_modules(${PROJECT_NAME} Widgets)
+endif(DEPTHVIEW_USE_QT4)
 
 # TODO - make this whole CPack thing a lot less messy...
 
