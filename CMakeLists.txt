@@ -81,7 +81,7 @@ fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/bin/DepthView${_extension}\" \"\${QT_PLU
 
 set(CPACK_PACKAGE_NAME "DepthView")
 set(CPACK_PACKAGE_VENDOR "chipgw")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Example showing CPack in action")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A basic viewer for stereoscopic 3D images.")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "DepthView")
 set(CPACK_PACKAGE_VERSION_MAJOR ${DepthView_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${DepthView_VERSION_MINOR})
