@@ -36,6 +36,7 @@ public:
 
     QImage imgL, imgR;
     bool swapLR;
+    bool enableContinuousPan;
     DrawMode mode;
 
     explicit ImageWidget(QWidget *parent = 0);

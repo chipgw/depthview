@@ -20,6 +20,9 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
     if(settings.contains(filedialogstartup)){
         ui->fileDialogStartupCheckBox->setChecked(settings.value(filedialogstartup).toBool());
     }
+    if(settings.contains(continuouspan)){
+        ui->enableContinuousPanCheckBox->setChecked(settings.value(continuouspan).toBool());
+    }
 
     ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
 }
@@ -36,6 +39,7 @@ void SettingsWindow::accept(){
     settings.setValue(showmenubar, ui->showMenuBarCheckBox->isChecked());
     settings.setValue(filedialogstartup, ui->fileDialogStartupCheckBox->isChecked());
     settings.setValue(disabledragdrop, ui->disableDragDropCheckBox->isChecked());
+    settings.setValue(continuouspan, ui->enableContinuousPanCheckBox->isChecked());
     QDialog::accept();
 }
 
@@ -52,6 +56,7 @@ void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
             ui->fileDialogStartupCheckBox->setChecked(true);
             ui->disableDragDropCheckBox->setChecked(false);
             ui->startupDirectoryLineEdit->setText("");
+            ui->enableContinuousPanCheckBox->setChecked(true);
         }
     }
 }
@@ -70,3 +75,4 @@ const QString SettingsWindow::startupdirectory  = "startupdirectory";
 const QString SettingsWindow::showmenubar       = "showmenubar";
 const QString SettingsWindow::filedialogstartup = "filedialogstartup";
 const QString SettingsWindow::disabledragdrop   = "disabledragdrop";
+const QString SettingsWindow::continuouspan     = "continuouspan";

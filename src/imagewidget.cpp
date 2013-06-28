@@ -3,7 +3,7 @@
 #include <QPainter>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
-    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this) {
+    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), enableContinuousPan(true) {
 
     this->setMouseTracking(true);
 
@@ -63,24 +63,28 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
         vBar.setValue(vBar.value() + lastmousepos.y() - e->y());
         hBar.setValue(hBar.value() + lastmousepos.x() - e->x());
 
-        QPoint warpto = e->pos();
+        if(enableContinuousPan){
+            QPoint warpto = e->pos();
 
-        if(e->x() <= 0){
-            warpto.setX(this->width() - 3);
-        }else if(e->x() >= this->width() - 1){
-            warpto.setX(2);
-        }
-        if(e->y() <= 0){
-            warpto.setY(this->height() - 3);
-        }else if(e->y() >= this->height() - 1){
-            warpto.setY(2);
-        }
+            if(e->x() <= 0){
+                warpto.setX(this->width() - 3);
+            }else if(e->x() >= this->width() - 1){
+                warpto.setX(2);
+            }
+            if(e->y() <= 0){
+                warpto.setY(this->height() - 3);
+            }else if(e->y() >= this->height() - 1){
+                warpto.setY(2);
+            }
 
-        if(warpto != e->pos()){
-            QCursor::setPos(this->mapToGlobal(warpto));
-        }
+            if(warpto != e->pos()){
+                QCursor::setPos(this->mapToGlobal(warpto));
+            }
 
-        this->lastmousepos = warpto;
+            this->lastmousepos = warpto;
+        }else{
+            this->lastmousepos = e->pos();
+        }
 
         this->setCursor(Qt::SizeAllCursor);
     }else{

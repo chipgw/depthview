@@ -339,6 +339,11 @@ void DepthViewWindow::loadSettings(){
     }else{
         setAcceptDrops(true);
     }
+    if(settings.contains(SettingsWindow::continuouspan)){
+        ui->imageWidget->enableContinuousPan = settings.value(SettingsWindow::continuouspan).toBool();
+    }else{
+        ui->imageWidget->enableContinuousPan = true;
+    }
     if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && !settings.value(SettingsWindow::startupdirectory).toString().isEmpty()){
         QDir::setCurrent(settings.value(SettingsWindow::startupdirectory).toString());
     }
