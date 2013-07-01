@@ -1,10 +1,6 @@
 #include "renderers.h"
-#include <QTime>
-#include <QDebug>
 
 QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, bool mirrorL, bool mirrorR){
-    QTime starttime = QTime::currentTime();
-
     if(finalwidth <= 0 || finalheight <= 0){
         finalwidth = imgL.width();
         finalheight = imgL.height() + imgR.height();
@@ -75,8 +71,6 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
             }
         }
     }
-
-    qDebug() << "Draw time: " << starttime.msecsTo(QTime::currentTime()) << "ms";
 
     return final;
 }

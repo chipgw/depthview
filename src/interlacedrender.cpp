@@ -1,11 +1,7 @@
 #include "renderers.h"
-#include <QTime>
 #include <QWidget>
-#include <QDebug>
 
 QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, bool horizontal, QWidget *parent){
-    QTime starttime = QTime::currentTime();
-
     bool first = 1;
     if(parent){
         if(horizontal){
@@ -85,8 +81,6 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
             }
         }
     }
-
-    qDebug() << "Draw time: " << starttime.msecsTo(QTime::currentTime()) << "ms";
 
     return final;
 }

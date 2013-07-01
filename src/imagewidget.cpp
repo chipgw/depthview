@@ -1,6 +1,8 @@
 #include "imagewidget.h"
 #include <QResizeEvent>
 #include <QPainter>
+#include <QTime>
+#include <QDebug>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
     mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), enableContinuousPan(true) {
@@ -40,11 +42,15 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         painter.setFont(font);
         painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("No Image Loaded"));
     }else{
+        QTime starttime = QTime::currentTime();
+
         if(swapLR){
             painter.drawImage(0 ,0, draw(imgR, imgL));
         }else{
             painter.drawImage(0, 0, draw(imgL, imgR));
         }
+
+        qDebug() << "Draw time: " << starttime.msecsTo(QTime::currentTime()) << "ms";
     }
 }
 

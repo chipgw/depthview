@@ -1,11 +1,7 @@
 #include "renderers.h"
-#include <QTime>
 #include <QWidget>
-#include <QDebug>
 
 QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, QWidget *parent){
-    QTime starttime = QTime::currentTime();
-
     if(zoom <= 0.0f){
         zoom = qMin(float(finalwidth) / float(imgL.width()), float(finalheight) / float(imgL.height()));
     }
@@ -44,8 +40,6 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
             }
         }
     }
-
-    qDebug() << "Draw time: " << starttime.msecsTo(QTime::currentTime()) << "ms";
 
     return final;
 }

@@ -1,10 +1,6 @@
 #include "renderers.h"
-#include <QTime>
-#include <QDebug>
 
 QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, float colormult, QRgb colorL, QRgb colorR){
-    QTime starttime = QTime::currentTime();
-
     if(finalwidth <= 0 || finalheight <= 0){
         finalwidth = imgL.width();
         finalheight = imgL.height();
@@ -60,8 +56,6 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, i
             }
         }
     }
-
-    qDebug() << "Draw time: " << starttime.msecsTo(QTime::currentTime()) << "ms";
 
     return final;
 }
