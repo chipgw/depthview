@@ -32,14 +32,14 @@ SettingsWindow::~SettingsWindow(){
 }
 
 void SettingsWindow::accept(){
-    settings.setValue(defaultrender, ui->defaultRendererComboBox->currentText());
-    settings.setValue(startfullscreen, ui->startFullscreenCheckBox->isChecked());
-    settings.setValue(swapLR, ui->swapLeftRightCheckBox->isChecked());
+    settings.setValue(defaultrender,    ui->defaultRendererComboBox->currentText());
+    settings.setValue(startfullscreen,  ui->startFullscreenCheckBox->isChecked());
+    settings.setValue(swapLR,           ui->swapLeftRightCheckBox->isChecked());
     settings.setValue(startupdirectory, ui->startupDirectoryLineEdit->text());
-    settings.setValue(showmenubar, ui->showMenuBarCheckBox->isChecked());
-    settings.setValue(filedialogstartup, ui->fileDialogStartupCheckBox->isChecked());
-    settings.setValue(disabledragdrop, ui->disableDragDropCheckBox->isChecked());
-    settings.setValue(continuouspan, ui->enableContinuousPanCheckBox->isChecked());
+    settings.setValue(showmenubar,      ui->showMenuBarCheckBox->isChecked());
+    settings.setValue(filedialogstartup,ui->fileDialogStartupCheckBox->isChecked());
+    settings.setValue(disabledragdrop,  ui->disableDragDropCheckBox->isChecked());
+    settings.setValue(continuouspan,    ui->enableContinuousPanCheckBox->isChecked());
     QDialog::accept();
 }
 
@@ -63,7 +63,7 @@ void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
 
 void SettingsWindow::on_startupDirectoryBrowsePushButton_clicked(){
     QString directory = QFileDialog::getExistingDirectory(this, tr("Choose Directory"), ui->startupDirectoryLineEdit->text());
-    if(directory != ""){
+    if(!directory.isEmpty()){
         ui->startupDirectoryLineEdit->setText(directory);
     }
 }
