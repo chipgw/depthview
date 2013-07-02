@@ -36,6 +36,7 @@ public:
 
     QImage imgL, imgR;
     bool swapLR;
+    bool showScrollbars;
     bool enableContinuousPan;
     DrawMode mode;
 
@@ -51,6 +52,7 @@ public slots:
     void hideCursor();
     void zoomIn();
     void zoomOut();
+    void recalculatescroolmax();
 
 signals:
     void doubleClicked();
@@ -62,7 +64,6 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void wheelEvent(QWheelEvent *e);
-    void recalculatescroolmax();
 };
 
 #endif // IMAGEWIDGET_H

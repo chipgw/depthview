@@ -5,7 +5,7 @@
 #include <QDebug>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
-    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), enableContinuousPan(true) {
+    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), enableContinuousPan(true), showScrollbars(true) {
 
     this->setMouseTracking(true);
 
@@ -127,8 +127,13 @@ void ImageWidget::recalculatescroolmax(){
     vBar.setMaximum( vmax);
     vBar.setMinimum(-vmax);
 
-    hBar.setVisible(hmax != 0);
-    vBar.setVisible(vmax != 0);
+    if(showScrollbars){
+        hBar.setVisible(hmax != 0);
+        vBar.setVisible(vmax != 0);
+    }else{
+        hBar.setVisible(false);
+        vBar.setVisible(false);
+    }
 }
 
 void ImageWidget::setZoom(float val){

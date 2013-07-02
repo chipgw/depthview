@@ -117,6 +117,7 @@
     <addaction name="actionFullscreen"/>
     <addaction name="menuZoom"/>
     <addaction name="actionSwap_Left_Right"/>
+    <addaction name="actionShow_Scrollbars"/>
    </widget>
    <widget class="QMenu" name="menuImage">
     <property name="title">
@@ -438,6 +439,17 @@
   <action name="actionTopBottomMirrorBoth">
    <property name="text">
     <string>Mirror Both</string>
+   </property>
+  </action>
+  <action name="actionShow_Scrollbars">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Scrollbars</string>
    </property>
   </action>
  </widget>

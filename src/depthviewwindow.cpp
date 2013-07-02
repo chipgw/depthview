@@ -292,6 +292,11 @@ void DepthViewWindow::on_actionSwap_Left_Right_toggled(bool val){
     ui->imageWidget->repaint();
 }
 
+void DepthViewWindow::on_actionShow_Scrollbars_toggled(bool val){
+    ui->imageWidget->showScrollbars = val;
+    ui->imageWidget->recalculatescroolmax();
+}
+
 void DepthViewWindow::on_actionAbout_triggered(){
     QMessageBox::about(this, tr("About DepthView"),
                        tr("<html><head/><body>"
