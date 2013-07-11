@@ -349,6 +349,11 @@ void DepthViewWindow::loadSettings(){
     }else{
         ui->imageWidget->enableContinuousPan = true;
     }
+    if(settings.contains(SettingsWindow::showscrollbars)){
+        ui->actionShow_Scrollbars->setChecked(settings.value(SettingsWindow::showscrollbars).toBool());
+    }else{
+        ui->actionShow_Scrollbars->setChecked(true);
+    }
     if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && !settings.value(SettingsWindow::startupdirectory).toString().isEmpty()){
         QDir::setCurrent(settings.value(SettingsWindow::startupdirectory).toString());
     }

@@ -179,6 +179,20 @@
        </property>
       </widget>
      </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="showScrollbarsLabel">
+       <property name="text">
+        <string>Show Scrollbars</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QCheckBox" name="showScrollbarsCheckBox">
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

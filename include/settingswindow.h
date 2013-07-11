@@ -25,6 +25,7 @@ public:
     const static QString filedialogstartup;
     const static QString disabledragdrop;
     const static QString continuouspan;
+    const static QString showscrollbars;
 
 private slots:
     void accept();
