@@ -11,7 +11,13 @@
 #include <QMimeData>
 #include <QUrl>
 
-DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow){
+DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow),
+#ifdef DEPTHVIEW_PORTABLE
+    settings(QApplication::applicationDirPath() + "/DepthView.conf", QSettings::IniFormat)
+#else
+    settings()
+#endif
+{
     ui->setupUi(this);
     ui->imageWidget->addActions(ui->menubar->actions());
     ui->imageWidget->setContextMenuPolicy(Qt::ActionsContextMenu);

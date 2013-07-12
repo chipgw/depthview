@@ -2,6 +2,7 @@ project(DepthView)
 cmake_minimum_required(VERSION 2.8)
 
 option(DEPTHVIEW_USE_QT4 "use Qt 4 rather than Qt 5." OFF)
+option(DEPTHVIEW_PORTABLE "build a portable version of DepthView (i.e. settings are saved in the application directory)" OFF)
 
 set(DepthView_VERSION_MAJOR 1)
 set(DepthView_VERSION_MINOR 04)
@@ -25,6 +26,10 @@ set(RESOURCES "icons.qrc")
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc.in" "${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc" @ONLY)
 set(WINDRES "DepthView.rc")
+
+if(DEPTHVIEW_PORTABLE)
+    add_definitions(-DDEPTHVIEW_PORTABLE)
+endif(DEPTHVIEW_PORTABLE)
 
 if(DEPTHVIEW_USE_QT4)
     find_package(Qt4 REQUIRED)
