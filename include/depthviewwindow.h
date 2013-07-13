@@ -42,7 +42,6 @@ public slots:
 
 private slots:
     void on_actionFullscreen_toggled(bool val);
-    void on_actionShowMenuBar_toggled(bool val);
     void on_actionSaveAs_triggered();
     void on_actionOptions_triggered();
     void on_actionAbout_triggered();

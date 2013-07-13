@@ -27,6 +27,8 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->actionZoomIn,  SIGNAL(triggered()), ui->imageWidget, SLOT(zoomIn()));
     connect(ui->actionZoomOut, SIGNAL(triggered()), ui->imageWidget, SLOT(zoomOut()));
 
+    connect(ui->actionShowMenuBar, SIGNAL(toggled(bool)), ui->menubar, SLOT(setVisible(bool)));
+
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(showLoadImageDialog()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
 
@@ -138,10 +140,6 @@ void DepthViewWindow::on_actionSingleLeft_triggered(){
 void DepthViewWindow::on_actionSingleRight_triggered(){
     ui->imageWidget->mode = ImageWidget::MonoRight;
     ui->imageWidget->repaint();
-}
-
-void DepthViewWindow::on_actionShowMenuBar_toggled(bool val){
-    ui->menubar->setVisible(val);
 }
 
 void DepthViewWindow::on_actionFullscreen_toggled(bool val){
