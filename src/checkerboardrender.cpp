@@ -23,7 +23,7 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
             lineL = (QRgb*)imgL.constScanLine(cy);
             lineR = (QRgb*)imgR.constScanLine(cy);
             for(int x = 0; x < final.width(); x++){
-                int cx = ( x - panX) / zoom;
+                int cx = (x - panX) / zoom;
                 if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
                     if((pos.x() + x) % 2 == (pos.y() + y) % 2){
                         line[x] = lineR[cx];

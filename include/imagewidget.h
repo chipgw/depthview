@@ -43,7 +43,6 @@ public:
     explicit ImageWidget(QWidget *parent = 0);
     bool loadStereoImage(const QString &filename);
     void setZoom(float val);
-    float getZoom();
     void addZoom(float amount);
 
     QImage draw(const QImage &L, const QImage &R);
