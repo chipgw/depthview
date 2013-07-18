@@ -7,12 +7,15 @@
 
 class ImageWidget : public QWidget {
     Q_OBJECT
+
+protected:
     QScrollBar hBar;
     QScrollBar vBar;
     QPoint lastmousepos;
     float zoom;
 
     QTimer mouseTimer;
+
 public:
     enum DrawMode{
         AnglaphFull,
@@ -45,8 +48,6 @@ public:
     void setZoom(float val);
     void addZoom(float amount);
 
-    QImage draw(const QImage &L, const QImage &R);
-
 public slots:
     void hideCursor();
     void zoomIn();
@@ -57,6 +58,8 @@ signals:
     void doubleClicked();
 
 protected:
+    QImage draw(const QImage &L, const QImage &R);
+
     void resizeEvent(QResizeEvent * e);
     void paintEvent(QPaintEvent *e);
     void mouseMoveEvent(QMouseEvent *e);

@@ -157,8 +157,7 @@ void ImageWidget::addZoom(float amount){
     }
     float zoomorig = zoom;
     zoom += amount * zoom;
-    zoom = qMax(zoom, 0.2f);
-    zoom = qMin(zoom, 4.0f);
+    zoom = qBound(0.2f, zoom, 4.0f);
     this->recalculatescroolmax();
     vBar.setValue(vBar.value() * zoom / zoomorig);
     hBar.setValue(hBar.value() * zoom / zoomorig);
