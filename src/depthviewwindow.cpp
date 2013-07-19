@@ -3,6 +3,7 @@
 #include "exportdialog.h"
 #include "settingswindow.h"
 #include "version.h"
+#include "renderers.h"
 #include <QKeyEvent>
 #include <QFileDialog>
 #include <QDebug>

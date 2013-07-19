@@ -1,8 +1,10 @@
 #include "imagewidget.h"
+#include "renderers.h"
 #include <QResizeEvent>
 #include <QPainter>
 #include <QTime>
 #include <QDebug>
+#include <QScrollArea>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
     mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), enableContinuousPan(true), showScrollbars(true) {
@@ -18,11 +20,11 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), 
 }
 
 void ImageWidget::resizeEvent(QResizeEvent *e){
-    hBar.resize(e->size().width() - 15, 15);
-    hBar.move(0, e->size().height() - 15);
+    hBar.resize(e->size().width() - vBar.sizeHint().width(), hBar.sizeHint().height());
+    hBar.move(0, e->size().height() - hBar.sizeHint().height());
 
-    vBar.resize(15, e->size().height() - 15);
-    vBar.move(e->size().width() - 15,0);
+    vBar.resize(vBar.sizeHint().width(), e->size().height() - hBar.sizeHint().height());
+    vBar.move(e->size().width() - vBar.sizeHint().width(), 0);
 
     this->recalculatescroolmax();
 }
@@ -47,7 +49,7 @@ void ImageWidget::paintEvent(QPaintEvent *e){
             painter.drawImage(0, 0, draw(imgL, imgR));
         }
 
-        qDebug() << "Draw time: " << starttime.msecsTo(QTime::currentTime()) << "ms";
+        qDebug() << "Draw time:" << starttime.msecsTo(QTime::currentTime()) << "ms";
     }
 }
 

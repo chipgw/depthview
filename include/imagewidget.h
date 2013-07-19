@@ -1,7 +1,6 @@
 #ifndef IMAGEWIDGET_H
 #define IMAGEWIDGET_H
 
-#include "renderers.h"
 #include <QScrollBar>
 #include <QTimer>
 
