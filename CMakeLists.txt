@@ -5,7 +5,7 @@ option(DEPTHVIEW_USE_QT4 "use Qt 4 rather than Qt 5." OFF)
 option(DEPTHVIEW_PORTABLE "build a portable version of DepthView (i.e. settings are saved in the application directory)" OFF)
 
 set(DepthView_VERSION_MAJOR 1)
-set(DepthView_VERSION_MINOR 04)
+set(DepthView_VERSION_MINOR 05)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
