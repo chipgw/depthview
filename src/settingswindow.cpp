@@ -27,6 +27,8 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
         ui->showScrollbarsCheckBox->setChecked(settings.value(showscrollbars).toBool());
     }
 
+    connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(on_restoreDefaultsButton_clicked()));
+
     ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
 }
 
@@ -47,22 +49,20 @@ void SettingsWindow::accept(){
     QDialog::accept();
 }
 
-void SettingsWindow::on_buttonBox_clicked(QAbstractButton *button){
-    if(button->text() == "Restore Defaults"){
-        if(QMessageBox::warning(this, tr("Are You Sure?"), tr("Are you sure you wish to reset to default settings?"),
-                                QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
-            settings.clear();
+void SettingsWindow::on_restoreDefaultsButton_clicked(){
+    if(QMessageBox::warning(this, tr("Are You Sure?"), tr("Are you sure you wish to reset to default settings?"),
+                            QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
+        settings.clear();
 
-            ui->defaultRendererComboBox->setCurrentIndex(-1);
-            ui->startFullscreenCheckBox->setChecked(false);
-            ui->swapLeftRightCheckBox->setChecked(false);
-            ui->showMenuBarCheckBox->setChecked(true);
-            ui->fileDialogStartupCheckBox->setChecked(true);
-            ui->disableDragDropCheckBox->setChecked(false);
-            ui->startupDirectoryLineEdit->setText("");
-            ui->enableContinuousPanCheckBox->setChecked(true);
-            ui->showScrollbarsCheckBox->setChecked(true);
-        }
+        ui->defaultRendererComboBox->setCurrentIndex(-1);
+        ui->startFullscreenCheckBox->setChecked(false);
+        ui->swapLeftRightCheckBox->setChecked(false);
+        ui->showMenuBarCheckBox->setChecked(true);
+        ui->fileDialogStartupCheckBox->setChecked(true);
+        ui->disableDragDropCheckBox->setChecked(false);
+        ui->startupDirectoryLineEdit->setText("");
+        ui->enableContinuousPanCheckBox->setChecked(true);
+        ui->showScrollbarsCheckBox->setChecked(true);
     }
 }
 

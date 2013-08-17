@@ -30,7 +30,7 @@ public:
 private slots:
     void accept();
 
-    void on_buttonBox_clicked(QAbstractButton *button);
+    void on_restoreDefaultsButton_clicked();
 
     void on_startupDirectoryBrowsePushButton_clicked();
 

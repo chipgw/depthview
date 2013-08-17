@@ -4,7 +4,6 @@
 #include <QPainter>
 #include <QTime>
 #include <QDebug>
-#include <QScrollArea>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
     mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), enableContinuousPan(true), showScrollbars(true) {
