@@ -1,7 +1,7 @@
 #include "renderers.h"
 #include <QWidget>
 
-QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, bool horizontal, QWidget *parent){
+QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, float zoom, bool horizontal, QWidget *parent){
     bool first = 1;
     if(parent){
         if(horizontal){
@@ -10,19 +10,18 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
             first = parent->pos().y() % 2;
         }
     }
-    if(finalwidth <= 0 || finalheight <= 0){
-        finalwidth  = imgL.width();
-        finalheight = imgL.height();
+    if(finalSize.isEmpty()){
+        finalSize = imgL.size();
     }
 
     if(zoom <= 0.0f){
-        zoom = qMin(float(finalwidth) / float(imgL.width()), float(finalheight) / float(imgL.height()));
+        zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.height()) / float(imgL.height()));
     }
 
-    panX += (finalwidth  * 0.5f - imgL.width()  * zoom * 0.5f);
-    panY += (finalheight * 0.5f - imgL.height() * zoom * 0.5f);
+    panX += (finalSize.width()  * 0.5f - imgL.width()  * zoom * 0.5f);
+    panY += (finalSize.height() * 0.5f - imgL.height() * zoom * 0.5f);
 
-    QImage final(finalwidth, finalheight, QImage::Format_RGB32);
+    QImage final(finalSize, QImage::Format_RGB32);
 
     QRgb *line;
 

@@ -172,52 +172,52 @@ void ImageWidget::hideCursor(){
 QImage ImageWidget::draw(const QImage &L, const QImage &R){
     switch(mode){
     case AnglaphFull:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, 1.0f);
+        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, 1.0f);
         break;
     case AnglaphHalf:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, 0.5f);
+        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, 0.5f);
         break;
     case AnglaphGreyscale:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, 0.0f);
+        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, 0.0f);
         break;
     case SidebySide:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom);
+        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom);
         break;
     case SidebySideMLeft:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, true);
+        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true);
         break;
     case SidebySideMRight:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, false, true);
+        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, false, true);
         break;
     case SidebySideMBoth:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, true, true);
+        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true, true);
         break;
     case TopBottom:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom);
+        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom);
         break;
     case TopBottomMTop:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, true);
+        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true);
         break;
     case TopBottomMBottom:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, false, true);
+        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, false, true);
         break;
     case TopBottomMBoth:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, true, true);
+        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true, true);
         break;
     case InterlacedHorizontal:
-        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, true, this);
+        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true, this);
         break;
     case InterlacedVertical:
-        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, false, this);
+        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, false, this);
         break;
     case Checkerboard:
-        return drawCheckerboard(L, R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom, this);
+        return drawCheckerboard(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, this);
         break;
     case MonoLeft:
-        return drawSingle(L, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom);
+        return drawSingle(L, -hBar.value(), -vBar.value(), this->size(), this->zoom);
         break;
     case MonoRight:
-        return drawSingle(R, -hBar.value(), -vBar.value(), this->width(), this->height(), this->zoom);
+        return drawSingle(R, -hBar.value(), -vBar.value(), this->size(), this->zoom);
         break;
     }
     return QImage();

@@ -234,13 +234,13 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
 
         if(dialog.exec() == QDialog::Accepted){
             if(dialog.anglaph){
-                QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 1.0f, dialog.colormult);
+                QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f, dialog.colormult);
 
                 if(!out.isNull()){
                     out.save(filename, NULL, dialog.quality);
                 }
             }else if(dialog.sidebyside){
-                QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, 0, 0, 1.0f, dialog.mirrorL, dialog.mirrorR);
+                QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f, dialog.mirrorL, dialog.mirrorR);
 
                 if(!out.isNull()){
                     out.save(filename, NULL, dialog.quality);

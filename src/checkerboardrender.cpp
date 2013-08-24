@@ -1,16 +1,16 @@
 #include "renderers.h"
 #include <QWidget>
 
-QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int panY, int finalwidth, int finalheight, float zoom, QWidget *parent){
+QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, float zoom, QWidget *parent){
     if(zoom <= 0.0f){
-        zoom = qMin(float(finalwidth) / float(imgL.width()), float(finalheight) / float(imgL.height()));
+        zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.width()) / float(imgL.height()));
     }
     QPoint pos = parent->mapToGlobal(QPoint());
 
-    panX += (finalwidth  * 0.5f - imgL.width()  * zoom * 0.5f);
-    panY += (finalheight * 0.5f - imgL.height() * zoom * 0.5f);
+    panX += (finalSize.width()  * 0.5f - imgL.width()  * zoom * 0.5f);
+    panY += (finalSize.height() * 0.5f - imgL.height() * zoom * 0.5f);
 
-    QImage final(finalwidth, finalheight, QImage::Format_RGB32);
+    QImage final(finalSize, QImage::Format_RGB32);
 
     QRgb *line;
     QRgb *lineL;
