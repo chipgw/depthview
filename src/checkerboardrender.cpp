@@ -7,8 +7,8 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
     }
     QPoint pos = parent->mapToGlobal(QPoint());
 
-    panX += (finalSize.width()  * 0.5f - imgL.width()  * zoom * 0.5f);
-    panY += (finalSize.height() * 0.5f - imgL.height() * zoom * 0.5f);
+    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5f;
+    panY += (finalSize.height() - imgL.height() * zoom) * 0.5f;
 
     QImage final(finalSize, QImage::Format_RGB32);
 

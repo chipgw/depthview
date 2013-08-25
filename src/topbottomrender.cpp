@@ -10,27 +10,31 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
         zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.height()) / float(imgL.height()) * 0.5f);
     }
 
+    panX += (finalSize.width() - imgL.width() * zoom) * 0.5f;
+    panY += finalSize.height() * 0.5f - imgL.height() * zoom;
     panY *= 0.5f;
-    panX += finalSize.width()  * 0.5f  - imgL.width()  * zoom * 0.5f;
-    panY += finalSize.height() * 0.25f - imgL.height() * zoom * 0.5f;
 
     QImage final(finalSize, QImage::Format_RGB32);
 
     QRgb *lineOut;
     QRgb *lineIn;
 
+    int rightOffset;
+    int halfHeight = finalSize.height() / 2;
+    if(mirrorR){
+        rightOffset = finalSize.height();
+    }else{
+        rightOffset = -halfHeight;
+    }
+
     for(int y = 0; y < finalSize.height(); y++){
         lineOut = (QRgb*)final.scanLine(y);
-        int cy = y;
-
-        if(y > finalSize.height() / 2){
+        if(y > halfHeight){
+            int cy = y;
             if(mirrorR){
-                cy = (finalSize.height() * 0.5f) - cy;
-                cy += finalSize.height() / 2;
-            }else{
-                cy -= finalSize.height() / 2;
+                cy = -cy;
             }
-            cy = (cy - panY) / zoom;
+            cy = (rightOffset + cy - panY) / zoom;
 
             if(cy >= 0 && cy < imgR.height()){
                 lineIn = (QRgb*)imgR.constScanLine(cy);
@@ -45,10 +49,10 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
                     lineOut[x] = qRgb(0,0,0);
                 }
             }
-        }
-        else if(y < finalSize.height() / 2){
+        }else if(y < halfHeight){
+            int cy = y;
             if(mirrorL){
-                cy = (finalSize.height() * 0.5f) - cy;
+                cy = halfHeight - cy;
             }
             cy = (cy - panY) / zoom;
 

@@ -9,8 +9,8 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
         zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.height()) / float(imgL.height()));
     }
 
-    panX += (finalSize.width()  * 0.5f - imgL.width()  * zoom * 0.5f);
-    panY += (finalSize.height() * 0.5f - imgL.height() * zoom * 0.5f);
+    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5f;
+    panY += (finalSize.height() - imgL.height() * zoom) * 0.5f;
 
     QImage final(finalSize, QImage::Format_RGB32);
 
