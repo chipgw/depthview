@@ -229,6 +229,12 @@ void ImageWidget::mouseDoubleClickEvent(QMouseEvent *e){
     }
 }
 
+void ImageWidget::setRenderMode(DrawMode m){
+    mode = m;
+    recalculatescroolmax();
+    repaint();
+}
+
 QMap<QString, ImageWidget::DrawMode> initDrawModeList(){
     QMap<QString, ImageWidget::DrawMode> list;
     list.insert("Anglaph, Full Color",          ImageWidget::AnglaphFull);

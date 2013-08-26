@@ -4,16 +4,9 @@
 #include <QScrollBar>
 #include <QTimer>
 
+
 class ImageWidget : public QWidget {
     Q_OBJECT
-
-protected:
-    QScrollBar hBar;
-    QScrollBar vBar;
-    QPoint lastmousepos;
-    float zoom;
-
-    QTimer mouseTimer;
 
 public:
     enum DrawMode{
@@ -34,18 +27,31 @@ public:
         MonoLeft,
         MonoRight
     };
+
+protected:
+    QScrollBar hBar;
+    QScrollBar vBar;
+    QPoint lastmousepos;
+    float zoom;
+
+    QTimer mouseTimer;
+
+    DrawMode mode;
+
+public:
     const static QMap<QString, DrawMode> drawModeNames;
 
     QImage imgL, imgR;
     bool swapLR;
     bool showScrollbars;
     bool enableContinuousPan;
-    DrawMode mode;
 
     explicit ImageWidget(QWidget *parent = 0);
     bool loadStereoImage(const QString &filename);
     void setZoom(float val);
     void addZoom(float amount);
+
+    void setRenderMode(DrawMode m);
 
 public slots:
     void hideCursor();

@@ -64,83 +64,67 @@ bool DepthViewWindow::showLoadImageDialog(){
 }
 
 void DepthViewWindow::on_actionAnglaphFullColor_triggered(){
-    ui->imageWidget->mode = ImageWidget::AnglaphFull;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::AnglaphFull);
 }
 
 void DepthViewWindow::on_actionAnglaphHalfColor_triggered(){
-    ui->imageWidget->mode = ImageWidget::AnglaphHalf;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::AnglaphHalf);
 }
 
 void DepthViewWindow::on_actionAnglaphGreyscale_triggered(){
-    ui->imageWidget->mode = ImageWidget::AnglaphGreyscale;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::AnglaphGreyscale);
 }
 
 void DepthViewWindow::on_actionSideBySideNoMirror_triggered(){
-    ui->imageWidget->mode = ImageWidget::SidebySide;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::SidebySide);
 }
 
 void DepthViewWindow::on_actionSideBySideMirrorLeft_triggered(){
-    ui->imageWidget->mode = ImageWidget::SidebySideMLeft;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::SidebySideMLeft);
 }
 
 void DepthViewWindow::on_actionSideBySideMirrorRight_triggered(){
-    ui->imageWidget->mode = ImageWidget::SidebySideMRight;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::SidebySideMRight);
 }
 
 void DepthViewWindow::on_actionSideBySideMirrorBoth_triggered(){
-    ui->imageWidget->mode = ImageWidget::SidebySideMBoth;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::SidebySideMBoth);
 }
 
 void DepthViewWindow::on_actionTopBottomNoMirror_triggered(){
-    ui->imageWidget->mode = ImageWidget::TopBottom;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::TopBottom);
 }
 
 void DepthViewWindow::on_actionTopBottomMirrorTop_triggered(){
-    ui->imageWidget->mode = ImageWidget::TopBottomMTop;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::TopBottomMTop);
 }
 
 void DepthViewWindow::on_actionTopBottomMirrorBottom_triggered(){
-    ui->imageWidget->mode = ImageWidget::TopBottomMBottom;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::TopBottomMBottom);
 }
 
 void DepthViewWindow::on_actionTopBottomMirrorBoth_triggered(){
-    ui->imageWidget->mode = ImageWidget::TopBottomMBoth;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::TopBottomMBoth);
 }
 
 void DepthViewWindow::on_actionInterlacedHorizontal_triggered(){
-    ui->imageWidget->mode = ImageWidget::InterlacedHorizontal;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::InterlacedHorizontal);
 }
 
 void DepthViewWindow::on_actionInterlacedVertical_triggered(){
-    ui->imageWidget->mode = ImageWidget::InterlacedVertical;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::InterlacedVertical);
 }
 
 void DepthViewWindow::on_actionCheckerboard_triggered(){
-    ui->imageWidget->mode = ImageWidget::Checkerboard;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::Checkerboard);
 }
 
 void DepthViewWindow::on_actionSingleLeft_triggered(){
-    ui->imageWidget->mode = ImageWidget::MonoLeft;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::MonoLeft);
 }
 
 void DepthViewWindow::on_actionSingleRight_triggered(){
-    ui->imageWidget->mode = ImageWidget::MonoRight;
-    ui->imageWidget->repaint();
+    ui->imageWidget->setRenderMode(ImageWidget::MonoRight);
 }
 
 void DepthViewWindow::on_actionFullscreen_toggled(bool val){
@@ -316,10 +300,9 @@ void DepthViewWindow::on_actionAboutQt_triggered(){
     QMessageBox::aboutQt(this);
 }
 
-bool DepthViewWindow::setRendererFromString(const QString &renderer){
+bool DepthViewWindow::setRenderModeFromString(const QString &renderer){
     if(ImageWidget::drawModeNames.contains(renderer)){
-        ui->imageWidget->mode = ImageWidget::drawModeNames.value(renderer);
-        ui->imageWidget->repaint();
+        ui->imageWidget->setRenderMode(ImageWidget::drawModeNames.value(renderer));
         return true;
     }
     return false;
@@ -327,7 +310,7 @@ bool DepthViewWindow::setRendererFromString(const QString &renderer){
 
 void DepthViewWindow::loadSettings(){
     if(settings.contains(SettingsWindow::defaultrender)){
-        setRendererFromString(settings.value(SettingsWindow::defaultrender).toString());
+        setRenderModeFromString(settings.value(SettingsWindow::defaultrender).toString());
     }
     if(settings.contains(SettingsWindow::startfullscreen)){
         ui->actionFullscreen->setChecked(settings.value(SettingsWindow::startfullscreen).toBool());
@@ -385,7 +368,7 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
         }else if(arg == "--renderer"){
             if(i.hasNext()){
                 const QString &renderer = i.next();
-                if(!setRendererFromString(renderer)){
+                if(!setRenderModeFromString(renderer)){
                     warning.append(tr("<p>Invalid renderer \"%1\" passed to \"--renderer\" argument!</p>").arg(renderer));
                 }
             }else{
