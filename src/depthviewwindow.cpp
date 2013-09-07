@@ -12,11 +12,9 @@
 #include <QMimeData>
 #include <QUrl>
 
-DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow),
+DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow)
 #ifdef DEPTHVIEW_PORTABLE
-    settings(QApplication::applicationDirPath() + "/DepthView.conf", QSettings::IniFormat)
-#else
-    settings()
+    , settings(QApplication::applicationDirPath() + "/DepthView.conf", QSettings::IniFormat)
 #endif
 {
     ui->setupUi(this);
