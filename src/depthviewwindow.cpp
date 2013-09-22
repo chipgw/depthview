@@ -287,7 +287,11 @@ void DepthViewWindow::on_actionShow_Scrollbars_toggled(bool val){
 void DepthViewWindow::on_actionAbout_triggered(){
     QMessageBox::about(this, tr("About DepthView"),
                        tr("<html><head/><body>"
-                          "<h1>DepthView %1 (%2)</h1>"
+                          "<h1>DepthView %1"
+                      #ifdef DEPTHVIEW_PORTABLE
+                          " Portable"
+                      #endif
+                          " (%2)</h1>"
                           "<p>DepthView is a basic application for viewing stereo 3D image files.</p>"
                           "<p>DepthView website: <a href=\"https://github.com/chipgw/depthview\">github.com/chipgw/depthview</a></p>"
                           "<p>Please report any bugs at: <a href=\"https://github.com/chipgw/depthview/issues\">github.com/chipgw/depthview/issues</a></p>"
