@@ -6,7 +6,7 @@
 #include <QDebug>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
-    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), enableContinuousPan(true), showScrollbars(true) {
+    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true) {
 
     this->setMouseTracking(true);
     this->recalculatescroolmax();
@@ -67,7 +67,7 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
         vBar.setValue(vBar.value() + lastmousepos.y() - e->y());
         hBar.setValue(hBar.value() + lastmousepos.x() - e->x());
 
-        if(enableContinuousPan){
+        if(continuousPan){
             QPoint warpto = e->pos();
 
             if(e->x() <= 0){
@@ -123,7 +123,7 @@ void ImageWidget::recalculatescroolmax(){
     int vmax = qMax(int(height * zoom - this->height()) / 2, 0);
     vBar.setRange(-vmax, vmax);
 
-    if(showScrollbars){
+    if(scrollbarsVisible){
         hBar.setVisible(hmax != 0);
         vBar.setVisible(vmax != 0);
     }else{
@@ -163,6 +163,20 @@ void ImageWidget::addZoom(float amount){
     vBar.setValue(vBar.value() * zoom / zoomorig);
     hBar.setValue(hBar.value() * zoom / zoomorig);
     this->repaint();
+}
+
+void ImageWidget::enableSwapLR(bool enable){
+    swapLR = enable;
+    repaint();
+}
+
+void ImageWidget::showScrollbars(bool show){
+    scrollbarsVisible = show;
+    recalculatescroolmax();
+}
+
+void ImageWidget::enableContinuousPan(bool enable){
+    continuousPan = enable;
 }
 
 void ImageWidget::hideCursor(){

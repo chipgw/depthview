@@ -33,6 +33,9 @@ protected:
     QScrollBar vBar;
     QPoint lastmousepos;
     float zoom;
+    bool swapLR;
+    bool scrollbarsVisible;
+    bool continuousPan;
 
     QTimer mouseTimer;
 
@@ -42,9 +45,6 @@ public:
     const static QMap<QString, DrawMode> drawModeNames;
 
     QImage imgL, imgR;
-    bool swapLR;
-    bool showScrollbars;
-    bool enableContinuousPan;
 
     explicit ImageWidget(QWidget *parent = 0);
     bool loadStereoImage(const QString &filename);
@@ -58,6 +58,10 @@ public slots:
     void zoomIn();
     void zoomOut();
     void recalculatescroolmax();
+
+    void enableSwapLR(bool enable);
+    void showScrollbars(bool show);
+    void enableContinuousPan(bool enable);
 
 signals:
     void doubleClicked();

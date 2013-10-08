@@ -46,8 +46,6 @@ private slots:
     void on_actionOptions_triggered();
     void on_actionAbout_triggered();
     void on_actionAboutQt_triggered();
-    void on_actionSwap_Left_Right_toggled(bool val);
-    void on_actionShow_Scrollbars_toggled(bool val);
 
     void on_actionFit_triggered();
     void on_actionzoom200_triggered();

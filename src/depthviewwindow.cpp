@@ -31,6 +31,9 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(showLoadImageDialog()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
 
+    connect(ui->actionSwap_Left_Right, SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableSwapLR(bool)));
+    connect(ui->actionShow_Scrollbars, SIGNAL(toggled(bool)), ui->imageWidget, SLOT(showScrollbars(bool)));
+
     this->loadSettings();
 }
 
@@ -274,25 +277,13 @@ void DepthViewWindow::on_actionOptions_triggered(){
     }
 }
 
-void DepthViewWindow::on_actionSwap_Left_Right_toggled(bool val){
-    ui->imageWidget->swapLR = val;
-    ui->imageWidget->repaint();
-}
-
-void DepthViewWindow::on_actionShow_Scrollbars_toggled(bool val){
-    ui->imageWidget->showScrollbars = val;
-    ui->imageWidget->recalculatescroolmax();
-}
-
 void DepthViewWindow::on_actionAbout_triggered(){
     QMessageBox::about(this, tr("About DepthView"),
-                       tr("<html><head/><body>"
-                          "<h1>DepthView %1"
+                       tr("<html><head/><body><h1>DepthView %1"
                       #ifdef DEPTHVIEW_PORTABLE
                           " Portable"
                       #endif
-                          " (%2)</h1>"
-                          "<p>DepthView is a basic application for viewing stereo 3D image files.</p>"
+                          " (%2)</h1><p>DepthView is a basic application for viewing stereo 3D image files.</p>"
                           "<p>DepthView website: <a href=\"https://github.com/chipgw/depthview\">github.com/chipgw/depthview</a></p>"
                           "<p>Please report any bugs at: <a href=\"https://github.com/chipgw/depthview/issues\">github.com/chipgw/depthview/issues</a></p>"
                           "</body></html>").arg(version::getVersionString()).arg(version::git_revision.left(7)));
@@ -335,9 +326,9 @@ void DepthViewWindow::loadSettings(){
         setAcceptDrops(true);
     }
     if(settings.contains(SettingsWindow::continuouspan)){
-        ui->imageWidget->enableContinuousPan = settings.value(SettingsWindow::continuouspan).toBool();
+        ui->imageWidget->enableContinuousPan(settings.value(SettingsWindow::continuouspan).toBool());
     }else{
-        ui->imageWidget->enableContinuousPan = true;
+        ui->imageWidget->enableContinuousPan(true);
     }
     if(settings.contains(SettingsWindow::showscrollbars)){
         ui->actionShow_Scrollbars->setChecked(settings.value(SettingsWindow::showscrollbars).toBool());
