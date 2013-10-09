@@ -12,11 +12,13 @@
 #include <QMimeData>
 #include <QUrl>
 
-DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow)
+DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow), currentDir(QDir::current())
 #ifdef DEPTHVIEW_PORTABLE
     , settings(QApplication::applicationDirPath() + "/DepthView.conf", QSettings::IniFormat)
 #endif
 {
+    currentDir.setNameFilters(QStringList() << "*.jps" << "*.pns");
+
     ui->setupUi(this);
     ui->imageWidget->addActions(ui->menubar->actions());
     ui->imageWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
@@ -44,10 +46,19 @@ DepthViewWindow::~DepthViewWindow(){
 
 bool DepthViewWindow::loadImage(const QString &filename){
     QFileInfo info(filename);
-    if(info.exists() && (info.suffix().toLower() == "jps" || info.suffix().toLower() == "pns")){
-        QDir::setCurrent(info.path());
+
+    if(!info.exists()){
+        info.setFile(currentDir.filePath(filename));
+
+        if(!info.exists()){
+            return false;
+        }
+    }
+
+    if(info.suffix().toLower() == "jps" || info.suffix().toLower() == "pns"){
+        currentDir.cd(info.path());
         currentFile = info.fileName();
-        if(ui->imageWidget->loadStereoImage(currentFile)){
+        if(ui->imageWidget->loadStereoImage(info.filePath())){
             this->setWindowTitle(currentFile);
             ui->imageWidget->repaint();
             return true;
@@ -144,7 +155,7 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
 }
 
 void DepthViewWindow::on_actionNext_triggered(){
-    QStringList entryList = QDir::current().entryList(fileFilters);
+    QStringList entryList = currentDir.entryList();
     if(!entryList.empty()){
         int index = entryList.indexOf(currentFile) + 1;
         if(index < 0){
@@ -157,7 +168,7 @@ void DepthViewWindow::on_actionNext_triggered(){
 }
 
 void DepthViewWindow::on_actionPrevious_triggered(){
-    QStringList entryList = QDir::current().entryList(fileFilters);
+    QStringList entryList = currentDir.entryList();
     if(!entryList.empty()){
         int index = entryList.indexOf(currentFile) - 1;
         if(index < 0){
@@ -170,14 +181,14 @@ void DepthViewWindow::on_actionPrevious_triggered(){
 }
 
 void DepthViewWindow::on_actionFirst_triggered(){
-    QStringList entryList = QDir::current().entryList(fileFilters);
+    QStringList entryList = currentDir.entryList();
     if(!entryList.isEmpty()){
         loadImage(entryList[0]);
     }
 }
 
 void DepthViewWindow::on_actionLast_triggered(){
-    QStringList entryList = QDir::current().entryList(fileFilters);
+    QStringList entryList = currentDir.entryList();
     if(!entryList.isEmpty()){
         loadImage(entryList[entryList.count() - 1]);
     }
@@ -336,7 +347,7 @@ void DepthViewWindow::loadSettings(){
         ui->actionShow_Scrollbars->setChecked(true);
     }
     if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && !settings.value(SettingsWindow::startupdirectory).toString().isEmpty()){
-        QDir::setCurrent(settings.value(SettingsWindow::startupdirectory).toString());
+        currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
     }
 }
 
@@ -401,5 +412,3 @@ void DepthViewWindow::dropEvent(QDropEvent *event){
         }
     }
 }
-
-const QStringList DepthViewWindow::fileFilters = QStringList() << "*.jps" << "*.pns";

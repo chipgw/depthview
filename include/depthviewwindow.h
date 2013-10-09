@@ -4,6 +4,7 @@
 #include "imagewidget.h"
 #include <QMainWindow>
 #include <QSettings>
+#include <QDir>
 
 namespace Ui {
     class DepthViewWindow;
@@ -12,8 +13,7 @@ namespace Ui {
 class DepthViewWindow : public QMainWindow {
     Q_OBJECT
 public:
-    const static QStringList fileFilters;
-
+    QDir currentDir;
     QString currentFile;
     QSettings settings;
 
