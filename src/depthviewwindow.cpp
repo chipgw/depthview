@@ -55,7 +55,7 @@ bool DepthViewWindow::loadImage(const QString &filename){
         }
     }
 
-    if(info.suffix().toLower() == "jps" || info.suffix().toLower() == "pns"){
+    if(QDir::match(currentDir.nameFilters(), info.fileName())){
         currentDir.cd(info.path());
         currentFile = info.fileName();
         if(ui->imageWidget->loadStereoImage(info.filePath())){
@@ -210,57 +210,52 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 }
 
 void DepthViewWindow::on_actionSaveAs_triggered(){
+    if(ui->imageWidget->imgR.isNull() || ui->imageWidget->imgL.isNull()) return;
+
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "",
                                                     tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
 
-    if(filename.contains(".jps", Qt::CaseInsensitive) || filename.contains(".pns", Qt::CaseInsensitive)){
+    if(filename.isNull()) return;
+
+    if(filename.contains(".jps", Qt::CaseInsensitive)){
         QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR, 0, 0);
 
         if(!out.isNull()){
-            if(filename.contains(".jps", Qt::CaseInsensitive)){
-                out.save(filename, "JPG");
-            }
-            if(filename.contains(".pns", Qt::CaseInsensitive)){
-                out.save(filename, "PNG");
-            }
+            out.save(filename, "JPG");
         }
-    }
-    else if(!filename.isNull()){
+    }else if(filename.contains(".pns", Qt::CaseInsensitive)){
+        QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR, 0, 0);
+
+        if(!out.isNull()){
+            out.save(filename, "PNG");
+        }
+    }else{
         ExportDialog dialog(this);
 
-        if(dialog.exec() == QDialog::Accepted){
-            if(dialog.anglaph){
-                QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f, dialog.colormult);
+        if(dialog.exec() != QDialog::Accepted) return;
 
-                if(!out.isNull()){
-                    out.save(filename, NULL, dialog.quality);
-                }
-            }else if(dialog.sidebyside){
-                QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f, dialog.mirrorL, dialog.mirrorR);
+        if(dialog.anglaph){
+            QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f, dialog.colormult);
 
-                if(!out.isNull()){
-                    out.save(filename, NULL, dialog.quality);
-                }
-            }else{
-                if(dialog.saveL && dialog.saveR){
-                    if(!ui->imageWidget->imgL.isNull()){
-                        QString filenameL = filename;
-                        ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'), NULL, dialog.quality);
-                    }
-                    if(!ui->imageWidget->imgR.isNull()){
-                        QString filenameR = filename;
-                        ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'), NULL, dialog.quality);
-                    }
-                }else if(dialog.saveL){
-                    if(!ui->imageWidget->imgL.isNull()){
-                        ui->imageWidget->imgL.save(filename, NULL, dialog.quality);
-                    }
-                }else if(dialog.saveR){
-                    if(!ui->imageWidget->imgR.isNull()){
-                        ui->imageWidget->imgR.save(filename, NULL, dialog.quality);
-                    }
-                }
+            if(!out.isNull()){
+                out.save(filename, NULL, dialog.quality);
             }
+        }else if(dialog.sidebyside){
+            QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f, dialog.mirrorL, dialog.mirrorR);
+
+            if(!out.isNull()){
+                out.save(filename, NULL, dialog.quality);
+            }
+        }else if(dialog.saveL && dialog.saveR){
+            QString filenameL = filename;
+            ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'), NULL, dialog.quality);
+
+            QString filenameR = filename;
+            ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'), NULL, dialog.quality);
+        }else if(dialog.saveL){
+            ui->imageWidget->imgL.save(filename, NULL, dialog.quality);
+        }else if(dialog.saveR){
+            ui->imageWidget->imgR.save(filename, NULL, dialog.quality);
         }
     }
 }
@@ -395,7 +390,7 @@ void DepthViewWindow::dragEnterEvent(QDragEnterEvent *event){
     if(event->mimeData()->hasUrls()){
         foreach(QUrl url, event->mimeData()->urls()){
             QFileInfo info(url.toLocalFile());
-            if(info.exists() && (info.suffix().toLower() == "jps" || info.suffix().toLower() == "pns")){
+            if(info.exists() && QDir::match(currentDir.nameFilters(), info.fileName())){
                 return event->acceptProposedAction();
             }
         }
