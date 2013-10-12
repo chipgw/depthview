@@ -195,11 +195,13 @@ void DepthViewWindow::on_actionLast_triggered(){
 }
 
 void DepthViewWindow::mousePressEvent(QMouseEvent *e){
-    if(e->buttons() == Qt::XButton2){
+    switch(e->button()){
+    case Qt::XButton2:
         this->on_actionNext_triggered();
-    }
-    if(e->buttons() == Qt::XButton1){
+        break;
+    case Qt::XButton1:
         this->on_actionPrevious_triggered();
+        break;
     }
 }
 
