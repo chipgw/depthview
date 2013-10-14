@@ -71,7 +71,7 @@ bool DepthViewWindow::loadImage(const QString &filename){
 }
 
 bool DepthViewWindow::showLoadImageDialog(){
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), "", tr("Stereo Image Files (*.jps *.pns)"));
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), currentDir.path(), tr("Stereo Image Files (*.jps *.pns)"));
     return loadImage(filename);
 }
 
@@ -214,7 +214,7 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 void DepthViewWindow::on_actionSaveAs_triggered(){
     if(ui->imageWidget->imgR.isNull() || ui->imageWidget->imgL.isNull()) return;
 
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), "",
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), currentDir.path(),
                                                     tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
 
     if(filename.isNull()) return;
@@ -360,7 +360,7 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
         }else if(arg == "--startdir"){
             if(i.hasNext()){
                 const QString &dir = i.next();
-                if(!QDir::setCurrent(dir)){
+                if(!currentDir.cd(dir)){
                     warning.append(tr("<p>Invalid directory \"\%1\" passed to \"--startdir\" argument!</p>").arg(dir));
                 }
             }else{
@@ -403,8 +403,7 @@ void DepthViewWindow::dropEvent(QDropEvent *event){
     if(event->mimeData()->hasUrls()){
         foreach(QUrl url, event->mimeData()->urls()){
             if(loadImage(url.toLocalFile())){
-                event->acceptProposedAction();
-                break;
+                return event->acceptProposedAction();
             }
         }
     }
