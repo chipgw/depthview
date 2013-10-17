@@ -45,7 +45,6 @@ private slots:
     void on_actionSaveAs_triggered();
     void on_actionOptions_triggered();
     void on_actionAbout_triggered();
-    void on_actionAboutQt_triggered();
 
     void on_actionFit_triggered();
     void on_actionzoom200_triggered();

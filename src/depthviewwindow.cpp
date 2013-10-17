@@ -36,6 +36,8 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->actionSwap_Left_Right, SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableSwapLR(bool)));
     connect(ui->actionShow_Scrollbars, SIGNAL(toggled(bool)), ui->imageWidget, SLOT(showScrollbars(bool)));
 
+    connect(ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
+
     this->loadSettings();
 }
 
@@ -295,10 +297,6 @@ void DepthViewWindow::on_actionAbout_triggered(){
                           "<p>DepthView website: <a href=\"https://github.com/chipgw/depthview\">github.com/chipgw/depthview</a></p>"
                           "<p>Please report any bugs at: <a href=\"https://github.com/chipgw/depthview/issues\">github.com/chipgw/depthview/issues</a></p>"
                           "</body></html>").arg(version::getVersionString()).arg(version::git_revision.left(7)));
-}
-
-void DepthViewWindow::on_actionAboutQt_triggered(){
-    QMessageBox::aboutQt(this);
 }
 
 bool DepthViewWindow::setRenderModeFromString(const QString &renderer){
