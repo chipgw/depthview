@@ -22,37 +22,44 @@ QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY
 
     int halfWidth = finalSize.width() / 2;
 
-    for(int y = 0; y < finalSize.height(); y++){
+    for(int y = 0; y < finalSize.height(); ++y){
         line = (QRgb*)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
             lineL = (QRgb*)imgL.constScanLine(cy);
             lineR = (QRgb*)imgR.constScanLine(cy);
-            for(int x = 0; x < finalSize.width(); x++){
-                int cxl = x;
-                int cxr = x;
-                if(mirrorL){
-                    cxl = halfWidth - cxl;
-                }
-                if(mirrorR){
-                    cxr = finalSize.width() - cxr;
-                }else{
-                    cxr -= halfWidth;
-                }
-                cxl = (cxl - panX) / zoom;
-                cxr = (cxr - panX) / zoom;
+            for(int x = 0; x < finalSize.width(); ++x){
+                if(x > halfWidth){
+                    int cx = x;
+                    if(mirrorR){
+                        cx = finalSize.width() - cx;
+                    }else{
+                        cx -= halfWidth;
+                    }
+                    cx = (cx - panX) / zoom;
 
-                if(x > halfWidth && imgR.valid(cxr,cy)){
-                    line[x]=lineR[cxr];
-                }else if(x < halfWidth && imgL.valid(cxl,cy)){
-                    line[x]=lineL[cxl];
-                }else{
-                    line[x] = qRgb(0,0,0);
+                    if(imgR.valid(cx,cy)){
+                        line[x]=lineR[cx];
+                        continue;
+                    }
+                }else if(x < halfWidth){
+                    int cx = x;
+                    if(mirrorL){
+                        cx = halfWidth - cx;
+                    }
+                    cx = (cx - panX) / zoom;
+
+                    if(imgL.valid(cx,cy)){
+                        line[x]=lineL[cx];
+                        continue;
+                    }
                 }
+
+                line[x] = 0;
             }
         }else{
-            for(int x = 0; x < final.width(); x++){
-                line[x] = qRgb(0,0,0);
+            for(int x = 0; x < final.width(); ++x){
+                line[x] = 0;
             }
         }
     }

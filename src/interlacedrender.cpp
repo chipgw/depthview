@@ -28,7 +28,7 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
     if(horizontal){
         QRgb *lineIn = NULL;
 
-        for(int y = 0; y < final.height(); y++){
+        for(int y = 0; y < final.height(); ++y){
             line = (QRgb*)final.scanLine(y);
             int cy = (y - panY) / zoom;
 
@@ -42,12 +42,12 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
                 }
             }
 
-            for(int x = 0; x < final.width(); x++){
+            for(int x = 0; x < final.width(); ++x){
                 int cx = (x - panX) / zoom;
                 if(imgL.valid(cx, cy) && imgR.valid(cx, cy)){
                     line[x] = lineIn[cx];
                 }else{
-                    line[x] = qRgb(0,0,0);
+                    line[x] = 0;
                 }
             }
         }
@@ -55,13 +55,13 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
         QRgb *lineL;
         QRgb *lineR;
 
-        for(int y = 0; y < final.height(); y++){
+        for(int y = 0; y < final.height(); ++y){
             line = (QRgb*)final.scanLine(y);
             int cy = (y - panY) / zoom;
             if(cy >= 0 && cy < imgL.height()){
                 lineL = (QRgb*)imgL.constScanLine(cy);
                 lineR = (QRgb*)imgR.constScanLine(cy);
-                for(int x = 0; x < final.width(); x++){
+                for(int x = 0; x < final.width(); ++x){
                     int cx = (x - panX) / zoom;
                     if(imgL.valid(cx, cy) && imgR.valid(cx, cy)){
                         if(x % 2 == first){
@@ -70,12 +70,12 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
                             line[x] = lineL[cx];
                         }
                     }else{
-                        line[x] = qRgb(0,0,0);
+                        line[x] = 0;
                     }
                 }
             }else{
-                for(int x = 0; x < final.width(); x++){
-                    line[x] = qRgb(0,0,0);
+                for(int x = 0; x < final.width(); ++x){
+                    line[x] = 0;
                 }
             }
         }

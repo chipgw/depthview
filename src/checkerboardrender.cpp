@@ -16,13 +16,13 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
     QRgb *lineL;
     QRgb *lineR;
 
-    for(int y = 0; y < final.height(); y++){
+    for(int y = 0; y < final.height(); ++y){
         line = (QRgb*)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
             lineL = (QRgb*)imgL.constScanLine(cy);
             lineR = (QRgb*)imgR.constScanLine(cy);
-            for(int x = 0; x < final.width(); x++){
+            for(int x = 0; x < final.width(); ++x){
                 int cx = (x - panX) / zoom;
                 if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
                     if((pos.x() + x) % 2 == (pos.y() + y) % 2){
@@ -31,12 +31,12 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
                         line[x] = lineL[cx];
                     }
                 }else{
-                    line[x] = qRgb(0,0,0);
+                    line[x] = 0;
                 }
             }
         }else{
-            for(int x = 0; x < final.width(); x++){
-                line[x] = qRgb(0,0,0);
+            for(int x = 0; x < final.width(); ++x){
+                line[x] = 0;
             }
         }
     }
