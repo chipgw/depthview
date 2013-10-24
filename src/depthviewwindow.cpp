@@ -12,11 +12,30 @@
 #include <QMimeData>
 #include <QUrl>
 
-DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow), currentDir(QDir::current())
+DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow), currentDir(QDir::current()),
 #ifdef DEPTHVIEW_PORTABLE
-    , settings(QApplication::applicationDirPath() + "/DepthView.conf", QSettings::IniFormat)
+    settings(QApplication::applicationDirPath() + "/DepthView.conf", QSettings::IniFormat)
+#else
+    settings(QSettings::IniFormat, QSettings::UserScope, QApplication::organizationName(), QApplication::applicationName())
 #endif
 {
+#ifndef DEPTHVIEW_PORTABLE
+    if(!settings.allKeys().size()){
+        qDebug() << "settings empty, checking old settings location.";
+        QSettings oldSettings("DepthView","DepthView");
+
+        if(oldSettings.allKeys().size()){
+            foreach(QString key, oldSettings.allKeys()){
+                settings.setValue(key, oldSettings.value(key));
+            }
+            // TODO - ask about deleting the old ones.
+            qDebug() << "settings migrated.";
+        }else{
+            qDebug() << "no old settings to migrate.";
+        }
+    }
+#endif
+
     currentDir.setNameFilters(QStringList() << "*.jps" << "*.pns");
 
     ui->setupUi(this);
