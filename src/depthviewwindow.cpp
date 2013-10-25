@@ -25,11 +25,27 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
         QSettings oldSettings("DepthView","DepthView");
 
         if(oldSettings.allKeys().size()){
-            foreach(QString key, oldSettings.allKeys()){
-                settings.setValue(key, oldSettings.value(key));
+            QMessageBox msgBox(this);
+            msgBox.setWindowTitle(tr("Migrate Settings?"));
+            msgBox.setText(tr("The location for storing settings has changed in DepthView 1.05, Do you want to migrate the old settings?"));
+
+            QPushButton *deleteButton = msgBox.addButton(tr("Migrate && Delete Old Settings"), QMessageBox::AcceptRole);
+            QPushButton *keepButton = msgBox.addButton(tr("Migrate && Keep Old Settings"), QMessageBox::AcceptRole);
+            msgBox.addButton(tr("Don't Migrate"), QMessageBox::RejectRole);
+
+            msgBox.exec();
+
+            if(msgBox.clickedButton() == (QAbstractButton*)deleteButton || msgBox.clickedButton() == (QAbstractButton*)keepButton){
+                foreach(QString key, oldSettings.allKeys()){
+                    settings.setValue(key, oldSettings.value(key));
+                }
+
+                if(msgBox.clickedButton() == (QAbstractButton*)deleteButton){
+                    oldSettings.clear();
+                }
+
+                qDebug() << "settings migrated.";
             }
-            // TODO - ask about deleting the old ones.
-            qDebug() << "settings migrated.";
         }else{
             qDebug() << "no old settings to migrate.";
         }
