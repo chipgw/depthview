@@ -237,12 +237,6 @@ QImage ImageWidget::draw(const QImage &L, const QImage &R){
     return QImage();
 }
 
-void ImageWidget::mouseDoubleClickEvent(QMouseEvent *e){
-    if(e->button() == Qt::LeftButton){
-        emit doubleClicked();
-    }
-}
-
 void ImageWidget::setRenderMode(DrawMode m){
     mode = m;
     recalculatescroolmax();

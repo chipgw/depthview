@@ -58,8 +58,6 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     ui->imageWidget->addActions(ui->menubar->actions());
     ui->imageWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    connect(ui->imageWidget, SIGNAL(doubleClicked()), ui->actionFullscreen, SLOT(toggle()));
-
     connect(ui->actionZoomIn,  SIGNAL(triggered()), ui->imageWidget, SLOT(zoomIn()));
     connect(ui->actionZoomOut, SIGNAL(triggered()), ui->imageWidget, SLOT(zoomOut()));
 
@@ -243,8 +241,13 @@ void DepthViewWindow::mousePressEvent(QMouseEvent *e){
 }
 
 void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
-    if(e->button() == Qt::LeftButton){
+    switch(e->button()){
+    case Qt::LeftButton:
         ui->actionFullscreen->toggle();
+        break;
+    case Qt::MiddleButton:
+        on_actionFit_triggered();
+        break;
     }
 }
 

@@ -63,16 +63,12 @@ public slots:
     void showScrollbars(bool show);
     void enableContinuousPan(bool enable);
 
-signals:
-    void doubleClicked();
-
 protected:
     QImage draw(const QImage &L, const QImage &R);
 
     void resizeEvent(QResizeEvent * e);
     void paintEvent(QPaintEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
-    void mouseDoubleClickEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void wheelEvent(QWheelEvent *e);
 };
