@@ -8,8 +8,8 @@
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
     mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true) {
 
-    this->setMouseTracking(true);
-    this->recalculatescroolmax();
+    setMouseTracking(true);
+    recalculatescroolmax();
 
     connect(&hBar, SIGNAL(valueChanged(int)), this, SLOT(update()));
     connect(&vBar, SIGNAL(valueChanged(int)), this, SLOT(update()));
@@ -25,7 +25,7 @@ void ImageWidget::resizeEvent(QResizeEvent *e){
     vBar.resize(vBar.sizeHint().width(), e->size().height() - hBar.sizeHint().height());
     vBar.move(e->size().width() - vBar.sizeHint().width(), 0);
 
-    this->recalculatescroolmax();
+    recalculatescroolmax();
 }
 
 void ImageWidget::paintEvent(QPaintEvent *e){
@@ -55,9 +55,9 @@ void ImageWidget::paintEvent(QPaintEvent *e){
 bool ImageWidget::loadStereoImage(const QString &filename){
     QImage img(filename);
 
-    this->imgL = img.copy(0,               0, img.width() / 2, img.height());
-    this->imgR = img.copy(img.width() / 2, 0, img.width() / 2, img.height());
-    this->recalculatescroolmax();
+    imgL = img.copy(0,               0, img.width() / 2, img.height());
+    imgR = img.copy(img.width() / 2, 0, img.width() / 2, img.height());
+    recalculatescroolmax();
 
     return !img.isNull();
 }
@@ -71,37 +71,37 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
             QPoint warpto = e->pos();
 
             if(e->x() <= 0){
-                warpto.setX(this->width() - 3);
-            }else if(e->x() >= this->width() - 1){
+                warpto.setX(width() - 3);
+            }else if(e->x() >= width() - 1){
                 warpto.setX(2);
             }
             if(e->y() <= 0){
-                warpto.setY(this->height() - 3);
-            }else if(e->y() >= this->height() - 1){
+                warpto.setY(height() - 3);
+            }else if(e->y() >= height() - 1){
                 warpto.setY(2);
             }
 
             if(warpto != e->pos()){
-                QCursor::setPos(this->mapToGlobal(warpto));
+                QCursor::setPos(mapToGlobal(warpto));
             }
 
-            this->lastmousepos = warpto;
+            lastmousepos = warpto;
         }else{
-            this->lastmousepos = e->pos();
+            lastmousepos = e->pos();
         }
 
-        this->setCursor(Qt::SizeAllCursor);
+        setCursor(Qt::SizeAllCursor);
     }else{
-        this->setCursor(Qt::ArrowCursor);
+        setCursor(Qt::ArrowCursor);
 
-        this->lastmousepos = e->pos();
+        lastmousepos = e->pos();
     }
     mouseTimer.start(4000);
 }
 
 void ImageWidget::mouseReleaseEvent(QMouseEvent *e){
     if(e->button() == Qt::MiddleButton){
-        this->setCursor(Qt::ArrowCursor);
+        setCursor(Qt::ArrowCursor);
     }
 }
 
@@ -110,17 +110,17 @@ void ImageWidget::wheelEvent(QWheelEvent *e){
 }
 
 void ImageWidget::recalculatescroolmax(){
-    int width = imgL.width();
-    int height = imgL.height();
+    int imgWidth = imgL.width();
+    int imgHeight = imgL.height();
     if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
-        width *= 2;
+        imgWidth *= 2;
     }else if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
-        height *= 2;
+        imgHeight *= 2;
     }
-    int hmax = qMax(int(width  * zoom - this->width())  / 2, 0);
+    int hmax = qMax(int(imgWidth  * zoom - width())  / 2, 0);
     hBar.setRange(-hmax, hmax);
 
-    int vmax = qMax(int(height * zoom - this->height()) / 2, 0);
+    int vmax = qMax(int(imgHeight * zoom - height()) / 2, 0);
     vBar.setRange(-vmax, vmax);
 
     if(scrollbarsVisible){
@@ -134,8 +134,8 @@ void ImageWidget::recalculatescroolmax(){
 
 void ImageWidget::setZoom(float val){
     zoom = val;
-    this->recalculatescroolmax();
-    this->repaint();
+    recalculatescroolmax();
+    repaint();
 }
 
 void ImageWidget::zoomIn(){
@@ -149,20 +149,20 @@ void ImageWidget::zoomOut(){
 void ImageWidget::addZoom(float amount){
     if(zoom <= 0.0f){
         if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
-            zoom = qMin((float)this->width() / (imgL.width() * 2.0f), (float)this->height() / (float)imgL.height());
+            zoom = qMin((float)width() / (imgL.width() * 2.0f), (float)height() / (float)imgL.height());
         }else if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
-            zoom = qMin((float)this->width() / imgL.width(), (float)this->height() / ((float)imgL.height() * 2.0f));
+            zoom = qMin((float)width() / imgL.width(), (float)height() / ((float)imgL.height() * 2.0f));
         }else{
-            zoom = qMin((float)this->width() / (float)imgL.width(), (float)this->height() / (float)imgL.height());
+            zoom = qMin((float)width() / (float)imgL.width(), (float)height() / (float)imgL.height());
         }
     }
     float zoomorig = zoom;
     zoom += amount * zoom;
     zoom = qBound(0.2f, zoom, 4.0f);
-    this->recalculatescroolmax();
+    recalculatescroolmax();
     vBar.setValue(vBar.value() * zoom / zoomorig);
     hBar.setValue(hBar.value() * zoom / zoomorig);
-    this->repaint();
+    repaint();
 }
 
 void ImageWidget::enableSwapLR(bool enable){
@@ -180,58 +180,58 @@ void ImageWidget::enableContinuousPan(bool enable){
 }
 
 void ImageWidget::hideCursor(){
-    this->setCursor(Qt::BlankCursor);
+    setCursor(Qt::BlankCursor);
 }
 
 QImage ImageWidget::draw(const QImage &L, const QImage &R){
     switch(mode){
     case AnglaphFull:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, 1.0f);
+        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom, 1.0f);
         break;
     case AnglaphHalf:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, 0.5f);
+        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom, 0.5f);
         break;
     case AnglaphGreyscale:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, 0.0f);
+        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom, 0.0f);
         break;
     case SidebySide:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom);
+        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom);
         break;
     case SidebySideMLeft:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true);
+        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, true);
         break;
     case SidebySideMRight:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, false, true);
+        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, true);
         break;
     case SidebySideMBoth:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true, true);
+        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, true);
         break;
     case TopBottom:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom);
+        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom);
         break;
     case TopBottomMTop:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true);
+        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, true);
         break;
     case TopBottomMBottom:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, false, true);
+        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, true);
         break;
     case TopBottomMBoth:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true, true);
+        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, true);
         break;
     case InterlacedHorizontal:
-        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, true, this);
+        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, this);
         break;
     case InterlacedVertical:
-        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, false, this);
+        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, this);
         break;
     case Checkerboard:
-        return drawCheckerboard(L, R, -hBar.value(), -vBar.value(), this->size(), this->zoom, this);
+        return drawCheckerboard(L, R, -hBar.value(), -vBar.value(), size(), zoom, this);
         break;
     case MonoLeft:
-        return drawSingle(L, -hBar.value(), -vBar.value(), this->size(), this->zoom);
+        return drawSingle(L, -hBar.value(), -vBar.value(), size(), zoom);
         break;
     case MonoRight:
-        return drawSingle(R, -hBar.value(), -vBar.value(), this->size(), this->zoom);
+        return drawSingle(R, -hBar.value(), -vBar.value(), size(), zoom);
         break;
     }
     return QImage();

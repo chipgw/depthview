@@ -71,7 +71,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 
     connect(ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 
-    this->loadSettings();
+    loadSettings();
 }
 
 DepthViewWindow::~DepthViewWindow(){
@@ -94,12 +94,12 @@ bool DepthViewWindow::loadImage(const QString &filename){
         currentDir.cd(info.path());
         currentFile = info.fileName();
         if(ui->imageWidget->loadStereoImage(info.filePath())){
-            this->setWindowTitle(currentFile);
+            setWindowTitle(currentFile);
             ui->imageWidget->repaint();
             return true;
         }else{
             currentFile.clear();
-            this->setWindowTitle("DepthView");
+            setWindowTitle("DepthView");
         }
     }
     return false;
@@ -232,10 +232,10 @@ void DepthViewWindow::on_actionLast_triggered(){
 void DepthViewWindow::mousePressEvent(QMouseEvent *e){
     switch(e->button()){
     case Qt::XButton2:
-        this->on_actionNext_triggered();
+        on_actionNext_triggered();
         break;
     case Qt::XButton1:
-        this->on_actionPrevious_triggered();
+        on_actionPrevious_triggered();
         break;
     }
 }
@@ -321,7 +321,7 @@ void DepthViewWindow::on_actionzoom200_triggered(){
 void DepthViewWindow::on_actionOptions_triggered(){
     SettingsWindow settingsdialog(settings, this);
     if(settingsdialog.exec() == QDialog::Accepted){
-        this->loadSettings();
+        loadSettings();
     }
 }
 
@@ -385,7 +385,7 @@ void DepthViewWindow::loadSettings(){
 }
 
 void DepthViewWindow::parseCommandLine(const QStringList &args){
-    bool loaded = !this->currentFile.isEmpty();
+    bool loaded = !currentFile.isEmpty();
 
     QString warning;
 

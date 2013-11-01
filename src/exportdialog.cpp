@@ -11,15 +11,15 @@ ExportDialog::~ExportDialog(){
 
 void ExportDialog::accept(){
     if(ui->tabWidget->currentWidget() == ui->tabAnglaph){
-        this->anglaph = true;
-        this->colormult = ui->doubleSpinBox->value();
+        anglaph = true;
+        colormult = ui->doubleSpinBox->value();
     }else if(ui->tabWidget->currentWidget() == ui->tabSideBySide){
-        this->sidebyside = true;
-        this->mirrorL = ui->checkBoxMirrorLeft->isChecked();
-        this->mirrorR = ui->checkBoxMirrorRight->isChecked();
+        sidebyside = true;
+        mirrorL = ui->checkBoxMirrorLeft->isChecked();
+        mirrorR = ui->checkBoxMirrorRight->isChecked();
     }else if(ui->tabWidget->currentWidget() == ui->tabSingle){
-        this->saveL = ui->radioButtonLeft->isChecked() || ui->radioButtonBoth->isChecked();
-        this->saveR = ui->radioButtonRight->isChecked() || ui->radioButtonBoth->isChecked();
+        saveL = ui->radioButtonLeft->isChecked() || ui->radioButtonBoth->isChecked();
+        saveR = ui->radioButtonRight->isChecked() || ui->radioButtonBoth->isChecked();
     }
     quality = ui->qualitySpinBox->value();
 
