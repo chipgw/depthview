@@ -3,4 +3,8 @@ It supports anglaph (full-color, half-color, and greyscale), side-by-side (with 
 
 Binary releases: http://sourceforge.net/projects/depthview/files/
 Build using CMake (http://www.cmake.org)
-Dependencies: Qt 4 or 5 (http://qt-project.org, to use Qt 4 enable option DEPTHVIEW_USE_QT4)
+Dependencies: Qt 4 or 5 (http://qt-project.org)
+
+Build options:
+DEPTHVIEW_PORTABLE: Builds a portable version that stores settings in the same directory as the executable.
+DEPTHVIEW_USE_QT4: Builds against Qt 4 instead of 5.
