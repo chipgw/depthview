@@ -7,7 +7,9 @@
 int main(int argc, char *argv[]){
     QApplication app(argc, argv);
 
-    QDir::setCurrent(QDir::homePath());
+    if(QDir::currentPath() == QApplication::applicationDirPath()){
+        QDir::setCurrent(QDir::homePath());
+    }
 
     qDebug() << "DepthView version:" << version::getVersionString()
              << "revision:" << version::git_revision
