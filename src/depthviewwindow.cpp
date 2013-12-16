@@ -21,7 +21,6 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 {
 #ifndef DEPTHVIEW_PORTABLE
     if(!settings.allKeys().size()){
-        qDebug() << "settings empty, checking old settings location.";
         QSettings oldSettings("DepthView","DepthView");
 
         if(oldSettings.allKeys().size()){
@@ -43,11 +42,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
                 if(msgBox.clickedButton() == (QAbstractButton*)deleteButton){
                     oldSettings.clear();
                 }
-
-                qDebug() << "settings migrated.";
             }
-        }else{
-            qDebug() << "no old settings to migrate.";
         }
     }
 #endif
