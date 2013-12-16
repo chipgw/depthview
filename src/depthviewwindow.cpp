@@ -337,7 +337,7 @@ void DepthViewWindow::on_actionAbout_triggered(){
 
 bool DepthViewWindow::setRenderModeFromString(const QString &renderer){
     if(ImageWidget::drawModeNames.contains(renderer)){
-        ui->imageWidget->setRenderMode(ImageWidget::drawModeNames.value(renderer));
+        ui->imageWidget->setRenderMode(ImageWidget::drawModeNames[renderer]);
         return true;
     }
     return false;
@@ -377,7 +377,8 @@ void DepthViewWindow::loadSettings(){
     }else{
         ui->actionShow_Scrollbars->setChecked(true);
     }
-    if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && !settings.value(SettingsWindow::startupdirectory).toString().isEmpty()){
+    if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() &&
+            currentDir.absolutePath() == QDir::homePath() && !settings.value(SettingsWindow::startupdirectory).toString().isEmpty()){
         currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
     }
 }
