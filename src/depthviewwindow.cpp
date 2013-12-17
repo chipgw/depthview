@@ -377,8 +377,7 @@ void DepthViewWindow::loadSettings(){
     }else{
         ui->actionShow_Scrollbars->setChecked(true);
     }
-    if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() &&
-            currentDir.absolutePath() == QDir::homePath() && !settings.value(SettingsWindow::startupdirectory).toString().isEmpty()){
+    if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && currentDir.absolutePath() == QDir::homePath()){
         currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
     }
 }
