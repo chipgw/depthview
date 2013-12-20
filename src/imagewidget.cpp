@@ -3,7 +3,6 @@
 #include <QResizeEvent>
 #include <QPainter>
 #include <QTime>
-#include <QDebug>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
     mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true) {
@@ -48,7 +47,7 @@ void ImageWidget::paintEvent(QPaintEvent *e){
             painter.drawImage(0, 0, draw(imgL, imgR));
         }
 
-        qDebug() << "Draw time:" << starttime.msecsTo(QTime::currentTime()) << "ms";
+        qDebug("Draw time: %ims", starttime.msecsTo(QTime::currentTime()));
     }
 }
 

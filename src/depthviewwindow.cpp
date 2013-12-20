@@ -6,7 +6,6 @@
 #include "renderers.h"
 #include <QKeyEvent>
 #include <QFileDialog>
-#include <QDebug>
 #include <QMessageBox>
 #include <QTime>
 #include <QMimeData>

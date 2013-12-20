@@ -2,7 +2,6 @@
 #include "version.h"
 #include <QApplication>
 #include <QDir>
-#include <QDebug>
 
 int main(int argc, char *argv[]){
     QApplication app(argc, argv);
@@ -10,10 +9,6 @@ int main(int argc, char *argv[]){
     if(QDir::currentPath() == QApplication::applicationDirPath()){
         QDir::setCurrent(QDir::homePath());
     }
-
-    qDebug() << "DepthView version:" << version::getVersionString()
-             << "revision:" << version::git_revision
-             << "build type:" << version::build_type;
 
     app.setOrganizationName("chipgw");
     app.setApplicationName("DepthView");
