@@ -32,6 +32,7 @@
      <string>File</string>
     </property>
     <addaction name="actionOpen"/>
+    <addaction name="actionImport"/>
     <addaction name="actionSaveAs"/>
     <addaction name="actionExit"/>
    </widget>
@@ -147,7 +148,7 @@
      <normaloff>:/icons/silk/16x16/folder-image.png</normaloff>:/icons/silk/16x16/folder-image.png</iconset>
    </property>
    <property name="text">
-    <string>Open</string>
+    <string>Open Stereo Image</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -450,6 +451,15 @@
    </property>
    <property name="text">
     <string>Show Scrollbars</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="icon">
+    <iconset resource="../icons.qrc">
+     <normaloff>:/icons/silk/16x16/folder.png</normaloff>:/icons/silk/16x16/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Import...</string>
    </property>
   </action>
  </widget>

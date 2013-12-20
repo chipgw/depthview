@@ -1,5 +1,6 @@
 #include "depthviewwindow.h"
 #include "ui_depthviewwindow.h"
+#include "importdialog.h"
 #include "exportdialog.h"
 #include "settingswindow.h"
 #include "version.h"
@@ -242,6 +243,29 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
     case Qt::MiddleButton:
         on_actionFit_triggered();
         break;
+    }
+}
+
+void DepthViewWindow::on_actionImport_triggered(){
+    ImportDialog dialog(this);
+
+    if(dialog.exec() != QDialog::Accepted) return;
+
+    if(dialog.seperateImages){
+        QImage imageL(dialog.filenameLeft);
+        QImage imageR(dialog.filenameRight);
+        if(imageL.isNull() || imageR.isNull()){
+            QMessageBox::warning(this, tr("Error Importing!"), tr("Error loading image files!"));
+            return;
+        }
+        if(imageL.size() != imageR.size()){
+            QMessageBox::warning(this, tr("Error Importing!"), tr("Image sizes are not the same!"));
+            return;
+        }
+
+        ui->imageWidget->imgL = imageL;
+        ui->imageWidget->imgR = imageR;
+        setWindowTitle(tr("[ Imported ]"));
     }
 }
 
