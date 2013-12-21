@@ -1,6 +1,7 @@
 #include "include/importdialog.h"
 #include "ui_importdialog.h"
 #include <QFileDialog>
+#include <QMessageBox>
 
 ImportDialog::ImportDialog(QWidget *parent) : QDialog(parent), ui(new Ui::ImportDialog), seperateImages(false){
     ui->setupUi(this);
@@ -29,6 +30,15 @@ void ImportDialog::accept(){
         seperateImages = true;
         filenameLeft = ui->lineEditLeftImage->text();
         filenameRight = ui->lineEditRightImage->text();
+
+        if(filenameLeft.isEmpty() || filenameRight.isEmpty()){
+            QMessageBox::warning(this, tr("Error importing!"), tr("Please choose the image files to open."));
+            return;
+        }
+        if(!QFile::exists(filenameLeft) || !QFile::exists(filenameRight)){
+            QMessageBox::warning(this, tr("Error importing!"), tr("One or both of the files do not exist."));
+            return;
+        }
     }
     QDialog::accept();
 }
