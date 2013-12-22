@@ -70,7 +70,6 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 }
 
 DepthViewWindow::~DepthViewWindow(){
-    settings.setValue("lastrun", QDate::currentDate().toString());
     delete ui;
 }
 
@@ -402,6 +401,9 @@ void DepthViewWindow::loadSettings(){
     }
     if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && currentDir.absolutePath() == QDir::homePath()){
         currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
+    }
+    if(settings.contains("lastrun")){
+        settings.remove("lastrun");
     }
 }
 
