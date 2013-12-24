@@ -1,10 +1,10 @@
+set(CMAKE_BUILD_TYPE_INIT "Release")
+
 project(DepthView)
 cmake_minimum_required(VERSION 2.8)
 
 option(DEPTHVIEW_USE_QT4 "use Qt 4 rather than Qt 5." OFF)
 option(DEPTHVIEW_PORTABLE "build a portable version of DepthView (i.e. settings are saved in the application directory)" OFF)
-
-set(CMAKE_BUILD_TYPE_INIT "Release")
 
 set(DepthView_VERSION_MAJOR 1)
 set(DepthView_VERSION_MINOR 05)
