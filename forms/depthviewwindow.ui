@@ -210,20 +210,6 @@
     <string>Greyscale (Red/Cyan)</string>
    </property>
   </action>
-  <action name="actionShow_StatusBar">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Show Status Bar</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+B</string>
-   </property>
-  </action>
   <action name="actionShowMenuBar">
    <property name="checkable">
     <bool>true</bool>
