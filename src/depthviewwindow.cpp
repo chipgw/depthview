@@ -277,13 +277,13 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
     if(filename.isNull()) return;
 
     if(filename.contains(".jps", Qt::CaseInsensitive)){
-        QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR, 0, 0);
+        QImage out = drawSideBySide(ui->imageWidget->imgR, ui->imageWidget->imgL, 0, 0);
 
         if(!out.isNull()){
             out.save(filename, "JPG");
         }
     }else if(filename.contains(".pns", Qt::CaseInsensitive)){
-        QImage out = drawSideBySide(ui->imageWidget->imgL,ui->imageWidget->imgR, 0, 0);
+        QImage out = drawSideBySide(ui->imageWidget->imgR, ui->imageWidget->imgL, 0, 0);
 
         if(!out.isNull()){
             out.save(filename, "PNG");

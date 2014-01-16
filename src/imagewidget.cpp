@@ -54,8 +54,8 @@ void ImageWidget::paintEvent(QPaintEvent *e){
 bool ImageWidget::loadStereoImage(const QString &filename){
     QImage img(filename);
 
-    imgL = img.copy(0,               0, img.width() / 2, img.height());
-    imgR = img.copy(img.width() / 2, 0, img.width() / 2, img.height());
+    imgR = img.copy(0,               0, img.width() / 2, img.height());
+    imgL = img.copy(img.width() / 2, 0, img.width() / 2, img.height());
     recalculatescroolmax();
 
     return !img.isNull();
