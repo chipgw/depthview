@@ -62,7 +62,7 @@ bool ImageWidget::loadStereoImage(const QString &filename){
 }
 
 void ImageWidget::mouseMoveEvent(QMouseEvent *e){
-    if(e->buttons().testFlag(Qt::MiddleButton)){
+    if(e->buttons().testFlag(Qt::MiddleButton) && (vBar.maximum() > 0 || hBar.maximum() > 0)){
         vBar.setValue(vBar.value() + lastmousepos.y() - e->y());
         hBar.setValue(hBar.value() + lastmousepos.x() - e->x());
 
