@@ -89,12 +89,10 @@ bool DepthViewWindow::loadImage(const QString &filename){
         currentFile = info.fileName();
         if(ui->imageWidget->loadStereoImage(info.filePath())){
             setWindowTitle(currentFile);
-            ui->imageWidget->repaint();
             return true;
-        }else{
-            currentFile.clear();
-            setWindowTitle("DepthView");
         }
+        currentFile.clear();
+        setWindowTitle("DepthView");
     }
     return false;
 }
