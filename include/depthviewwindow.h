@@ -37,10 +37,9 @@ private:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
 
-public slots:
+private slots:
     bool showLoadImageDialog();
 
-private slots:
     void on_actionFullscreen_toggled(bool val);
     void on_actionSaveAs_triggered();
     void on_actionImport_triggered();
