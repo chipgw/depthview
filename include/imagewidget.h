@@ -7,7 +7,6 @@
 
 class ImageWidget : public QWidget {
     Q_OBJECT
-
 public:
     enum DrawMode{
         AnglaphFull,
@@ -46,7 +45,7 @@ public:
 
     QImage imgL, imgR;
 
-    explicit ImageWidget(QWidget *parent = 0);
+    explicit ImageWidget(QWidget *parent = NULL);
     bool loadStereoImage(const QString &filename);
     void setZoom(float val);
     void addZoom(float amount);
@@ -66,7 +65,7 @@ public slots:
 protected:
     QImage draw(const QImage &L, const QImage &R);
 
-    void resizeEvent(QResizeEvent * e);
+    void resizeEvent(QResizeEvent *e);
     void paintEvent(QPaintEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);

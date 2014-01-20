@@ -12,9 +12,8 @@ class SettingsWindow;
 
 class SettingsWindow : public QDialog {
     Q_OBJECT
-    
 public:
-    explicit SettingsWindow(QSettings &Settings, QWidget *parent = 0);
+    explicit SettingsWindow(QSettings &Settings, QWidget *parent = NULL);
     ~SettingsWindow();
     
     const static QString defaultrender;

@@ -7,12 +7,10 @@ namespace Ui {
 class ImportDialog;
 }
 
-class ImportDialog : public QDialog
-{
+class ImportDialog : public QDialog {
     Q_OBJECT
-
 public:
-    explicit ImportDialog(QWidget *parent = 0);
+    explicit ImportDialog(QWidget *parent = NULL);
     ~ImportDialog();
 
     bool seperateImages;

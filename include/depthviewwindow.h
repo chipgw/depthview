@@ -7,7 +7,7 @@
 #include <QDir>
 
 namespace Ui {
-    class DepthViewWindow;
+class DepthViewWindow;
 }
 
 class DepthViewWindow : public QMainWindow {
@@ -17,7 +17,7 @@ public:
     QString currentFile;
     QSettings settings;
 
-    explicit DepthViewWindow(QWidget *parent = 0);
+    explicit DepthViewWindow(QWidget *parent = NULL);
     ~DepthViewWindow();
 
     bool loadImage(const QString &filename);
