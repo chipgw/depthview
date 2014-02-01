@@ -12,14 +12,14 @@ ImportDialog::~ImportDialog(){
 }
 
 void ImportDialog::on_pushButtonLeftImageBrowse_clicked(){
-    QString file = QFileDialog::getOpenFileName(this, tr("Open Left Eye Image"), ui->lineEditLeftImage->text());
+    QString file = QFileDialog::getOpenFileName(this, tr("Open Left Eye Image"), ui->lineEditLeftImage->text(), "Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)");
     if(!file.isEmpty()){
         ui->lineEditLeftImage->setText(file);
     }
 }
 
 void ImportDialog::on_pushButtonRightImageBrowse_clicked(){
-    QString file = QFileDialog::getOpenFileName(this, tr("Open Right Eye Image"), ui->lineEditRightImage->text());
+    QString file = QFileDialog::getOpenFileName(this, tr("Open Right Eye Image"), ui->lineEditRightImage->text(), "Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)");
     if(!file.isEmpty()){
         ui->lineEditRightImage->setText(file);
     }
