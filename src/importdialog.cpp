@@ -3,7 +3,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-ImportDialog::ImportDialog(QWidget *parent) : QDialog(parent), ui(new Ui::ImportDialog), seperateImages(false){
+ImportDialog::ImportDialog(const QDir &directory, QWidget *parent) : QDialog(parent), ui(new Ui::ImportDialog), seperateImages(false), currentDir(directory) {
     ui->setupUi(this);
 }
 
@@ -12,14 +12,16 @@ ImportDialog::~ImportDialog(){
 }
 
 void ImportDialog::on_pushButtonLeftImageBrowse_clicked(){
-    QString file = QFileDialog::getOpenFileName(this, tr("Open Left Eye Image"), ui->lineEditLeftImage->text(), "Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)");
+    QString file = QFileDialog::getOpenFileName(this, tr("Open Left Eye Image"), ui->lineEditLeftImage->text().isEmpty() ? currentDir.path() : ui->lineEditLeftImage->text(),
+                                                "Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)");
     if(!file.isEmpty()){
         ui->lineEditLeftImage->setText(file);
     }
 }
 
 void ImportDialog::on_pushButtonRightImageBrowse_clicked(){
-    QString file = QFileDialog::getOpenFileName(this, tr("Open Right Eye Image"), ui->lineEditRightImage->text(), "Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)");
+    QString file = QFileDialog::getOpenFileName(this, tr("Open Right Eye Image"), ui->lineEditRightImage->text().isEmpty() ? currentDir.path() : ui->lineEditRightImage->text(),
+                                                "Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)");
     if(!file.isEmpty()){
         ui->lineEditRightImage->setText(file);
     }

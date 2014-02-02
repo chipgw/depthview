@@ -2,15 +2,17 @@
 #define IMPORTDIALOG_H
 
 #include <QDialog>
+#include <QDir>
 
 namespace Ui {
 class ImportDialog;
 }
 
 class ImportDialog : public QDialog {
+    const QDir &currentDir;
     Q_OBJECT
 public:
-    explicit ImportDialog(QWidget *parent = NULL);
+    explicit ImportDialog(const QDir &directory, QWidget *parent = NULL);
     ~ImportDialog();
 
     bool seperateImages;

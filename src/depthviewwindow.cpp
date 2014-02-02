@@ -244,7 +244,7 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 }
 
 void DepthViewWindow::on_actionImport_triggered(){
-    ImportDialog dialog(this);
+    ImportDialog dialog(currentDir, this);
 
     if(dialog.exec() != QDialog::Accepted) return;
 
