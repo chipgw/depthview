@@ -292,7 +292,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
         if(dialog.exec() != QDialog::Accepted) return;
 
         if(dialog.anglaph){
-            QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f, dialog.colormult);
+            QImage out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f);
 
             if(!out.isNull()){
                 out.save(filename, NULL, dialog.quality);

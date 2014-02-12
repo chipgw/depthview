@@ -186,13 +186,13 @@ void ImageWidget::hideCursor(){
 QImage ImageWidget::draw(const QImage &L, const QImage &R){
     switch(mode){
     case AnglaphFull:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom, 1.0f);
+        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom);
         break;
     case AnglaphHalf:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom, 0.5f);
+        return drawAnglaphHalf(L, R, -hBar.value(), -vBar.value(), size(), zoom);
         break;
     case AnglaphGreyscale:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom, 0.0f);
+        return drawAnglaphGrey(L, R, -hBar.value(), -vBar.value(), size(), zoom);
         break;
     case SidebySide:
         return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom);

@@ -3,7 +3,9 @@
 
 #include <QImage>
 
-QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f, float colormult = 0.0f);
+QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f);
+QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f);
+QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f);
 
 QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f, QWidget *parent = NULL);
 
