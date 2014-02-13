@@ -14,7 +14,8 @@ public:
     int quality;
     bool anglaph;
     bool sidebyside;
-    float colormult;
+    bool fullColor;
+    bool halfColor;
     bool mirrorL;
     bool mirrorR;
     bool saveL;

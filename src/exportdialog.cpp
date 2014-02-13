@@ -12,7 +12,8 @@ ExportDialog::~ExportDialog(){
 void ExportDialog::accept(){
     if(ui->tabWidget->currentWidget() == ui->tabAnglaph){
         anglaph = true;
-        colormult = ui->doubleSpinBox->value();
+        fullColor = ui->radioButtonFullColor->isChecked();
+        halfColor = ui->radioButtonHalfColor->isChecked();
     }else if(ui->tabWidget->currentWidget() == ui->tabSideBySide){
         sidebyside = true;
         mirrorL = ui->checkBoxMirrorLeft->isChecked();
