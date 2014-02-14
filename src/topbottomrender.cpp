@@ -17,7 +17,7 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
     QImage final(finalSize, QImage::Format_RGB32);
 
     QRgb *lineOut;
-    QRgb *lineIn;
+    const QRgb *lineIn;
 
     int rightOffset;
     int halfHeight = finalSize.height() / 2;
@@ -37,7 +37,7 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
             cy = (rightOffset + cy - panY) / zoom;
 
             if(cy >= 0 && cy < imgR.height()){
-                lineIn = (QRgb*)imgR.constScanLine(cy);
+                lineIn = (const QRgb*)imgR.constScanLine(cy);
             }
 
             for(int x = 0; x < finalSize.width(); ++x){
@@ -57,7 +57,7 @@ QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY,
             cy = (cy - panY) / zoom;
 
             if(cy >= 0 && cy < imgL.height()){
-                lineIn = (QRgb*)imgL.constScanLine(cy);
+                lineIn = (const QRgb*)imgL.constScanLine(cy);
             }
 
             for(int x = 0; x < finalSize.width(); ++x){

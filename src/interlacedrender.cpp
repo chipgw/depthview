@@ -26,7 +26,7 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
     QRgb *line;
 
     if(horizontal){
-        QRgb *lineIn = NULL;
+        const QRgb *lineIn;
 
         for(int y = 0; y < final.height(); ++y){
             line = (QRgb*)final.scanLine(y);
@@ -34,11 +34,11 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
 
             if(y % 2 == first){
                 if(cy >= 0 && cy < imgR.height()){
-                    lineIn = (QRgb*)imgR.constScanLine(cy);
+                    lineIn = (const QRgb*)imgR.constScanLine(cy);
                 }
             }else{
                 if(cy >= 0 && cy < imgL.height()){
-                    lineIn = (QRgb*)imgL.constScanLine(cy);
+                    lineIn = (const QRgb*)imgL.constScanLine(cy);
                 }
             }
 
@@ -52,15 +52,15 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
             }
         }
     }else{
-        QRgb *lineL;
-        QRgb *lineR;
+        const QRgb *lineL;
+        const QRgb *lineR;
 
         for(int y = 0; y < final.height(); ++y){
             line = (QRgb*)final.scanLine(y);
             int cy = (y - panY) / zoom;
             if(cy >= 0 && cy < imgL.height()){
-                lineL = (QRgb*)imgL.constScanLine(cy);
-                lineR = (QRgb*)imgR.constScanLine(cy);
+                lineL = (const QRgb*)imgL.constScanLine(cy);
+                lineR = (const QRgb*)imgR.constScanLine(cy);
                 for(int x = 0; x < final.width(); ++x){
                     int cx = (x - panX) / zoom;
                     if(imgL.valid(cx, cy) && imgR.valid(cx, cy)){

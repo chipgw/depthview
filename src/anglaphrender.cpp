@@ -18,15 +18,15 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
     QImage final(finalSize, QImage::Format_RGB32);
 
     QRgb *line;
-    QRgb *lineL;
-    QRgb *lineR;
+    const QRgb *lineL;
+    const QRgb *lineR;
 
     for(int y = 0; y < final.height(); ++y){
         line = (QRgb*)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
-            lineL = (QRgb*)imgL.constScanLine(cy);
-            lineR = (QRgb*)imgR.constScanLine(cy);
+            lineL = (const QRgb*)imgL.constScanLine(cy);
+            lineR = (const QRgb*)imgR.constScanLine(cy);
             for(int x = 0; x < final.width(); ++x){
                 int cx = (x - panX) / zoom;
                 if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
@@ -60,15 +60,15 @@ QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR, int panX, int pan
     QImage final(finalSize, QImage::Format_RGB32);
 
     QRgb *line;
-    QRgb *lineL;
-    QRgb *lineR;
+    const QRgb *lineL;
+    const QRgb *lineR;
 
     for(int y = 0; y < final.height(); ++y){
         line = (QRgb*)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
-            lineL = (QRgb*)imgL.constScanLine(cy);
-            lineR = (QRgb*)imgR.constScanLine(cy);
+            lineL = (const QRgb*)imgL.constScanLine(cy);
+            lineR = (const QRgb*)imgR.constScanLine(cy);
             for(int x = 0; x < final.width(); ++x){
                 int cx = (x - panX) / zoom;
                 if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
@@ -106,15 +106,15 @@ QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR, int panX, int pan
     QImage final(finalSize, QImage::Format_RGB32);
 
     QRgb *line;
-    QRgb *lineL;
-    QRgb *lineR;
+    const QRgb *lineL;
+    const QRgb *lineR;
 
     for(int y = 0; y < final.height(); ++y){
         line = (QRgb*)final.scanLine(y);
         int cy = (y - panY) / zoom;
         if(cy >= 0 && cy < imgL.height()){
-            lineL = (QRgb*)imgL.constScanLine(cy);
-            lineR = (QRgb*)imgR.constScanLine(cy);
+            lineL = (const QRgb*)imgL.constScanLine(cy);
+            lineR = (const QRgb*)imgR.constScanLine(cy);
             for(int x = 0; x < final.width(); ++x){
                 int cx = (x - panX) / zoom;
                 if(imgL.valid(cx,cy) && imgR.valid(cx,cy)){
