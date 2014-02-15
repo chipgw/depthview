@@ -63,7 +63,7 @@ public slots:
     void enableContinuousPan(bool enable);
 
 protected:
-    QImage draw(const QImage &L, const QImage &R);
+    void draw(const QImage &L, const QImage &R, QPainter &painter);
 
     void resizeEvent(QResizeEvent *e);
     void paintEvent(QPaintEvent *e);

@@ -29,10 +29,10 @@ void ImageWidget::resizeEvent(QResizeEvent *e){
 
 void ImageWidget::paintEvent(QPaintEvent *e){
     QPainter painter(this);
-    if(imgL.isNull() && imgR.isNull()){
-        painter.setBrush(QBrush(Qt::black));
-        painter.drawRect(e->rect());
+    painter.setBrush(QBrush(Qt::black));
+    painter.drawRect(e->rect());
 
+    if(imgL.isNull() && imgR.isNull()){
         painter.setPen(Qt::gray);
         QFont font;
         font.setPointSize(32);
@@ -42,9 +42,9 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         QTime starttime = QTime::currentTime();
 
         if(swapLR){
-            painter.drawImage(0 ,0, draw(imgR, imgL));
+            draw(imgR, imgL, painter);
         }else{
-            painter.drawImage(0, 0, draw(imgL, imgR));
+            draw(imgL, imgR, painter);
         }
 
         qDebug("Draw time: %ims", starttime.msecsTo(QTime::currentTime()));
@@ -183,58 +183,57 @@ void ImageWidget::hideCursor(){
     setCursor(Qt::BlankCursor);
 }
 
-QImage ImageWidget::draw(const QImage &L, const QImage &R){
+void ImageWidget::draw(const QImage &L, const QImage &R, QPainter &painter){
     switch(mode){
     case AnglaphFull:
-        return drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom);
+        painter.drawImage(0, 0, drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom));
         break;
     case AnglaphHalf:
-        return drawAnglaphHalf(L, R, -hBar.value(), -vBar.value(), size(), zoom);
+        painter.drawImage(0, 0, drawAnglaphHalf(L, R, -hBar.value(), -vBar.value(), size(), zoom));
         break;
     case AnglaphGreyscale:
-        return drawAnglaphGrey(L, R, -hBar.value(), -vBar.value(), size(), zoom);
+        painter.drawImage(0, 0, drawAnglaphGrey(L, R, -hBar.value(), -vBar.value(), size(), zoom));
         break;
     case SidebySide:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom);
+        painter.drawImage(0, 0, drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom);
         break;
     case SidebySideMLeft:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, true);
+        painter.drawImage(0, 0, drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, true);
         break;
     case SidebySideMRight:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, true);
+        painter.drawImage(0, 0, drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, true);
         break;
     case SidebySideMBoth:
-        return drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, true);
+        painter.drawImage(0, 0, drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, true);
         break;
     case TopBottom:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom);
+        painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom));
         break;
     case TopBottomMTop:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, true);
+        painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, true));
         break;
     case TopBottomMBottom:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, true);
+        painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, true));
         break;
     case TopBottomMBoth:
-        return drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, true);
+        painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, true));
         break;
     case InterlacedHorizontal:
-        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, this);
+        painter.drawImage(0, 0, drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, this));
         break;
     case InterlacedVertical:
-        return drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, this);
+        painter.drawImage(0, 0, drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, this));
         break;
     case Checkerboard:
-        return drawCheckerboard(L, R, -hBar.value(), -vBar.value(), size(), zoom, this);
+        painter.drawImage(0, 0, drawCheckerboard(L, R, -hBar.value(), -vBar.value(), size(), zoom, this));
         break;
     case MonoLeft:
-        return drawSingle(L, -hBar.value(), -vBar.value(), size(), zoom);
+        painter.drawImage(0, 0, drawSingle(L, -hBar.value(), -vBar.value(), size(), zoom));
         break;
     case MonoRight:
-        return drawSingle(R, -hBar.value(), -vBar.value(), size(), zoom);
+        painter.drawImage(0, 0, drawSingle(R, -hBar.value(), -vBar.value(), size(), zoom));
         break;
     }
-    return QImage();
 }
 
 void ImageWidget::setRenderMode(DrawMode m){
