@@ -195,16 +195,16 @@ void ImageWidget::draw(const QImage &L, const QImage &R, QPainter &painter){
         painter.drawImage(0, 0, drawAnglaphGrey(L, R, -hBar.value(), -vBar.value(), size(), zoom));
         break;
     case SidebySide:
-        painter.drawImage(0, 0, drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom);
+        drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom);
         break;
     case SidebySideMLeft:
-        painter.drawImage(0, 0, drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, true);
+        drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true);
         break;
     case SidebySideMRight:
-        painter.drawImage(0, 0, drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, true);
+        drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, false, true);
         break;
     case SidebySideMBoth:
-        painter.drawImage(0, 0, drawSideBySide(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, true);
+        drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
         break;
     case TopBottom:
         painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom));

@@ -11,6 +11,7 @@
 #include <QTime>
 #include <QMimeData>
 #include <QUrl>
+#include <QPainter>
 
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow), currentDir(QDir::current()),
 #ifdef DEPTHVIEW_PORTABLE
@@ -275,13 +276,17 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
     if(filename.isNull()) return;
 
     if(filename.contains(".jps", Qt::CaseInsensitive)){
-        QImage out = drawSideBySide(ui->imageWidget->imgR, ui->imageWidget->imgL, 0, 0);
+        QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
+        QPainter paint(&out);
+        drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, paint);
 
         if(!out.isNull()){
             out.save(filename, "JPG");
         }
     }else if(filename.contains(".pns", Qt::CaseInsensitive)){
-        QImage out = drawSideBySide(ui->imageWidget->imgR, ui->imageWidget->imgL, 0, 0);
+        QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
+        QPainter paint(&out);
+        drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, paint);
 
         if(!out.isNull()){
             out.save(filename, "PNG");
@@ -306,7 +311,9 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
                 out.save(filename, NULL, dialog.quality);
             }
         }else if(dialog.sidebyside){
-            QImage out = drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, QSize(), 1.0f, dialog.mirrorL, dialog.mirrorR);
+            QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
+            QPainter paint(&out);
+            drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, paint, 1.0f, dialog.mirrorL, dialog.mirrorR);
 
             if(!out.isNull()){
                 out.save(filename, NULL, dialog.quality);

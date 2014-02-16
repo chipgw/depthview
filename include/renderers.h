@@ -11,7 +11,7 @@ QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int pa
 
 QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f, bool horizontal = false, QWidget *parent = NULL);
 
-QImage drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f, bool mirrorL = false, bool mirrorR = false);
+void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, float zoom = 0.0f, bool mirrorL = false, bool mirrorR = false);
 
 QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f, bool mirrorL = false, bool mirrorR = false);
 
