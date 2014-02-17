@@ -207,16 +207,16 @@ void ImageWidget::draw(const QImage &L, const QImage &R, QPainter &painter){
         drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
         break;
     case TopBottom:
-        painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom));
+        drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom);
         break;
     case TopBottomMTop:
-        painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, true));
+        drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true);
         break;
     case TopBottomMBottom:
-        painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, true));
+        drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, false, true);
         break;
     case TopBottomMBoth:
-        painter.drawImage(0, 0, drawTopBottom(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, true));
+        drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
         break;
     case InterlacedHorizontal:
         painter.drawImage(0, 0, drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, this));

@@ -1,81 +1,37 @@
 #include "renderers.h"
+#include <QPainter>
 
-QImage drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, float zoom, bool mirrorL, bool mirrorR){
-    if(finalSize.isEmpty()){
-        finalSize.setWidth(imgL.width());
-        finalSize.setHeight(imgL.height() + imgR.height());
-    }
-
+void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, float zoom, bool mirrorL, bool mirrorR){
     if(zoom <= 0.0f){
-        zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.height()) / float(imgL.height()) * 0.5f);
+        zoom = qMin(float(painter.window().width()) / float(imgL.width()), float(painter.window().height()) / float(imgL.height()) * 0.5f);
     }
 
-    panX += (finalSize.width() - imgL.width() * zoom) * 0.5f;
-    panY += finalSize.height() * 0.5f - imgL.height() * zoom;
-    panY *= 0.5f;
+    QRect clip(0, 0, painter.window().width(), painter.window().height() / 2);
 
-    QImage final(finalSize, QImage::Format_RGB32);
+    painter.setClipRect(clip);
 
-    QRgb *lineOut;
-    const QRgb *lineIn;
+    painter.translate(painter.window().width() / 2,
+                      painter.window().height() / 4);
+    if(mirrorL) painter.scale(1, -1);
 
-    int rightOffset;
-    int halfHeight = finalSize.height() / 2;
-    if(mirrorR){
-        rightOffset = finalSize.height();
-    }else{
-        rightOffset = -halfHeight;
-    }
+    painter.translate(panX, panY / 2);
 
-    for(int y = 0; y < finalSize.height(); ++y){
-        lineOut = (QRgb*)final.scanLine(y);
-        if(y > halfHeight){
-            int cy = y;
-            if(mirrorR){
-                cy = -cy;
-            }
-            cy = (rightOffset + cy - panY) / zoom;
+    painter.scale(zoom, zoom);
+    painter.translate(-imgL.width() / 2, -imgR.height() / 2);
+    painter.drawImage(0, 0, imgL);
 
-            if(cy >= 0 && cy < imgR.height()){
-                lineIn = (const QRgb*)imgR.constScanLine(cy);
-            }
+    painter.resetTransform();
 
-            for(int x = 0; x < finalSize.width(); ++x){
-                int cx = (x - panX) / zoom;
+    painter.translate(0, painter.window().height() / 2);
+    painter.setClipRect(clip);
+    painter.translate(painter.window().width() / 2,
+                      painter.window().height() / 4);
+    if(mirrorR) painter.scale(1, -1);
 
-                if(imgR.valid(cx, cy)){
-                    lineOut[x] = lineIn[cx];
-                }else{
-                    lineOut[x] = 0;
-                }
-            }
-        }else if(y < halfHeight){
-            int cy = y;
-            if(mirrorL){
-                cy = halfHeight - cy;
-            }
-            cy = (cy - panY) / zoom;
+    painter.translate(panX, panY / 2);
 
-            if(cy >= 0 && cy < imgL.height()){
-                lineIn = (const QRgb*)imgL.constScanLine(cy);
-            }
-
-            for(int x = 0; x < finalSize.width(); ++x){
-                int cx = (x - panX) / zoom;
-
-                if(imgL.valid(cx, cy)){
-                    lineOut[x] = lineIn[cx];
-                }else{
-                    lineOut[x] = 0;
-                }
-            }
-        }else{
-            for(int x = 0; x < finalSize.width(); ++x){
-                lineOut[x] = 0;
-            }
-        }
-    }
-
-    return final;
+    painter.scale(zoom, zoom);
+    painter.translate(-imgR.width() / 2, -imgR.height() / 2);
+    painter.drawImage(0, 0, imgR);
 }
 
