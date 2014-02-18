@@ -1,22 +1,17 @@
 #include "renderers.h"
+#include <QPainter>
 
-QImage drawSingle(const QImage &img, int panX, int panY, QSize finalSize, float zoom){
-    if(finalSize.isEmpty()){
-        finalSize = img.size();
+void drawSingle(const QImage &img, int panX, int panY, QPainter &painter, float zoom){
+    if(zoom <= 0.0f){
+        zoom = qMin(float(painter.window().width()) / float(img.width()), float(painter.window().height()) / float(img.height()));
     }
+    painter.translate(painter.window().width() / 2,
+                      painter.window().height() / 2);
 
-    QImage in;
-    if(zoom == 0.0f){
-        in = img.scaled(finalSize, Qt::KeepAspectRatio);
-    }else{
-        in = img.scaled(img.size() * zoom, Qt::KeepAspectRatio);
-    }
+    painter.translate(panX, panY);
 
-    panX += (finalSize.width()  - in.width())  * 0.5f;
-    panY += (finalSize.height() - in.height()) * 0.5f;
-
-    QImage final = in.copy(-panX, -panY, finalSize.width(), finalSize.height());
-
-    return final;
+    painter.scale(zoom, zoom);
+    painter.translate(-img.width() / 2, -img.height() / 2);
+    painter.drawImage(0, 0, img);
 }
 

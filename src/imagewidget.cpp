@@ -228,10 +228,10 @@ void ImageWidget::draw(const QImage &L, const QImage &R, QPainter &painter){
         painter.drawImage(0, 0, drawCheckerboard(L, R, -hBar.value(), -vBar.value(), size(), zoom, this));
         break;
     case MonoLeft:
-        painter.drawImage(0, 0, drawSingle(L, -hBar.value(), -vBar.value(), size(), zoom));
+        drawSingle(L, -hBar.value(), -vBar.value(), painter, zoom);
         break;
     case MonoRight:
-        painter.drawImage(0, 0, drawSingle(R, -hBar.value(), -vBar.value(), size(), zoom));
+        drawSingle(R, -hBar.value(), -vBar.value(), painter, zoom);
         break;
     }
 }

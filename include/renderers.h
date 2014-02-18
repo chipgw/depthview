@@ -15,7 +15,7 @@ void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, 
 
 void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, float zoom = 0.0f, bool mirrorL = false, bool mirrorR = false);
 
-QImage drawSingle(const QImage &img, int panX, int panY, QSize finalSize, float zoom = 0.0f);
+void drawSingle(const QImage &img, int panX, int panY, QPainter &painter, float zoom = 0.0f);
 
 
 #endif // RENDERERS_H
