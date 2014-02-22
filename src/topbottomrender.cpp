@@ -14,6 +14,7 @@ void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
 
     painter.translate(size.width() / 2,
                       size.height() / 4);
+
     if(mirrorL) painter.scale(1, -1);
 
     painter.translate(panX, panY / 2);
@@ -28,6 +29,7 @@ void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
     painter.setClipRect(clip);
     painter.translate(size.width() / 2,
                       size.height() / 4);
+
     if(mirrorR) painter.scale(1, -1);
 
     painter.translate(panX, panY / 2);
