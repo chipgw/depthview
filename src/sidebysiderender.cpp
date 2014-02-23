@@ -19,7 +19,7 @@ void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, 
     painter.translate(panX / 2, panY);
 
     painter.scale(zoom, zoom);
-    painter.translate(-imgL.width() / 2, -imgR.height() / 2);
+    painter.translate(-imgL.width() / 2, -imgL.height() / 2);
     painter.drawImage(0, 0, imgL);
 
     painter.resetTransform();
