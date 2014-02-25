@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QTime>
 
-ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false),
+ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false), panButtons(Qt::LeftButton | Qt::MidButton),
     mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true) {
 
     setMouseTracking(true);
@@ -63,7 +63,7 @@ bool ImageWidget::loadStereoImage(const QString &filename){
 }
 
 void ImageWidget::mouseMoveEvent(QMouseEvent *e){
-    if(e->buttons().testFlag(Qt::MiddleButton) && (vBar.maximum() > 0 || hBar.maximum() > 0)){
+    if((e->buttons() & panButtons) && (vBar.maximum() > 0 || hBar.maximum() > 0)){
         vBar.setValue(vBar.value() + lastmousepos.y() - e->y());
         hBar.setValue(hBar.value() + lastmousepos.x() - e->x());
 
@@ -100,7 +100,7 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
 }
 
 void ImageWidget::mouseReleaseEvent(QMouseEvent *e){
-    if(e->button() == Qt::MiddleButton){
+    if(panButtons.testFlag(e->button())){
         setCursor(Qt::ArrowCursor);
     }
 }

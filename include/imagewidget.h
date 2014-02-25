@@ -35,6 +35,7 @@ protected:
     bool swapLR;
     bool scrollbarsVisible;
     bool continuousPan;
+    Qt::MouseButtons panButtons;
 
     QTimer mouseTimer;
 
