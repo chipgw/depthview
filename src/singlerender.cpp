@@ -11,7 +11,6 @@ void drawSingle(const QImage &img, int panX, int panY, QPainter &painter, float 
     painter.translate(panX, panY);
 
     painter.scale(zoom, zoom);
-    painter.translate(-img.width() / 2, -img.height() / 2);
-    painter.drawImage(0, 0, img);
+    painter.drawImage(-img.width() / 2, -img.height() / 2, img);
 }
 

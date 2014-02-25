@@ -2,7 +2,8 @@
 #include <QPainter>
 
 void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, float zoom, bool mirrorL, bool mirrorR){
-    QRect size= painter.window();
+    QRect size = painter.window();
+
     if(zoom <= 0.0f){
         zoom = qMin(float(size.width()) / float(imgL.width()) * 0.5f, float(size.height()) / float(imgL.height()));
     }
@@ -19,13 +20,13 @@ void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, 
     painter.translate(panX / 2, panY);
 
     painter.scale(zoom, zoom);
-    painter.translate(-imgL.width() / 2, -imgL.height() / 2);
-    painter.drawImage(0, 0, imgL);
+    painter.drawImage(-imgL.width() / 2, -imgL.height() / 2, imgL);
 
     painter.resetTransform();
-
     painter.translate(size.width() / 2, 0);
+
     painter.setClipRect(clip);
+
     painter.translate(size.width() / 4,
                       size.height() / 2);
 
@@ -34,7 +35,6 @@ void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, 
     painter.translate(panX / 2, panY);
 
     painter.scale(zoom, zoom);
-    painter.translate(-imgR.width() / 2, -imgR.height() / 2);
-    painter.drawImage(0, 0, imgR);
+    painter.drawImage(-imgR.width() / 2, -imgR.height() / 2, imgR);
 }
 

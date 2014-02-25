@@ -20,13 +20,13 @@ void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
     painter.translate(panX, panY / 2);
 
     painter.scale(zoom, zoom);
-    painter.translate(-imgL.width() / 2, -imgR.height() / 2);
-    painter.drawImage(0, 0, imgL);
+    painter.drawImage(-imgL.width() / 2, -imgL.height() / 2, imgL);
 
     painter.resetTransform();
-
     painter.translate(0, size.height() / 2);
+
     painter.setClipRect(clip);
+
     painter.translate(size.width() / 2,
                       size.height() / 4);
 
@@ -35,7 +35,6 @@ void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
     painter.translate(panX, panY / 2);
 
     painter.scale(zoom, zoom);
-    painter.translate(-imgR.width() / 2, -imgR.height() / 2);
-    painter.drawImage(0, 0, imgR);
+    painter.drawImage(-imgR.width() / 2, -imgR.height() / 2, imgR);
 }
 
