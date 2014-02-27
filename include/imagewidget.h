@@ -53,6 +53,8 @@ public:
 
     void setRenderMode(DrawMode m);
 
+    void setPanButtons(Qt::MouseButtons buttons);
+
 public slots:
     void hideCursor();
     void zoomIn();

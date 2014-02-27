@@ -30,10 +30,21 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
     connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(on_restoreDefaultsButton_clicked()));
 
     ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
+
+    Qt::MouseButtons buttons(settings.value(SettingsWindow::panbuttons).toInt());
+
+    addPanButtonOption(Qt::LeftButton,      tr("Left Mouse"),   buttons);
+    addPanButtonOption(Qt::MiddleButton,    tr("Middle Mouse"), buttons);
+
+    ui->panButtonComboBox->setModel(&panButtonModel);
 }
 
 SettingsWindow::~SettingsWindow(){
     delete ui;
+
+    foreach (QStandardItem* item, panButtonOptions) {
+        delete item;
+    }
 }
 
 void SettingsWindow::accept(){
@@ -46,6 +57,14 @@ void SettingsWindow::accept(){
     settings.setValue(disabledragdrop,  ui->disableDragDropCheckBox->isChecked());
     settings.setValue(continuouspan,    ui->enableContinuousPanCheckBox->isChecked());
     settings.setValue(showscrollbars,   ui->showScrollbarsCheckBox->isChecked());
+
+    Qt::MouseButtons buttons;
+    for(QMap<Qt::MouseButton, QStandardItem*>::iterator i = panButtonOptions.begin(); i != panButtonOptions.end(); ++i) {
+        if(i.value()->checkState() == Qt::Checked){
+            buttons |= i.key();
+        }
+    }
+    settings.setValue(panbuttons, int(buttons));
     QDialog::accept();
 }
 
@@ -73,6 +92,15 @@ void SettingsWindow::on_startupDirectoryBrowsePushButton_clicked(){
     }
 }
 
+void SettingsWindow::addPanButtonOption(Qt::MouseButton button, QString text, Qt::MouseButtons enabled){
+    QStandardItem *item = panButtonOptions.insert(button, new QStandardItem(text)).value();
+
+    item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+    item->setData(enabled.testFlag(button) ? Qt::Checked : Qt::Unchecked, Qt::CheckStateRole);
+
+    panButtonModel.appendRow(item);
+}
+
 const QString SettingsWindow::defaultrender     = "defaultrender";
 const QString SettingsWindow::startfullscreen   = "startfullscreen";
 const QString SettingsWindow::swapLR            = "swapLR";
@@ -82,3 +110,4 @@ const QString SettingsWindow::filedialogstartup = "filedialogstartup";
 const QString SettingsWindow::disabledragdrop   = "disabledragdrop";
 const QString SettingsWindow::continuouspan     = "continuouspan";
 const QString SettingsWindow::showscrollbars    = "showscrollbars";
+const QString SettingsWindow::panbuttons        = "panbuttons";

@@ -415,6 +415,9 @@ void DepthViewWindow::loadSettings(){
     if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && currentDir.absolutePath() == QDir::homePath()){
         currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
     }
+    if(settings.contains(SettingsWindow::panbuttons)){
+        ui->imageWidget->setPanButtons(Qt::MouseButtons(settings.value(SettingsWindow::panbuttons).toInt()));
+    }
     if(settings.contains("lastrun")){
         settings.remove("lastrun");
     }

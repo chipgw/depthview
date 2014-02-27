@@ -242,6 +242,10 @@ void ImageWidget::setRenderMode(DrawMode m){
     repaint();
 }
 
+void ImageWidget::setPanButtons(Qt::MouseButtons buttons){
+    panButtons = buttons;
+}
+
 QMap<QString, ImageWidget::DrawMode> initDrawModeList(){
     QMap<QString, ImageWidget::DrawMode> list;
     list.insert("Anglaph, Full Color",          ImageWidget::AnglaphFull);
