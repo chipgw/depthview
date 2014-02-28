@@ -2,6 +2,7 @@
 #include "ui_settingswindow.h"
 #include "imagewidget.h"
 #include <QFileDialog>
+#include <QMenu>
 
 SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(parent), ui(new Ui::SettingsWindow), settings(Settings){
     ui->setupUi(this);
@@ -31,20 +32,21 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
 
     ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
 
-    Qt::MouseButtons buttons(settings.value(SettingsWindow::panbuttons).toInt());
+    ui->panButtonMenuPushButton->setMenu(new QMenu());
+    ui->panButtonMenuPushButton->menu()->addAction(ui->actionLeft_Mouse);
+    ui->panButtonMenuPushButton->menu()->addAction(ui->actionMiddle_Mouse);
 
-    addPanButtonOption(Qt::LeftButton,      tr("Left Mouse"),   buttons);
-    addPanButtonOption(Qt::MiddleButton,    tr("Middle Mouse"), buttons);
+    if(settings.contains(panbuttons)){
+        Qt::MouseButtons buttons = Qt::MouseButtons(settings.value(panbuttons).toInt());
 
-    ui->panButtonComboBox->setModel(&panButtonModel);
+        ui->actionLeft_Mouse->setChecked(buttons.testFlag(Qt::LeftButton));
+        ui->actionMiddle_Mouse->setChecked(buttons.testFlag(Qt::MiddleButton));
+    }
 }
 
 SettingsWindow::~SettingsWindow(){
+    delete ui->panButtonMenuPushButton->menu();
     delete ui;
-
-    foreach (QStandardItem* item, panButtonOptions) {
-        delete item;
-    }
 }
 
 void SettingsWindow::accept(){
@@ -57,14 +59,7 @@ void SettingsWindow::accept(){
     settings.setValue(disabledragdrop,  ui->disableDragDropCheckBox->isChecked());
     settings.setValue(continuouspan,    ui->enableContinuousPanCheckBox->isChecked());
     settings.setValue(showscrollbars,   ui->showScrollbarsCheckBox->isChecked());
-
-    Qt::MouseButtons buttons;
-    for(QMap<Qt::MouseButton, QStandardItem*>::iterator i = panButtonOptions.begin(); i != panButtonOptions.end(); ++i) {
-        if(i.value()->checkState() == Qt::Checked){
-            buttons |= i.key();
-        }
-    }
-    settings.setValue(panbuttons, int(buttons));
+    settings.setValue(panbuttons,       int(ui->actionLeft_Mouse->isChecked() ? Qt::LeftButton : 0 & ui->actionMiddle_Mouse->isChecked() ? Qt::MiddleButton : 0));
     QDialog::accept();
 }
 
@@ -82,6 +77,8 @@ void SettingsWindow::on_restoreDefaultsButton_clicked(){
         ui->startupDirectoryLineEdit->setText("");
         ui->enableContinuousPanCheckBox->setChecked(true);
         ui->showScrollbarsCheckBox->setChecked(true);
+        ui->actionLeft_Mouse->setChecked(true);
+        ui->actionMiddle_Mouse->setChecked(true);
     }
 }
 
@@ -90,15 +87,6 @@ void SettingsWindow::on_startupDirectoryBrowsePushButton_clicked(){
     if(!directory.isEmpty()){
         ui->startupDirectoryLineEdit->setText(directory);
     }
-}
-
-void SettingsWindow::addPanButtonOption(Qt::MouseButton button, QString text, Qt::MouseButtons enabled){
-    QStandardItem *item = panButtonOptions.insert(button, new QStandardItem(text)).value();
-
-    item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-    item->setData(enabled.testFlag(button) ? Qt::Checked : Qt::Unchecked, Qt::CheckStateRole);
-
-    panButtonModel.appendRow(item);
 }
 
 const QString SettingsWindow::defaultrender     = "defaultrender";

@@ -5,7 +5,6 @@
 #include <QSettings>
 #include <QAbstractButton>
 #include <QMessageBox>
-#include <QStandardItemModel>
 
 namespace Ui {
 class SettingsWindow;
@@ -38,10 +37,6 @@ private slots:
 private:
     Ui::SettingsWindow *ui;
     QSettings &settings;
-    QStandardItemModel panButtonModel;
-
-    QMap<Qt::MouseButton, QStandardItem*> panButtonOptions;
-    void addPanButtonOption(Qt::MouseButton button, QString text, Qt::MouseButtons enabled);
 };
 
 #endif // SETTINGSWINDOW_H

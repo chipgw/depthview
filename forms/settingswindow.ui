@@ -201,7 +201,11 @@
       </widget>
      </item>
      <item row="9" column="1">
-      <widget class="QComboBox" name="panButtonComboBox"/>
+      <widget class="QPushButton" name="panButtonMenuPushButton">
+       <property name="text">
+        <string>Mouse Buttons</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -216,6 +220,28 @@
     </widget>
    </item>
   </layout>
+  <action name="actionLeft_Mouse">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Left Mouse</string>
+   </property>
+  </action>
+  <action name="actionMiddle_Mouse">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Middle Mouse</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../icons.qrc"/>
