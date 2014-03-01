@@ -17,7 +17,7 @@ void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
 
     if(mirrorL) painter.scale(1, -1);
 
-    painter.translate(panX, panY / 2);
+    painter.translate(panX, panY);
 
     painter.scale(zoom, zoom);
     painter.drawImage(-imgL.width() / 2, -imgL.height() / 2, imgL);
@@ -32,7 +32,7 @@ void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
 
     if(mirrorR) painter.scale(1, -1);
 
-    painter.translate(panX, panY / 2);
+    painter.translate(panX, panY);
 
     painter.scale(zoom, zoom);
     painter.drawImage(-imgR.width() / 2, -imgR.height() / 2, imgR);

@@ -110,17 +110,13 @@ void ImageWidget::wheelEvent(QWheelEvent *e){
 }
 
 void ImageWidget::recalculatescroolmax(){
-    int imgWidth = imgL.width();
-    int imgHeight = imgL.height();
-    if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
-        imgWidth *= 2;
-    }else if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
-        imgHeight *= 2;
-    }
-    int hmax = qMax(int(imgWidth  * zoom - width())  / 2, 0);
+    bool isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
+    bool isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
+
+    int hmax = qMax(int((imgL.width() << isSidebySide) * zoom - width()) >> (isSidebySide + 1), 0);
     hBar.setRange(-hmax, hmax);
 
-    int vmax = qMax(int(imgHeight * zoom - height()) / 2, 0);
+    int vmax = qMax(int((imgL.height() << isTopBottom) * zoom - height()) >> (isTopBottom + 1), 0);
     vBar.setRange(-vmax, vmax);
 
     if(scrollbarsVisible){
