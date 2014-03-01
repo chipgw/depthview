@@ -59,7 +59,7 @@ void SettingsWindow::accept(){
     settings.setValue(disabledragdrop,  ui->disableDragDropCheckBox->isChecked());
     settings.setValue(continuouspan,    ui->enableContinuousPanCheckBox->isChecked());
     settings.setValue(showscrollbars,   ui->showScrollbarsCheckBox->isChecked());
-    settings.setValue(panbuttons,       int(ui->actionLeft_Mouse->isChecked() ? Qt::LeftButton : 0 & ui->actionMiddle_Mouse->isChecked() ? Qt::MiddleButton : 0));
+    settings.setValue(panbuttons,       int((ui->actionLeft_Mouse->isChecked() ? Qt::LeftButton : 0) | (ui->actionMiddle_Mouse->isChecked() ? Qt::MiddleButton : 0)));
     QDialog::accept();
 }
 
