@@ -3,8 +3,6 @@
 
 #include <QDialog>
 #include <QSettings>
-#include <QAbstractButton>
-#include <QMessageBox>
 
 namespace Ui {
 class SettingsWindow;
@@ -30,7 +28,7 @@ public:
 private slots:
     void accept();
 
-    void on_restoreDefaultsButton_clicked();
+    void restoreDefaults();
 
     void on_startupDirectoryBrowsePushButton_clicked();
 

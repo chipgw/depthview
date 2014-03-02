@@ -1,6 +1,7 @@
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
 #include "imagewidget.h"
+#include <QMessageBox>
 #include <QFileDialog>
 #include <QMenu>
 
@@ -63,7 +64,7 @@ void SettingsWindow::accept(){
     QDialog::accept();
 }
 
-void SettingsWindow::on_restoreDefaultsButton_clicked(){
+void SettingsWindow::restoreDefaults(){
     if(QMessageBox::warning(this, tr("Are You Sure?"), tr("Are you sure you wish to reset to default settings?"),
                             QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes) == QMessageBox::Yes){
         settings.clear();
