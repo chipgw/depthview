@@ -230,6 +230,7 @@ void DepthViewWindow::mousePressEvent(QMouseEvent *e){
     case Qt::XButton1:
         on_actionPrevious_triggered();
         break;
+    default: break;
     }
 }
 
@@ -241,6 +242,7 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
     case Qt::MiddleButton:
         on_actionFit_triggered();
         break;
+    default: break;
     }
 }
 
