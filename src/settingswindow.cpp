@@ -29,7 +29,7 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
         ui->showScrollbarsCheckBox->setChecked(settings.value(showscrollbars).toBool());
     }
 
-    connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(on_restoreDefaultsButton_clicked()));
+    connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
 
     ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
 
