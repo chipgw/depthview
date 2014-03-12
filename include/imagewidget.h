@@ -31,7 +31,7 @@ protected:
     QScrollBar hBar;
     QScrollBar vBar;
     QPoint lastmousepos;
-    float zoom;
+    qreal zoom;
     bool swapLR;
     bool scrollbarsVisible;
     bool continuousPan;
@@ -48,8 +48,8 @@ public:
 
     explicit ImageWidget(QWidget *parent = NULL);
     bool loadStereoImage(const QString &filename);
-    void setZoom(float val);
-    void addZoom(float amount);
+    void setZoom(qreal val);
+    void addZoom(qreal amount);
 
     void setRenderMode(DrawMode m);
 

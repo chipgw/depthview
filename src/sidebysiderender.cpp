@@ -1,11 +1,11 @@
 #include "renderers.h"
 #include <QPainter>
 
-void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, float zoom, bool mirrorL, bool mirrorR){
+void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, qreal zoom, bool mirrorL, bool mirrorR){
     QRect size = painter.window();
 
-    if(zoom <= 0.0f){
-        zoom = qMin(float(size.width()) / float(imgL.width()) * 0.5f, float(size.height()) / float(imgL.height()));
+    if(zoom <= 0.0){
+        zoom = qMin(qreal(size.width()) / qreal(imgL.width()) * 0.5, qreal(size.height()) / qreal(imgL.height()));
     }
 
     QRect clip(0, 0, size.width() / 2, size.height());

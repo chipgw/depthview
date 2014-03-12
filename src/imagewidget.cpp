@@ -4,7 +4,7 @@
 #include <QPainter>
 #include <QTime>
 
-ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0f), swapLR(false), panButtons(Qt::LeftButton | Qt::MidButton),
+ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0), swapLR(false), panButtons(Qt::LeftButton | Qt::MidButton),
     mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true) {
 
     setMouseTracking(true);
@@ -106,7 +106,7 @@ void ImageWidget::mouseReleaseEvent(QMouseEvent *e){
 }
 
 void ImageWidget::wheelEvent(QWheelEvent *e){
-    addZoom(e->delta() / 1000.0f);
+    addZoom(e->delta() / 1000.0);
 }
 
 void ImageWidget::recalculatescroolmax(){
@@ -128,33 +128,33 @@ void ImageWidget::recalculatescroolmax(){
     }
 }
 
-void ImageWidget::setZoom(float val){
+void ImageWidget::setZoom(qreal val){
     zoom = val;
     recalculatescroolmax();
     repaint();
 }
 
 void ImageWidget::zoomIn(){
-    addZoom( 0.1f);
+    addZoom( 0.1);
 }
 
 void ImageWidget::zoomOut(){
-    addZoom(-0.1f);
+    addZoom(-0.1);
 }
 
-void ImageWidget::addZoom(float amount){
-    if(zoom <= 0.0f){
+void ImageWidget::addZoom(qreal amount){
+    if(zoom <= 0.0){
         if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
-            zoom = qMin((float)width() / (imgL.width() * 2.0f), (float)height() / (float)imgL.height());
+            zoom = qMin(qreal(width()) / (imgL.width() * 2.0), qreal(height()) / qreal(imgL.height()));
         }else if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
-            zoom = qMin((float)width() / imgL.width(), (float)height() / ((float)imgL.height() * 2.0f));
+            zoom = qMin(qreal(width()) / qreal(imgL.width()), qreal(height()) / (imgL.height() * 2.0));
         }else{
-            zoom = qMin((float)width() / (float)imgL.width(), (float)height() / (float)imgL.height());
+            zoom = qMin(qreal(width()) / qreal(imgL.width()), qreal(height()) / qreal(imgL.height()));
         }
     }
-    float zoomorig = zoom;
+    qreal zoomorig = zoom;
     zoom += amount * zoom;
-    zoom = qBound(0.2f, zoom, 4.0f);
+    zoom = qBound(0.2, zoom, 4.0);
     recalculatescroolmax();
     vBar.setValue(vBar.value() * zoom / zoomorig);
     hBar.setValue(hBar.value() * zoom / zoomorig);

@@ -3,17 +3,17 @@
 const QRgb lEyeMask = qRgb(0xff, 0x00, 0x00);
 const QRgb rEyeMask = qRgb(0x00, 0xff, 0xff);
 
-QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, float zoom){
+QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, qreal zoom){
     if(finalSize.isEmpty()){
         finalSize = imgL.size();
     }
 
-    if(zoom <= 0.0f){
-        zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.height()) / float(imgL.height()));
+    if(zoom <= 0.0){
+        zoom = qMin(qreal(finalSize.width()) / qreal(imgL.width()), qreal(finalSize.height()) / qreal(imgL.height()));
     }
 
-    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5f;
-    panY += (finalSize.height() - imgL.height() * zoom) * 0.5f;
+    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5;
+    panY += (finalSize.height() - imgL.height() * zoom) * 0.5;
 
     QImage final(finalSize, QImage::Format_RGB32);
 
@@ -45,17 +45,17 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, Q
     return final;
 }
 
-QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, float zoom){
+QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, qreal zoom){
     if(finalSize.isEmpty()){
         finalSize = imgL.size();
     }
 
-    if(zoom <= 0.0f){
-        zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.height()) / float(imgL.height()));
+    if(zoom <= 0.0){
+        zoom = qMin(qreal(finalSize.width()) / qreal(imgL.width()), qreal(finalSize.height()) / qreal(imgL.height()));
     }
 
-    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5f;
-    panY += (finalSize.height() - imgL.height() * zoom) * 0.5f;
+    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5;
+    panY += (finalSize.height() - imgL.height() * zoom) * 0.5;
 
     QImage final(finalSize, QImage::Format_RGB32);
 
@@ -91,17 +91,17 @@ QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR, int panX, int pan
     return final;
 }
 
-QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, float zoom){
+QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, qreal zoom){
     if(finalSize.isEmpty()){
         finalSize = imgL.size();
     }
 
-    if(zoom <= 0.0f){
-        zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.height()) / float(imgL.height()));
+    if(zoom <= 0.0){
+        zoom = qMin(qreal(finalSize.width()) / qreal(imgL.width()), qreal(finalSize.height()) / qreal(imgL.height()));
     }
 
-    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5f;
-    panY += (finalSize.height() - imgL.height() * zoom) * 0.5f;
+    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5;
+    panY += (finalSize.height() - imgL.height() * zoom) * 0.5;
 
     QImage final(finalSize, QImage::Format_RGB32);
 

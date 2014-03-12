@@ -315,7 +315,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
         }else if(dialog.sidebyside){
             QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
             QPainter paint(&out);
-            drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, paint, 1.0f, dialog.mirrorL, dialog.mirrorR);
+            drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, paint, 1.0, dialog.mirrorL, dialog.mirrorR);
 
             if(!out.isNull()){
                 out.save(filename, NULL, dialog.quality);
@@ -335,19 +335,19 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
 }
 
 void DepthViewWindow::on_actionFit_triggered(){
-    ui->imageWidget->setZoom(0.0f);
+    ui->imageWidget->setZoom(0.0);
 }
 
 void DepthViewWindow::on_actionzoom100_triggered(){
-    ui->imageWidget->setZoom(1.0f);
+    ui->imageWidget->setZoom(1.0);
 }
 
 void DepthViewWindow::on_actionzoom50_triggered(){
-    ui->imageWidget->setZoom(0.5f);
+    ui->imageWidget->setZoom(0.5);
 }
 
 void DepthViewWindow::on_actionzoom200_triggered(){
-    ui->imageWidget->setZoom(2.0f);
+    ui->imageWidget->setZoom(2.0);
 }
 
 void DepthViewWindow::on_actionOptions_triggered(){

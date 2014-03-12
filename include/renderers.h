@@ -3,19 +3,19 @@
 
 #include <QImage>
 
-QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f);
-QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f);
-QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f);
+QImage drawAnglaph(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), qreal zoom = 0.0);
+QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), qreal zoom = 0.0);
+QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), qreal zoom = 0.0);
 
-QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f, QWidget *parent = NULL);
+QImage drawCheckerboard(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), qreal zoom = 0.0, QWidget *parent = NULL);
 
-QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), float zoom = 0.0f, bool horizontal = false, QWidget *parent = NULL);
+QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize = QSize(), qreal zoom = 0.0, bool horizontal = false, QWidget *parent = NULL);
 
-void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, float zoom = 0.0f, bool mirrorL = false, bool mirrorR = false);
+void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, qreal zoom = 0.0, bool mirrorL = false, bool mirrorR = false);
 
-void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, float zoom = 0.0f, bool mirrorL = false, bool mirrorR = false);
+void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, qreal zoom = 0.0, bool mirrorL = false, bool mirrorR = false);
 
-void drawSingle(const QImage &img, int panX, int panY, QPainter &painter, float zoom = 0.0f);
+void drawSingle(const QImage &img, int panX, int panY, QPainter &painter, qreal zoom = 0.0);
 
 
 #endif // RENDERERS_H

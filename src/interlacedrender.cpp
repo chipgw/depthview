@@ -1,7 +1,7 @@
 #include "renderers.h"
 #include <QWidget>
 
-QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, float zoom, bool horizontal, QWidget *parent){
+QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, QSize finalSize, qreal zoom, bool horizontal, QWidget *parent){
     bool first = 1;
     if(parent){
         if(horizontal){
@@ -14,12 +14,12 @@ QImage drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY
         finalSize = imgL.size();
     }
 
-    if(zoom <= 0.0f){
-        zoom = qMin(float(finalSize.width()) / float(imgL.width()), float(finalSize.height()) / float(imgL.height()));
+    if(zoom <= 0.0){
+        zoom = qMin(qreal(finalSize.width()) / qreal(imgL.width()), qreal(finalSize.height()) / qreal(imgL.height()));
     }
 
-    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5f;
-    panY += (finalSize.height() - imgL.height() * zoom) * 0.5f;
+    panX += (finalSize.width()  - imgL.width()  * zoom) * 0.5;
+    panY += (finalSize.height() - imgL.height() * zoom) * 0.5;
 
     QImage final(finalSize, QImage::Format_RGB32);
 

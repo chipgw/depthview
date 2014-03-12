@@ -1,11 +1,11 @@
 #include "renderers.h"
 #include <QPainter>
 
-void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, float zoom, bool mirrorL, bool mirrorR){
+void drawTopBottom(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, qreal zoom, bool mirrorL, bool mirrorR){
     QRect size = painter.window();
 
-    if(zoom <= 0.0f){
-        zoom = qMin(float(size.width()) / float(imgL.width()), float(size.height()) / float(imgL.height()) * 0.5f);
+    if(zoom <= 0.0){
+        zoom = qMin(qreal(size.width()) / qreal(imgL.width()), qreal(size.height()) / qreal(imgL.height()) * 0.5);
     }
 
     QRect clip(0, 0, size.width(), size.height() / 2);
