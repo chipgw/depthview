@@ -57,6 +57,7 @@ bool ImageWidget::loadStereoImage(const QString &filename){
     imgR = img.copy(0,               0, img.width() / 2, img.height());
     imgL = img.copy(img.width() / 2, 0, img.width() / 2, img.height());
     recalculatescroolmax();
+    updateAnglaph();
     repaint();
 
     return !img.isNull();
@@ -163,6 +164,7 @@ void ImageWidget::addZoom(qreal amount){
 
 void ImageWidget::enableSwapLR(bool enable){
     swapLR = enable;
+    updateAnglaph();
     repaint();
 }
 
@@ -182,13 +184,9 @@ void ImageWidget::hideCursor(){
 void ImageWidget::draw(const QImage &L, const QImage &R, QPainter &painter){
     switch(mode){
     case AnglaphFull:
-        painter.drawImage(0, 0, drawAnglaph(L, R, -hBar.value(), -vBar.value(), size(), zoom));
-        break;
     case AnglaphHalf:
-        painter.drawImage(0, 0, drawAnglaphHalf(L, R, -hBar.value(), -vBar.value(), size(), zoom));
-        break;
     case AnglaphGreyscale:
-        painter.drawImage(0, 0, drawAnglaphGrey(L, R, -hBar.value(), -vBar.value(), size(), zoom));
+        drawSingle(anglaph, -hBar.value(), -vBar.value(), painter, zoom);
         break;
     case SidebySide:
         drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom);
@@ -235,11 +233,29 @@ void ImageWidget::draw(const QImage &L, const QImage &R, QPainter &painter){
 void ImageWidget::setRenderMode(DrawMode m){
     mode = m;
     recalculatescroolmax();
+    updateAnglaph();
     repaint();
 }
 
 void ImageWidget::setPanButtons(Qt::MouseButtons buttons){
     panButtons = buttons;
+}
+
+void ImageWidget::updateAnglaph(){
+    const QImage &L = swapLR ? imgL : imgR;
+    const QImage &R = swapLR ? imgR : imgL;
+    switch(mode){
+    case AnglaphFull:
+        anglaph = drawAnglaph(L, R);
+        break;
+    case AnglaphHalf:
+        anglaph = drawAnglaphHalf(L, R);
+        break;
+    case AnglaphGreyscale:
+        anglaph = drawAnglaphGrey(L, R);
+        break;
+    default: break;
+    }
 }
 
 QMap<QString, ImageWidget::DrawMode> initDrawModeList(){

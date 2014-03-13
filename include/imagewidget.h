@@ -41,6 +41,8 @@ protected:
 
     DrawMode mode;
 
+    QImage anglaph;
+
 public:
     const static QMap<QString, DrawMode> drawModeNames;
 
@@ -67,6 +69,7 @@ public slots:
 
 protected:
     void draw(const QImage &L, const QImage &R, QPainter &painter);
+    void updateAnglaph();
 
     void resizeEvent(QResizeEvent *e);
     void paintEvent(QPaintEvent *e);

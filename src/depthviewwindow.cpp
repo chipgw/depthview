@@ -302,11 +302,11 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
             QImage out;
 
             if(dialog.fullColor){
-                out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0);
+                out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR);
             }else if(dialog.halfColor){
-                out = drawAnglaphHalf(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0);
+                out = drawAnglaphHalf(ui->imageWidget->imgL, ui->imageWidget->imgR);
             }else{
-                out = drawAnglaphGrey(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0);
+                out = drawAnglaphGrey(ui->imageWidget->imgL, ui->imageWidget->imgR);
             }
 
             if(!out.isNull()){
