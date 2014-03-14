@@ -7,6 +7,11 @@ void drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, 
     if(zoom <= 0.0){
         zoom = qMin(qreal(painter.window().width()) / qreal(imgL.width()), qreal(painter.window().height()) / qreal(imgL.height()));
     }
+    QRect outRect(panX + painter.window().width()  / 2 - (imgL.width()  / 2) * zoom,
+                  panY + painter.window().height() / 2 - (imgL.height() / 2) * zoom,
+                  imgL.width() * zoom, imgL.height() * zoom);
+
+    painter.setClipRect(outRect);
 
     painter.setCompositionMode(QPainter::CompositionMode_Clear);
     painter.drawRect(painter.window());
@@ -15,21 +20,16 @@ void drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, 
     painter.setBackgroundMode(Qt::TransparentMode);
 
     // TODO - offset this based on widget's position on screen.
-    for(int x = 0; x < painter.window().width(); x += mask.width()){
-        for(int y = 0; y < painter.window().height(); y += mask.height()){
+    for(int x = outRect.left(); x < outRect.right(); x += mask.width()){
+        for(int y = outRect.top(); y < outRect.bottom(); y += mask.height()){
             painter.drawPixmap(x, y, mask);
         }
     }
 
-    painter.translate(painter.window().width() / 2,
-                      painter.window().height() / 2);
 
-    painter.translate(panX, panY);
-
-    painter.scale(zoom, zoom);
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-    painter.drawImage(-imgL.width() / 2, -imgL.height() / 2, imgL);
+    painter.drawImage(outRect, imgL);
     painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
-    painter.drawImage(-imgL.width() / 2, -imgL.height() / 2, imgR);
+    painter.drawImage(outRect, imgR);
 }
 
