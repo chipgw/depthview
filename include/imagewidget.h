@@ -3,7 +3,7 @@
 
 #include <QScrollBar>
 #include <QTimer>
-
+#include <QBitmap>
 
 class ImageWidget : public QWidget {
     Q_OBJECT
@@ -42,6 +42,10 @@ protected:
     DrawMode mode;
 
     QImage anglaph;
+
+    QBitmap maskInterlacedHorizontal;
+    QBitmap maskInterlacedVertical;
+    QBitmap maskCheckerboard;
 
 public:
     const static QMap<QString, DrawMode> drawModeNames;

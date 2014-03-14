@@ -29,4 +29,9 @@
     <qresource prefix="/icons">
         <file alias="MainIcon.png">icons/DepthView.png</file>
     </qresource>
+    <qresource prefix="/masks">
+        <file alias="interlacedH.pbm">masks/interlacedH.pbm</file>
+        <file alias="interlacedV.pbm">masks/interlacedV.pbm</file>
+        <file alias="checkerboard.pbm">masks/checkerboard.pbm</file>
+    </qresource>
 </RCC>

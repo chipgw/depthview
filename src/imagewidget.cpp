@@ -5,7 +5,8 @@
 #include <QTime>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0), swapLR(false), panButtons(Qt::LeftButton | Qt::MidButton),
-    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true) {
+    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true),
+    maskInterlacedHorizontal(":/masks/interlacedH.pbm"), maskInterlacedVertical(":/masks/interlacedV.pbm"), maskCheckerboard(":/masks/checkerboard.pbm") {
 
     setMouseTracking(true);
     recalculatescroolmax();
@@ -213,13 +214,13 @@ void ImageWidget::draw(const QImage &L, const QImage &R, QPainter &painter){
         drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
         break;
     case InterlacedHorizontal:
-        painter.drawImage(0, 0, drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, true, this));
+        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedHorizontal, zoom, this);
         break;
     case InterlacedVertical:
-        painter.drawImage(0, 0, drawInterlaced(L, R, -hBar.value(), -vBar.value(), size(), zoom, false, this));
+        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedVertical, zoom, this);
         break;
     case Checkerboard:
-        painter.drawImage(0, 0, drawCheckerboard(L, R, -hBar.value(), -vBar.value(), size(), zoom, this));
+        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskCheckerboard, zoom, this);
         break;
     case MonoLeft:
         drawSingle(L, -hBar.value(), -vBar.value(), painter, zoom);
