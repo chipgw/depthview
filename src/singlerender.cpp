@@ -1,7 +1,7 @@
 #include "renderers.h"
 #include <QPainter>
 
-void drawSingle(const QImage &img, int panX, int panY, QPainter &painter, qreal zoom){
+void drawSingle(const QPixmap &img, int panX, int panY, QPainter &painter, qreal zoom){
     if(zoom <= 0.0){
         zoom = qMin(qreal(painter.window().width()) / qreal(img.width()), qreal(painter.window().height()) / qreal(img.height()));
     }
@@ -11,6 +11,6 @@ void drawSingle(const QImage &img, int panX, int panY, QPainter &painter, qreal 
     painter.translate(panX, panY);
 
     painter.scale(zoom, zoom);
-    painter.drawImage(-img.width() / 2, -img.height() / 2, img);
+    painter.drawPixmap(-img.width() / 2, -img.height() / 2, img);
 }
 

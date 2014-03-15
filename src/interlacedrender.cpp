@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QBitmap>
 
-void drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, QBitmap &mask, qreal zoom, QWidget *parent){
+void drawInterlaced(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY, QPainter &painter, QBitmap &mask, qreal zoom, QWidget *parent){
     if(zoom <= 0.0){
         zoom = qMin(qreal(painter.window().width()) / qreal(imgL.width()), qreal(painter.window().height()) / qreal(imgL.height()));
     }
@@ -28,8 +28,8 @@ void drawInterlaced(const QImage &imgL, const QImage &imgR, int panX, int panY, 
 
 
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-    painter.drawImage(outRect, imgL);
+    painter.drawPixmap(outRect, imgL);
     painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
-    painter.drawImage(outRect, imgR);
+    painter.drawPixmap(outRect, imgR);
 }
 

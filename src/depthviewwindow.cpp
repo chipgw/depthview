@@ -280,7 +280,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
     if(filename.contains(".jps", Qt::CaseInsensitive)){
         QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
         QPainter paint(&out);
-        drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, paint);
+        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint);
 
         if(!out.isNull()){
             out.save(filename, "JPG");
@@ -288,7 +288,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
     }else if(filename.contains(".pns", Qt::CaseInsensitive)){
         QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
         QPainter paint(&out);
-        drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, paint);
+        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint);
 
         if(!out.isNull()){
             out.save(filename, "PNG");
@@ -315,7 +315,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
         }else if(dialog.sidebyside){
             QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
             QPainter paint(&out);
-            drawSideBySide(ui->imageWidget->imgL, ui->imageWidget->imgR, 0, 0, paint, 1.0, dialog.mirrorL, dialog.mirrorR);
+            drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0, dialog.mirrorL, dialog.mirrorR);
 
             if(!out.isNull()){
                 out.save(filename, NULL, dialog.quality);

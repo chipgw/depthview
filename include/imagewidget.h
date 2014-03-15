@@ -41,7 +41,7 @@ protected:
 
     DrawMode mode;
 
-    QImage anglaph;
+    QPixmap anglaph;
 
     QBitmap maskInterlacedHorizontal;
     QBitmap maskInterlacedVertical;
@@ -51,6 +51,7 @@ public:
     const static QMap<QString, DrawMode> drawModeNames;
 
     QImage imgL, imgR;
+    QPixmap pixmapL, pixmapR;
 
     explicit ImageWidget(QWidget *parent = NULL);
     bool loadStereoImage(const QString &filename);
@@ -72,7 +73,7 @@ public slots:
     void enableContinuousPan(bool enable);
 
 protected:
-    void draw(const QImage &L, const QImage &R, QPainter &painter);
+    void draw(const QPixmap &L, const QPixmap &R, QPainter &painter);
     void updateAnglaph();
 
     void resizeEvent(QResizeEvent *e);

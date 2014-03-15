@@ -43,9 +43,9 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         QTime starttime = QTime::currentTime();
 
         if(swapLR){
-            draw(imgR, imgL, painter);
+            draw(pixmapR, pixmapL, painter);
         }else{
-            draw(imgL, imgR, painter);
+            draw(pixmapL, pixmapR, painter);
         }
 
         qDebug("Draw time: %ims", starttime.msecsTo(QTime::currentTime()));
@@ -57,6 +57,8 @@ bool ImageWidget::loadStereoImage(const QString &filename){
 
     imgR = img.copy(0,               0, img.width() / 2, img.height());
     imgL = img.copy(img.width() / 2, 0, img.width() / 2, img.height());
+    pixmapL = QPixmap::fromImage(imgL);
+    pixmapR = QPixmap::fromImage(imgR);
     recalculatescroolmax();
     updateAnglaph();
     repaint();
@@ -182,7 +184,7 @@ void ImageWidget::hideCursor(){
     setCursor(Qt::BlankCursor);
 }
 
-void ImageWidget::draw(const QImage &L, const QImage &R, QPainter &painter){
+void ImageWidget::draw(const QPixmap &L, const QPixmap &R, QPainter &painter){
     switch(mode){
     case AnglaphFull:
     case AnglaphHalf:
@@ -247,13 +249,13 @@ void ImageWidget::updateAnglaph(){
     const QImage &R = swapLR ? imgR : imgL;
     switch(mode){
     case AnglaphFull:
-        anglaph = drawAnglaph(L, R);
+        anglaph = QPixmap::fromImage(drawAnglaph(L, R));
         break;
     case AnglaphHalf:
-        anglaph = drawAnglaphHalf(L, R);
+        anglaph = QPixmap::fromImage(drawAnglaphHalf(L, R));
         break;
     case AnglaphGreyscale:
-        anglaph = drawAnglaphGrey(L, R);
+        anglaph = QPixmap::fromImage(drawAnglaphGrey(L, R));
         break;
     default: break;
     }

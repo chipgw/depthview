@@ -1,7 +1,7 @@
 #include "renderers.h"
 #include <QPainter>
 
-void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, QPainter &painter, qreal zoom, bool mirrorL, bool mirrorR){
+void drawSideBySide(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY, QPainter &painter, qreal zoom, bool mirrorL, bool mirrorR){
     QRect size = painter.window();
 
     if(zoom <= 0.0){
@@ -20,7 +20,7 @@ void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, 
     painter.translate(panX, panY);
 
     painter.scale(zoom, zoom);
-    painter.drawImage(-imgL.width() / 2, -imgL.height() / 2, imgL);
+    painter.drawPixmap(-imgL.width() / 2, -imgL.height() / 2, imgL);
 
     painter.resetTransform();
     painter.translate(size.width() / 2, 0);
@@ -35,6 +35,6 @@ void drawSideBySide(const QImage &imgL, const QImage &imgR, int panX, int panY, 
     painter.translate(panX, panY);
 
     painter.scale(zoom, zoom);
-    painter.drawImage(-imgR.width() / 2, -imgR.height() / 2, imgR);
+    painter.drawPixmap(-imgR.width() / 2, -imgR.height() / 2, imgR);
 }
 
