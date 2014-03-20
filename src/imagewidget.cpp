@@ -245,8 +245,8 @@ void ImageWidget::setPanButtons(Qt::MouseButtons buttons){
 }
 
 void ImageWidget::updateAnglaph(){
-    const QImage &L = swapLR ? imgL : imgR;
-    const QImage &R = swapLR ? imgR : imgL;
+    const QImage &L = swapLR ? imgR : imgL;
+    const QImage &R = swapLR ? imgL : imgR;
     switch(mode){
     case AnglaphFull:
         anglaph = QPixmap::fromImage(drawAnglaph(L, R));
