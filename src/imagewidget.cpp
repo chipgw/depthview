@@ -123,13 +123,8 @@ void ImageWidget::recalculatescroolmax(){
     int vmax = qMax(int((imgL.height() << isTopBottom) * zoom - height()) >> (isTopBottom + 1), 0);
     vBar.setRange(-vmax, vmax);
 
-    if(scrollbarsVisible){
-        hBar.setVisible(hmax != 0);
-        vBar.setVisible(vmax != 0);
-    }else{
-        hBar.setVisible(false);
-        vBar.setVisible(false);
-    }
+    hBar.setVisible(scrollbarsVisible ? hmax != 0 : false);
+    vBar.setVisible(scrollbarsVisible ? vmax != 0 : false);
 }
 
 void ImageWidget::setZoom(qreal val){
@@ -148,13 +143,10 @@ void ImageWidget::zoomOut(){
 
 void ImageWidget::addZoom(qreal amount){
     if(zoom <= 0.0){
-        if(mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth){
-            zoom = qMin(qreal(width()) / (imgL.width() * 2.0), qreal(height()) / qreal(imgL.height()));
-        }else if(mode == TopBottom || mode == TopBottomMTop || mode == TopBottomMBottom || mode == TopBottomMBoth){
-            zoom = qMin(qreal(width()) / qreal(imgL.width()), qreal(height()) / (imgL.height() * 2.0));
-        }else{
-            zoom = qMin(qreal(width()) / qreal(imgL.width()), qreal(height()) / qreal(imgL.height()));
-        }
+        bool isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
+        bool isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
+
+        zoom = qMin(qreal(width()) / qreal(imgL.width() << isSidebySide), qreal(height()) / qreal(imgL.height() << isTopBottom));
     }
     qreal zoomorig = zoom;
     zoom += amount * zoom;
