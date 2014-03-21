@@ -11,21 +11,22 @@ void drawInterlaced(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY
                   panY + painter.window().height() / 2 - (imgL.height() / 2) * zoom,
                   imgL.width() * zoom, imgL.height() * zoom);
 
-    painter.setClipRect(outRect);
+    QRect maskArea = outRect & painter.window();
+
+    painter.setClipRect(maskArea);
 
     painter.setCompositionMode(QPainter::CompositionMode_Clear);
-    painter.drawRect(painter.window());
+    painter.drawRect(maskArea);
 
     painter.setCompositionMode(QPainter::CompositionMode_Source);
     painter.setBackgroundMode(Qt::TransparentMode);
 
     // TODO - offset this based on widget's position on screen.
-    for(int x = outRect.left(); x < outRect.right(); x += mask.width()){
-        for(int y = outRect.top(); y < outRect.bottom(); y += mask.height()){
+    for(int x = maskArea.left(); x < maskArea.right(); x += mask.width()){
+        for(int y = maskArea.top(); y < maskArea.bottom(); y += mask.height()){
             painter.drawPixmap(x, y, mask);
         }
     }
-
 
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
     painter.drawPixmap(outRect, imgL);
