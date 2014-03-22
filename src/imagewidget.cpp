@@ -123,8 +123,8 @@ void ImageWidget::recalculatescroolmax(){
     int vmax = qMax(int((imgL.height() << isTopBottom) * zoom - height()) >> (isTopBottom + 1), 0);
     vBar.setRange(-vmax, vmax);
 
-    hBar.setVisible(scrollbarsVisible ? hmax != 0 : false);
-    vBar.setVisible(scrollbarsVisible ? vmax != 0 : false);
+    hBar.setVisible(scrollbarsVisible && hmax != 0);
+    vBar.setVisible(scrollbarsVisible && vmax != 0);
 }
 
 void ImageWidget::setZoom(qreal val){
