@@ -39,6 +39,12 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         font.setPointSize(32);
         painter.setFont(font);
         painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("No Image Loaded"));
+    }else if(parentWidget() && !parentWidget()->isFullScreen() && (mode == InterlacedHorizontal || mode == InterlacedVertical || mode == Checkerboard)){
+        painter.setPen(Qt::gray);
+        QFont font;
+        font.setPointSize(32);
+        painter.setFont(font);
+        painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("Interlaced/Checkerboard Display Must Be Fullscreen"));
     }else{
         QTime starttime = QTime::currentTime();
 
@@ -208,13 +214,13 @@ void ImageWidget::draw(const QPixmap &L, const QPixmap &R, QPainter &painter){
         drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
         break;
     case InterlacedHorizontal:
-        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedHorizontal, zoom, this);
+        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedHorizontal, zoom);
         break;
     case InterlacedVertical:
-        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedVertical, zoom, this);
+        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedVertical, zoom);
         break;
     case Checkerboard:
-        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskCheckerboard, zoom, this);
+        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskCheckerboard, zoom);
         break;
     case MonoLeft:
         drawSingle(L, -hBar.value(), -vBar.value(), painter, zoom);

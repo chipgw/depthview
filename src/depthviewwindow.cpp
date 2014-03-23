@@ -171,6 +171,11 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
     if(val){
         setWindowState(windowState() | Qt::WindowFullScreen);
         ui->actionShowMenuBar->setChecked(false);
+
+        ui->menuInterlaced->setEnabled(true);
+        ui->actionInterlacedHorizontal->setEnabled(true);
+        ui->actionInterlacedVertical->setEnabled(true);
+        ui->actionCheckerboard->setEnabled(true);
     }else{
         setWindowState(windowState() & ~Qt::WindowFullScreen);
 
@@ -179,6 +184,11 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
         }else{
             ui->actionShowMenuBar->setChecked(true);
         }
+
+        ui->menuInterlaced->setEnabled(false);
+        ui->actionInterlacedHorizontal->setEnabled(false);
+        ui->actionInterlacedVertical->setEnabled(false);
+        ui->actionCheckerboard->setEnabled(false);
     }
 }
 
