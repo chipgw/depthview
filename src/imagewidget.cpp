@@ -44,7 +44,7 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         QFont font;
         font.setPointSize(24);
         painter.setFont(font);
-        painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("Interlaced/Checkerboard Display Must Be Fullscreen"));
+        painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("%1 Display Must Be Fullscreen").arg(mode == Checkerboard ? "Checkerboard" : "Interlaced"));
 
         /* keep scrollbars hidden. */
         zoom = 0.0f;
