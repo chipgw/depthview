@@ -42,9 +42,13 @@ void ImageWidget::paintEvent(QPaintEvent *e){
     }else if(parentWidget() && !parentWidget()->isFullScreen() && (mode == InterlacedHorizontal || mode == InterlacedVertical || mode == Checkerboard)){
         painter.setPen(Qt::gray);
         QFont font;
-        font.setPointSize(32);
+        font.setPointSize(24);
         painter.setFont(font);
         painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("Interlaced/Checkerboard Display Must Be Fullscreen"));
+
+        /* keep scrollbars hidden. */
+        zoom = 0.0f;
+        recalculatescroolmax();
     }else{
         QTime starttime = QTime::currentTime();
 
