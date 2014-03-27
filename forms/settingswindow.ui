@@ -14,7 +14,7 @@
    <string>DepthView Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons.qrc">
+   <iconset resource="../resources.qrc">
     <normaloff>:/icons/silk/16x16/wrench.png</normaloff>:/icons/silk/16x16/wrench.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -244,7 +244,7 @@
   </action>
  </widget>
  <resources>
-  <include location="../icons.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections>
   <connection>
