@@ -30,6 +30,7 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
     }
 
     connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
+    connect(ui->rememberWindowStateCheckBox, SIGNAL(toggled(bool)), ui->startFullscreenCheckBox, SLOT(setDisabled(bool)));
 
     ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
 
@@ -52,6 +53,7 @@ SettingsWindow::~SettingsWindow(){
 
 void SettingsWindow::accept(){
     settings.setValue(defaultrender,    ui->defaultRendererComboBox->currentText());
+    settings.setValue(rememberwindow,   ui->rememberWindowStateCheckBox->isChecked());
     settings.setValue(startfullscreen,  ui->startFullscreenCheckBox->isChecked());
     settings.setValue(swapLR,           ui->swapLeftRightCheckBox->isChecked());
     settings.setValue(startupdirectory, ui->startupDirectoryLineEdit->text());
@@ -70,6 +72,7 @@ void SettingsWindow::restoreDefaults(){
         settings.clear();
 
         ui->defaultRendererComboBox->setCurrentIndex(-1);
+        ui->rememberWindowStateCheckBox->setChecked(true);
         ui->startFullscreenCheckBox->setChecked(false);
         ui->swapLeftRightCheckBox->setChecked(false);
         ui->showMenuBarCheckBox->setChecked(true);
@@ -91,6 +94,7 @@ void SettingsWindow::on_startupDirectoryBrowsePushButton_clicked(){
 }
 
 const QString SettingsWindow::defaultrender     = "defaultrender";
+const QString SettingsWindow::rememberwindow    = "rememberwindow";
 const QString SettingsWindow::startfullscreen   = "startfullscreen";
 const QString SettingsWindow::swapLR            = "swapLR";
 const QString SettingsWindow::startupdirectory  = "startupdirectory";

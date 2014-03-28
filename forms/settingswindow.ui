@@ -40,7 +40,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="startFullscreenLabel">
        <property name="toolTip">
         <string>Run DepthView fullscreen</string>
@@ -50,14 +50,17 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <widget class="QCheckBox" name="startFullscreenCheckBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="toolTip">
         <string>Run DepthView fullscreen</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="startupDirectoryLabel">
        <property name="toolTip">
         <string>The directory in which DepthView starts up if no command line arguments are supplied. (leave blank for home directory)</string>
@@ -67,7 +70,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLineEdit" name="startupDirectoryLineEdit">
@@ -91,7 +94,7 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="swapLeftRightLabel">
        <property name="toolTip">
         <string>Swap the left and right images by default</string>
@@ -101,14 +104,14 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <widget class="QCheckBox" name="swapLeftRightCheckBox">
        <property name="toolTip">
         <string>Swap the left and right images by default</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="showMenuBarLabel">
        <property name="toolTip">
         <string>Show the menu bar when DepthView is started. (has no effect if start fullscreen is enabled)</string>
@@ -118,7 +121,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <widget class="QCheckBox" name="showMenuBarCheckBox">
        <property name="toolTip">
         <string>Show the menu bar when DepthView is started. (has no effect if start fullscreen is enabled)</string>
@@ -128,7 +131,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="disableDragDropLabel">
        <property name="toolTip">
         <string>disables droping images into window to open them.</string>
@@ -138,14 +141,14 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <widget class="QCheckBox" name="disableDragDropCheckBox">
        <property name="toolTip">
         <string>disables droping images into window to open them.</string>
        </property>
       </widget>
      </item>
-     <item row="6" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="fileDialogStartupLabel">
        <property name="toolTip">
         <string>Enables showing an &quot;Open File&quot; dialog when DepthView starts and has no command line arguments.</string>
@@ -155,7 +158,7 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="7" column="1">
       <widget class="QCheckBox" name="fileDialogStartupCheckBox">
        <property name="toolTip">
         <string>Enables showing an &quot;Open File&quot; dialog when DepthView starts and has no command line arguments.</string>
@@ -165,45 +168,59 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="enableContinuousPanLabel">
        <property name="text">
         <string>Enable Continuous Pan</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <widget class="QCheckBox" name="enableContinuousPanCheckBox">
        <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
+     <item row="9" column="0">
       <widget class="QLabel" name="showScrollbarsLabel">
        <property name="text">
         <string>Show Scrollbars</string>
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="9" column="1">
       <widget class="QCheckBox" name="showScrollbarsCheckBox">
        <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
+     <item row="10" column="0">
       <widget class="QLabel" name="panButtonLabel">
        <property name="text">
         <string>Pan Button</string>
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
+     <item row="10" column="1">
       <widget class="QPushButton" name="panButtonMenuPushButton">
        <property name="text">
         <string>Mouse Buttons</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="rememberWindowStateLabel">
+       <property name="text">
+        <string>Remember Window State</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="rememberWindowStateCheckBox">
+       <property name="checked">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

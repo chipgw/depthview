@@ -71,6 +71,11 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 }
 
 DepthViewWindow::~DepthViewWindow(){
+    settings.beginGroup("Window");
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("state", saveState());
+    settings.endGroup();
+
     delete ui;
 }
 
@@ -394,20 +399,32 @@ void DepthViewWindow::loadSettings(){
     if(settings.contains(SettingsWindow::defaultrender)){
         setRenderModeFromString(settings.value(SettingsWindow::defaultrender).toString());
     }
-    if(settings.contains(SettingsWindow::startfullscreen)){
+    if(settings.contains(SettingsWindow::rememberwindow) && settings.value(SettingsWindow::rememberwindow).toBool()){
+        settings.beginGroup("Window");
+        restoreGeometry(settings.value("geometry").toByteArray());
+        restoreState(settings.value("state").toByteArray());
+        settings.endGroup();
+
+        if(windowState().testFlag(Qt::WindowFullScreen)){
+            /* hides the menubar and makes toggling fullscreen work right */
+            ui->actionFullscreen->setChecked(true);
+        }
+    }else if(settings.contains(SettingsWindow::startfullscreen)){
         ui->actionFullscreen->setChecked(settings.value(SettingsWindow::startfullscreen).toBool());
     }else{
         ui->actionFullscreen->setChecked(false);
+
+        /* keeps the menubar from enabling in fullscreen mode */
+        if(settings.contains(SettingsWindow::showmenubar)){
+            ui->actionShowMenuBar->setChecked(settings.value(SettingsWindow::showmenubar).toBool());
+        }else{
+            ui->actionShowMenuBar->setChecked(true);
+        }
     }
     if(settings.contains(SettingsWindow::swapLR)){
         ui->actionSwap_Left_Right->setChecked(settings.value(SettingsWindow::swapLR).toBool());
     }else{
         ui->actionSwap_Left_Right->setChecked(false);
-    }
-    if(settings.contains(SettingsWindow::showmenubar)){
-        ui->actionShowMenuBar->setChecked(settings.value(SettingsWindow::showmenubar).toBool());
-    }else{
-        ui->actionShowMenuBar->setChecked(true);
     }
     if(settings.contains(SettingsWindow::disabledragdrop)){
         setAcceptDrops(!settings.value(SettingsWindow::disabledragdrop).toBool());

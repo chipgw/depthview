@@ -15,6 +15,7 @@ public:
     ~SettingsWindow();
     
     const static QString defaultrender;
+    const static QString rememberwindow;
     const static QString startfullscreen;
     const static QString swapLR;
     const static QString startupdirectory;
