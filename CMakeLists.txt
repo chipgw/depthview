@@ -55,6 +55,7 @@ if(DEPTHVIEW_USE_QT4)
     target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
 else(DEPTHVIEW_USE_QT4)
     qt5_use_modules(${PROJECT_NAME} Widgets)
+    target_link_libraries(${PROJECT_NAME} Qt5::WinMain)
 endif(DEPTHVIEW_USE_QT4)
 
 # TODO - make this whole CPack thing a lot less messy...
