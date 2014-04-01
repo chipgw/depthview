@@ -32,6 +32,10 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
     connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
     connect(ui->rememberWindowStateCheckBox, SIGNAL(toggled(bool)), ui->startFullscreenCheckBox, SLOT(setDisabled(bool)));
 
+    if(settings.contains(rememberwindow)){
+        ui->rememberWindowStateCheckBox->setChecked(settings.value(rememberwindow).toBool());
+    }
+
     ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
 
     ui->panButtonMenuPushButton->setMenu(new QMenu());
