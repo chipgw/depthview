@@ -2,7 +2,7 @@
 #include "renderers.h"
 #include <QResizeEvent>
 #include <QPainter>
-#include <QTime>
+#include <QElapsedTimer>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0), swapLR(false), panButtons(Qt::LeftButton | Qt::MidButton),
     mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true),
@@ -50,7 +50,8 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         zoom = 0.0f;
         recalculatescroolmax();
     }else{
-        QTime starttime = QTime::currentTime();
+        QElapsedTimer time;
+        time.start();
 
         if(swapLR){
             draw(pixmapR, pixmapL, painter);
@@ -58,7 +59,7 @@ void ImageWidget::paintEvent(QPaintEvent *e){
             draw(pixmapL, pixmapR, painter);
         }
 
-        qDebug("Draw time: %ims", starttime.msecsTo(QTime::currentTime()));
+        qDebug("Draw time: %fms", time.nsecsElapsed() * 1.0e-6);
     }
 }
 
