@@ -119,6 +119,7 @@
     <addaction name="menuZoom"/>
     <addaction name="actionSwap_Left_Right"/>
     <addaction name="actionShow_Scrollbars"/>
+    <addaction name="actionSmooth_Scaling"/>
    </widget>
    <widget class="QMenu" name="menuImage">
     <property name="title">
@@ -446,6 +447,14 @@
    </property>
    <property name="text">
     <string>Import...</string>
+   </property>
+  </action>
+  <action name="actionSmooth_Scaling">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Smooth Scaling</string>
    </property>
   </action>
  </widget>

@@ -35,6 +35,7 @@ protected:
     bool swapLR;
     bool scrollbarsVisible;
     bool continuousPan;
+    bool smoothTransform;
     Qt::MouseButtons panButtons;
 
     QTimer mouseTimer;
@@ -71,6 +72,7 @@ public slots:
     void enableSwapLR(bool enable);
     void showScrollbars(bool show);
     void enableContinuousPan(bool enable);
+    void enableSmoothTransform(bool enable);
 
 protected:
     void draw(const QPixmap &L, const QPixmap &R, QPainter &painter);

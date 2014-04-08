@@ -5,7 +5,7 @@
 #include <QElapsedTimer>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0), swapLR(false), panButtons(Qt::LeftButton | Qt::MidButton),
-    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true),
+    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true), smoothTransform(false),
     maskInterlacedHorizontal(":/masks/interlacedH.pbm"), maskInterlacedVertical(":/masks/interlacedV.pbm"), maskCheckerboard(":/masks/checkerboard.pbm") {
 
     setMouseTracking(true);
@@ -30,6 +30,7 @@ void ImageWidget::resizeEvent(QResizeEvent *e){
 
 void ImageWidget::paintEvent(QPaintEvent *e){
     QPainter painter(this);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform, smoothTransform);
     painter.setBrush(QBrush(Qt::black));
     painter.drawRect(e->rect());
 
@@ -181,6 +182,11 @@ void ImageWidget::showScrollbars(bool show){
 
 void ImageWidget::enableContinuousPan(bool enable){
     continuousPan = enable;
+}
+
+void ImageWidget::enableSmoothTransform(bool enable){
+    smoothTransform = enable;
+    repaint();
 }
 
 void ImageWidget::hideCursor(){
