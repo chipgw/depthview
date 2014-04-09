@@ -19,15 +19,20 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
 include(GetGitRevisionDescription)
 get_git_head_revision(GIT_REFSPEC GIT_SHA1)
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp" @ONLY)
-
 file(GLOB HEADERS "include/*.h")
 file(GLOB SOURCES "src/*.cpp")
 file(GLOB FORMS "forms/*.ui")
 set(RESOURCES "resources.qrc")
 
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc.in" "${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc" @ONLY)
-set(WINDRES "DepthView.rc")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/version.cpp" @ONLY)
+list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/version.cpp")
+
+if(WIN32)
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc.in" "${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc" @ONLY)
+    set(WINDRES "DepthView.rc")
+else(WIN32)
+    set(WINDRES "")
+endif(WIN32)
 
 if(DEPTHVIEW_PORTABLE)
     add_definitions(-DDEPTHVIEW_PORTABLE)
