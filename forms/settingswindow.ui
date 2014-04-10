@@ -40,6 +40,20 @@
        </property>
       </widget>
      </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="rememberWindowStateLabel">
+       <property name="text">
+        <string>Remember Window State</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="rememberWindowStateCheckBox">
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="startFullscreenLabel">
        <property name="toolTip">
@@ -196,33 +210,29 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="panButtonLabel">
        <property name="text">
         <string>Pan Button</string>
        </property>
       </widget>
      </item>
-     <item row="10" column="1">
+     <item row="11" column="1">
       <widget class="QPushButton" name="panButtonMenuPushButton">
        <property name="text">
         <string>Mouse Buttons</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="rememberWindowStateLabel">
+     <item row="10" column="0">
+      <widget class="QLabel" name="enableSmoothScalingLabel">
        <property name="text">
-        <string>Remember Window State</string>
+        <string>Enable Smooth Scaling</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QCheckBox" name="rememberWindowStateCheckBox">
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
+     <item row="10" column="1">
+      <widget class="QCheckBox" name="enableSmoothScalingCheckBox"/>
      </item>
     </layout>
    </item>

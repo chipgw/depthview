@@ -24,6 +24,7 @@ public:
     const static QString disabledragdrop;
     const static QString continuouspan;
     const static QString showscrollbars;
+    const static QString smoothscaling;
     const static QString panbuttons;
 
 private slots:

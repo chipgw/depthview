@@ -28,6 +28,7 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
     if(settings.contains(showscrollbars)){
         ui->showScrollbarsCheckBox->setChecked(settings.value(showscrollbars).toBool());
     }
+    ui->enableSmoothScalingCheckBox->setChecked(settings.value(smoothscaling).toBool());
 
     connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
     connect(ui->rememberWindowStateCheckBox, SIGNAL(toggled(bool)), ui->startFullscreenCheckBox, SLOT(setDisabled(bool)));
@@ -66,6 +67,7 @@ void SettingsWindow::accept(){
     settings.setValue(disabledragdrop,  ui->disableDragDropCheckBox->isChecked());
     settings.setValue(continuouspan,    ui->enableContinuousPanCheckBox->isChecked());
     settings.setValue(showscrollbars,   ui->showScrollbarsCheckBox->isChecked());
+    settings.setValue(smoothscaling,    ui->enableSmoothScalingCheckBox->isChecked());
     settings.setValue(panbuttons,       int((ui->actionLeft_Mouse->isChecked() ? Qt::LeftButton : 0) | (ui->actionMiddle_Mouse->isChecked() ? Qt::MiddleButton : 0)));
     QDialog::accept();
 }
@@ -85,6 +87,7 @@ void SettingsWindow::restoreDefaults(){
         ui->startupDirectoryLineEdit->setText("");
         ui->enableContinuousPanCheckBox->setChecked(true);
         ui->showScrollbarsCheckBox->setChecked(true);
+        ui->enableSmoothScalingCheckBox->setChecked(false);
         ui->actionLeft_Mouse->setChecked(true);
         ui->actionMiddle_Mouse->setChecked(true);
     }
@@ -107,4 +110,5 @@ const QString SettingsWindow::filedialogstartup = "filedialogstartup";
 const QString SettingsWindow::disabledragdrop   = "disabledragdrop";
 const QString SettingsWindow::continuouspan     = "continuouspan";
 const QString SettingsWindow::showscrollbars    = "showscrollbars";
+const QString SettingsWindow::smoothscaling     = "smoothscaling";
 const QString SettingsWindow::panbuttons        = "panbuttons";
