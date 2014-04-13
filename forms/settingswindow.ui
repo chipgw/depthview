@@ -76,7 +76,6 @@
         <widget class="QCheckBox" name="enableSmoothScalingCheckBox"/>
        </item>
       </layout>
-      <zorder></zorder>
       <zorder>defaultRendererComboBox</zorder>
       <zorder>defaultRendererLabel</zorder>
       <zorder>swapLeftRightLabel</zorder>
@@ -89,6 +88,9 @@
        <string>Interface</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout_3">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="rememberWindowStateLabel">
          <property name="text">
@@ -143,26 +145,6 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="fileDialogStartupLabel">
-         <property name="toolTip">
-          <string>Enables showing an &quot;Open File&quot; dialog when DepthView starts and has no command line arguments.</string>
-         </property>
-         <property name="text">
-          <string>Show Open File Dialog at Startup</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QCheckBox" name="fileDialogStartupCheckBox">
-         <property name="toolTip">
-          <string>Enables showing an &quot;Open File&quot; dialog when DepthView starts and has no command line arguments.</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="0">
         <widget class="QLabel" name="showScrollbarsLabel">
          <property name="text">
@@ -177,16 +159,41 @@
          </property>
         </widget>
        </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="enableContinuousPanLabel">
+         <property name="text">
+          <string>Enable Continuous Pan</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QCheckBox" name="enableContinuousPanCheckBox">
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="panButtonLabel">
+         <property name="text">
+          <string>Pan Button</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QPushButton" name="panButtonMenuPushButton">
+         <property name="text">
+          <string>Mouse Buttons</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tabControls">
+     <widget class="QWidget" name="tabFile">
       <attribute name="title">
-       <string>Controls</string>
+       <string>File</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout_4">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
+      <layout class="QFormLayout" name="formLayout">
        <item row="0" column="0">
         <widget class="QLabel" name="disableDragDropLabel">
          <property name="toolTip">
@@ -205,41 +212,26 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="enableContinuousPanLabel">
+        <widget class="QLabel" name="fileDialogStartupLabel">
+         <property name="toolTip">
+          <string>Enables showing an &quot;Open File&quot; dialog when DepthView starts and has no command line arguments.</string>
+         </property>
          <property name="text">
-          <string>Enable Continuous Pan</string>
+          <string>Show Open File Dialog at Startup</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QCheckBox" name="enableContinuousPanCheckBox">
+        <widget class="QCheckBox" name="fileDialogStartupCheckBox">
+         <property name="toolTip">
+          <string>Enables showing an &quot;Open File&quot; dialog when DepthView starts and has no command line arguments.</string>
+         </property>
          <property name="checked">
           <bool>true</bool>
          </property>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="panButtonLabel">
-         <property name="text">
-          <string>Pan Button</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="panButtonMenuPushButton">
-         <property name="text">
-          <string>Mouse Buttons</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tabFile">
-      <attribute name="title">
-       <string>File</string>
-      </attribute>
-      <layout class="QFormLayout" name="formLayout">
-       <item row="0" column="0">
         <widget class="QLabel" name="startupDirectoryLabel">
          <property name="toolTip">
           <string>The directory in which DepthView starts up if no command line arguments are supplied. (leave blank for home directory)</string>
@@ -249,7 +241,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="2" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLineEdit" name="startupDirectoryLineEdit">
