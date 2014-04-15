@@ -201,26 +201,30 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
 void DepthViewWindow::on_actionNext_triggered(){
     QStringList entryList = currentDir.entryList();
     if(!entryList.empty()){
-        int index = entryList.indexOf(currentFile) + 1;
-        if(index < 0){
-            index = entryList.count() - 1;
-        }else if(index >= entryList.count()){
-            index = 0;
-        }
-        loadImage(entryList[index]);
+        int index = entryList.indexOf(currentFile);
+        do{
+            ++index;
+            if(index < 0){
+                index = entryList.count() - 1;
+            }else if(index >= entryList.count()){
+                index = 0;
+            }
+        }while(!loadImage(entryList[index]));
     }
 }
 
 void DepthViewWindow::on_actionPrevious_triggered(){
     QStringList entryList = currentDir.entryList();
     if(!entryList.empty()){
-        int index = entryList.indexOf(currentFile) - 1;
-        if(index < 0){
-            index = entryList.count() - 1;
-        }else if(index >= entryList.count()){
-            index = 0;
-        }
-        loadImage(entryList[index]);
+        int index = entryList.indexOf(currentFile);
+        do{
+            --index;
+            if(index < 0){
+                index = entryList.count() - 1;
+            }else if(index >= entryList.count()){
+                index = 0;
+            }
+        }while(!loadImage(entryList[index]));
     }
 }
 
