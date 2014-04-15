@@ -75,7 +75,6 @@ public slots:
     void enableSmoothTransform(bool enable);
 
 protected:
-    void draw(const QPixmap &L, const QPixmap &R, QPainter &painter);
     void updateAnglaph();
 
     void resizeEvent(QResizeEvent *e);

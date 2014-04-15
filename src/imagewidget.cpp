@@ -54,10 +54,54 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         QElapsedTimer time;
         time.start();
 
-        if(swapLR){
-            draw(pixmapR, pixmapL, painter);
-        }else{
-            draw(pixmapL, pixmapR, painter);
+        const QPixmap &L = swapLR ? pixmapR : pixmapL;
+        const QPixmap &R = swapLR ? pixmapL : pixmapR;
+
+        switch(mode){
+        case AnglaphFull:
+        case AnglaphHalf:
+        case AnglaphGreyscale:
+            drawSingle(anglaph, -hBar.value(), -vBar.value(), painter, zoom);
+            break;
+        case SidebySide:
+            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom);
+            break;
+        case SidebySideMLeft:
+            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true);
+            break;
+        case SidebySideMRight:
+            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, false, true);
+            break;
+        case SidebySideMBoth:
+            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
+            break;
+        case TopBottom:
+            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom);
+            break;
+        case TopBottomMTop:
+            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true);
+            break;
+        case TopBottomMBottom:
+            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, false, true);
+            break;
+        case TopBottomMBoth:
+            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
+            break;
+        case InterlacedHorizontal:
+            drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedHorizontal, zoom);
+            break;
+        case InterlacedVertical:
+            drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedVertical, zoom);
+            break;
+        case Checkerboard:
+            drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskCheckerboard, zoom);
+            break;
+        case MonoLeft:
+            drawSingle(L, -hBar.value(), -vBar.value(), painter, zoom);
+            break;
+        case MonoRight:
+            drawSingle(R, -hBar.value(), -vBar.value(), painter, zoom);
+            break;
         }
 
         qDebug("Draw time: %fms", time.nsecsElapsed() * 1.0e-6);
@@ -191,55 +235,6 @@ void ImageWidget::enableSmoothTransform(bool enable){
 
 void ImageWidget::hideCursor(){
     setCursor(Qt::BlankCursor);
-}
-
-void ImageWidget::draw(const QPixmap &L, const QPixmap &R, QPainter &painter){
-    switch(mode){
-    case AnglaphFull:
-    case AnglaphHalf:
-    case AnglaphGreyscale:
-        drawSingle(anglaph, -hBar.value(), -vBar.value(), painter, zoom);
-        break;
-    case SidebySide:
-        drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom);
-        break;
-    case SidebySideMLeft:
-        drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true);
-        break;
-    case SidebySideMRight:
-        drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, false, true);
-        break;
-    case SidebySideMBoth:
-        drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
-        break;
-    case TopBottom:
-        drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom);
-        break;
-    case TopBottomMTop:
-        drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true);
-        break;
-    case TopBottomMBottom:
-        drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, false, true);
-        break;
-    case TopBottomMBoth:
-        drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
-        break;
-    case InterlacedHorizontal:
-        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedHorizontal, zoom);
-        break;
-    case InterlacedVertical:
-        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedVertical, zoom);
-        break;
-    case Checkerboard:
-        drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskCheckerboard, zoom);
-        break;
-    case MonoLeft:
-        drawSingle(L, -hBar.value(), -vBar.value(), painter, zoom);
-        break;
-    case MonoRight:
-        drawSingle(R, -hBar.value(), -vBar.value(), painter, zoom);
-        break;
-    }
 }
 
 void ImageWidget::setRenderMode(DrawMode m){
