@@ -475,7 +475,7 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
             if(i.hasNext()){
                 const QString &dir = i.next();
                 if(!currentDir.cd(dir)){
-                    warning.append(tr("<p>Invalid directory \"\%1\" passed to \"--startdir\" argument!</p>").arg(dir));
+                    warning.append(tr("<p>Invalid directory \"%1\" passed to \"--startdir\" argument!</p>").arg(dir));
                 }
             }else{
                 warning.append(tr("<p>Argument \"--startdir\" passed with no argument after it!</p>"));
