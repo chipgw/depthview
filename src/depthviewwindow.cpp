@@ -426,31 +426,13 @@ void DepthViewWindow::loadSettings(){
             ui->actionShowMenuBar->setChecked(true);
         }
     }
-    if(settings.contains(SettingsWindow::swapLR)){
-        ui->actionSwap_Left_Right->setChecked(settings.value(SettingsWindow::swapLR).toBool());
-    }else{
-        ui->actionSwap_Left_Right->setChecked(false);
-    }
-    if(settings.contains(SettingsWindow::disabledragdrop)){
-        setAcceptDrops(!settings.value(SettingsWindow::disabledragdrop).toBool());
-    }else{
-        setAcceptDrops(true);
-    }
-    if(settings.contains(SettingsWindow::continuouspan)){
-        ui->imageWidget->enableContinuousPan(settings.value(SettingsWindow::continuouspan).toBool());
-    }else{
-        ui->imageWidget->enableContinuousPan(true);
-    }
-    if(settings.contains(SettingsWindow::showscrollbars)){
-        ui->actionShow_Scrollbars->setChecked(settings.value(SettingsWindow::showscrollbars).toBool());
-    }else{
-        ui->actionShow_Scrollbars->setChecked(true);
-    }
-    if(settings.contains(SettingsWindow::smoothscaling)){
-        ui->actionSmooth_Scaling->setChecked(settings.value(SettingsWindow::smoothscaling).toBool());
-    }else{
-        ui->actionSmooth_Scaling->setChecked(false);
-    }
+
+    ui->actionSwap_Left_Right->setChecked(settings.contains(SettingsWindow::swapLR) ? settings.value(SettingsWindow::swapLR).toBool() : false);
+    setAcceptDrops(settings.contains(SettingsWindow::disabledragdrop) ? !settings.value(SettingsWindow::disabledragdrop).toBool() : true);
+    ui->imageWidget->enableContinuousPan(settings.contains(SettingsWindow::continuouspan) ? settings.value(SettingsWindow::continuouspan).toBool() : true);
+    ui->actionShow_Scrollbars->setChecked(settings.contains(SettingsWindow::showscrollbars) ? settings.value(SettingsWindow::showscrollbars).toBool() : true);
+    ui->actionSmooth_Scaling->setChecked(settings.contains(SettingsWindow::smoothscaling) ? settings.value(SettingsWindow::smoothscaling).toBool() : false);
+
     if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && currentDir.absolutePath() == QDir::homePath()){
         currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
     }
