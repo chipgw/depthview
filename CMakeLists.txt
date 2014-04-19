@@ -12,6 +12,13 @@ set(DepthView_VERSION_MINOR 05)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
+# Silences warnings about the policy not being set.
+# We still manually link to Qt5::WinMain to support older versions of CMake.
+# As far as I can tell there is no harm in doing both.
+if(POLICY CMP0020)
+    cmake_policy(SET CMP0020 NEW)
+endif(POLICY CMP0020)
+
 include_directories("./include")
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/")
