@@ -63,6 +63,9 @@ public:
 
     void setPanButtons(Qt::MouseButtons buttons);
 
+    /* Call this after modifying imgL and/or imgR. */
+    void updateImages();
+
 public slots:
     void hideCursor();
     void zoomIn();

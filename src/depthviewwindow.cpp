@@ -284,6 +284,8 @@ void DepthViewWindow::on_actionImport_triggered(){
 
         ui->imageWidget->imgL = imageL;
         ui->imageWidget->imgR = imageR;
+        ui->imageWidget->updateImages();
+
         setWindowTitle(tr("[ Imported ]"));
     }
 }

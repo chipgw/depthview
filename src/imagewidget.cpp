@@ -113,13 +113,17 @@ bool ImageWidget::loadStereoImage(const QString &filename){
 
     imgR = img.copy(0,               0, img.width() / 2, img.height());
     imgL = img.copy(img.width() / 2, 0, img.width() / 2, img.height());
+    updateImages();
+
+    return !img.isNull();
+}
+
+void ImageWidget::updateImages(){
     pixmapL = QPixmap::fromImage(imgL);
     pixmapR = QPixmap::fromImage(imgR);
     recalculatescroolmax();
     updateAnglaph();
     repaint();
-
-    return !img.isNull();
 }
 
 void ImageWidget::mouseMoveEvent(QMouseEvent *e){
