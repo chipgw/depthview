@@ -174,8 +174,8 @@ void ImageWidget::wheelEvent(QWheelEvent *e){
 }
 
 void ImageWidget::recalculatescroolmax(){
-    bool isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
-    bool isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
+    int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
+    int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
 
     int hmax = qMax(int((imgL.width() << isSidebySide) * zoom - width()) >> (isSidebySide + 1), 0);
     hBar.setRange(-hmax, hmax);
@@ -203,8 +203,8 @@ void ImageWidget::zoomOut(){
 
 void ImageWidget::addZoom(qreal amount){
     if(zoom <= 0.0){
-        bool isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
-        bool isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
+        int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
+        int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
 
         zoom = qMin(qreal(width()) / qreal(imgL.width() << isSidebySide), qreal(height()) / qreal(imgL.height() << isTopBottom));
     }
