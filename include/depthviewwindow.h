@@ -12,6 +12,16 @@ class DepthViewWindow;
 
 class DepthViewWindow : public QMainWindow {
     Q_OBJECT
+
+private:
+    Ui::DepthViewWindow *ui;
+
+    void mouseDoubleClickEvent(QMouseEvent *e);
+    void mousePressEvent(QMouseEvent *e);
+
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dropEvent(QDropEvent *event);
+
 public:
     QDir currentDir;
     QString currentFile;
@@ -27,15 +37,6 @@ public:
     void parseCommandLine(const QStringList &args);
 
     bool setRenderModeFromString(const QString &renderer);
-
-private:
-    Ui::DepthViewWindow *ui;
-
-    void mouseDoubleClickEvent(QMouseEvent *e);
-    void mousePressEvent(QMouseEvent *e);
-
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dropEvent(QDropEvent *event);
 
 private slots:
     bool showLoadImageDialog();

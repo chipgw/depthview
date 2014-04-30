@@ -4,8 +4,8 @@
 #include <QPainter>
 #include <QElapsedTimer>
 
-ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), mode(AnglaphFull), zoom(0.0), swapLR(false), panButtons(Qt::LeftButton | Qt::MidButton),
-    mouseTimer(this), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), continuousPan(true), scrollbarsVisible(true), smoothTransform(false),
+ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), zoom(0.0),
+    swapLR(false), scrollbarsVisible(true), continuousPan(true), smoothTransform(false), panButtons(Qt::LeftButton | Qt::MidButton), mouseTimer(this), mode(AnglaphFull),
     maskInterlacedHorizontal(":/masks/interlacedH.pbm"), maskInterlacedVertical(":/masks/interlacedV.pbm"), maskCheckerboard(":/masks/checkerboard.pbm") {
 
     setMouseTracking(true);
