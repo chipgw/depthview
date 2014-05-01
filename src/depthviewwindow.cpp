@@ -67,6 +67,11 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 
     connect(ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 
+    ui->menuInterlaced->setEnabled(false);
+    ui->actionInterlacedHorizontal->setEnabled(false);
+    ui->actionInterlacedVertical->setEnabled(false);
+    ui->actionCheckerboard->setEnabled(false);
+
     loadSettings();
 }
 
