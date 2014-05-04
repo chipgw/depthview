@@ -85,6 +85,9 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
     void wheelEvent(QWheelEvent *e);
+
+    void enterEvent(QEvent* e);
+    void leaveEvent(QEvent* e);
 };
 
 #endif // IMAGEWIDGET_H

@@ -173,6 +173,15 @@ void ImageWidget::wheelEvent(QWheelEvent *e){
     addZoom(e->delta() / 1000.0);
 }
 
+void ImageWidget::enterEvent(QEvent *e){
+    mouseTimer.start(4000);
+}
+
+void ImageWidget::leaveEvent(QEvent *e){
+    mouseTimer.stop();
+    setCursor(Qt::ArrowCursor);
+}
+
 void ImageWidget::recalculatescroolmax(){
     int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
     int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
