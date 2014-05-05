@@ -35,6 +35,10 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_CURRENT
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/version.cpp")
 
 if(WIN32)
+    if(${CMAKE_GENERATOR} MATCHES "Visual Studio*")
+        add_definitions(-DDEPTHVIEW_MSVC_CONFIGURATION="$(ConfigurationName)")
+    endif()
+
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/DepthView.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/DepthView.rc" @ONLY)
     set(WINDRES "${CMAKE_CURRENT_BINARY_DIR}/DepthView.rc")
 else(WIN32)

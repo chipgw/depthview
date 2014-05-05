@@ -9,5 +9,10 @@ namespace version{
         QString val = "%1.%2";
         return val.arg(major).arg(minor, 2, 10, QLatin1Char('0'));
     }
+
+#ifdef DEPTHVIEW_MSVC_CONFIGURATION
+    const QString build_type = DEPTHVIEW_MSVC_CONFIGURATION;
+#else
     const QString build_type = "@CMAKE_BUILD_TYPE@";
+#endif
 }
