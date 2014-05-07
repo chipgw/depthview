@@ -298,8 +298,7 @@ void DepthViewWindow::on_actionImport_triggered(){
 void DepthViewWindow::on_actionSaveAs_triggered(){
     if(ui->imageWidget->imgR.isNull() || ui->imageWidget->imgL.isNull()) return;
 
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), currentDir.path(),
-                                                    tr("Stereo Image Files (*.jps *.pns);;Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), currentDir.path(), tr("Stereo Image Files (*.jps *.pns)"));
 
     if(filename.isNull()) return;
 
@@ -319,52 +318,62 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
         if(!out.isNull()){
             out.save(filename, "PNG");
         }
-    }else{
-        ExportWizard dialog(this);
+    }
+}
 
-        if(dialog.exec() != QDialog::Accepted) return;
+void DepthViewWindow::on_actionExport_triggered() {
+    if(ui->imageWidget->imgR.isNull() || ui->imageWidget->imgL.isNull()) return;
 
-        if(dialog.field("anglaph").toBool()){
-            QImage out;
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), currentDir.path(), tr("Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
 
-            if(dialog.field("fullColor").toBool()){
-                out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR);
-            }else if(dialog.field("halfColor").toBool()){
-                out = drawAnglaphHalf(ui->imageWidget->imgL, ui->imageWidget->imgR);
-            }else{
-                out = drawAnglaphGrey(ui->imageWidget->imgL, ui->imageWidget->imgR);
-            }
+    if(filename.isNull()) return;
 
-            if(!out.isNull()){
-                out.save(filename, NULL, dialog.field("quality").toInt());
-            }
-        }else if(dialog.field("sideBySide").toBool()){
-            QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
-            QPainter paint(&out);
-            drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0, dialog.field("mirrorL").toBool(), dialog.field("mirrorR").toBool());
+    ExportWizard dialog(this);
 
-            if(!out.isNull()){
-                out.save(filename, NULL, dialog.field("quality").toInt());
-            }
-        }else if(dialog.field("topBottom").toBool()){
-            QImage out(ui->imageWidget->imgL.width(), ui->imageWidget->imgL.height() + ui->imageWidget->imgR.height(), QImage::Format_RGB32);
-            QPainter paint(&out);
-            drawTopBottom(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0, dialog.field("mirrorT").toBool(), dialog.field("mirrorB").toBool());
+    if(dialog.exec() != QDialog::Accepted) return;
 
-            if(!out.isNull()){
-                out.save(filename, NULL, dialog.field("quality").toInt());
-            }
-        }else if(dialog.field("exportBoth").toBool()){
-            QString filenameL = filename;
-            ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'), NULL, dialog.field("quality").toInt());
+    int quality = dialog.field("quality").toInt();
 
-            QString filenameR = filename;
-            ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'), NULL, dialog.field("quality").toInt());
-        }else if(dialog.field("exportL").toBool()){
-            ui->imageWidget->imgL.save(filename, NULL, dialog.field("quality").toInt());
-        }else if(dialog.field("exportR").toBool()){
-            ui->imageWidget->imgR.save(filename, NULL, dialog.field("quality").toInt());
+    if(dialog.field("anglaph").toBool()){
+        QImage out;
+
+        if(dialog.field("fullColor").toBool()){
+            out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR);
+        }else if(dialog.field("halfColor").toBool()){
+            out = drawAnglaphHalf(ui->imageWidget->imgL, ui->imageWidget->imgR);
+        }else{
+            out = drawAnglaphGrey(ui->imageWidget->imgL, ui->imageWidget->imgR);
         }
+
+        if(!out.isNull()){
+            out.save(filename, NULL, quality);
+        }
+    }else if(dialog.field("sideBySide").toBool()){
+        QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
+        QPainter paint(&out);
+        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0, dialog.field("mirrorL").toBool(), dialog.field("mirrorR").toBool());
+
+        if(!out.isNull()){
+            out.save(filename, NULL, quality);
+        }
+    }else if(dialog.field("topBottom").toBool()){
+        QImage out(ui->imageWidget->imgL.width(), ui->imageWidget->imgL.height() + ui->imageWidget->imgR.height(), QImage::Format_RGB32);
+        QPainter paint(&out);
+        drawTopBottom(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0, dialog.field("mirrorT").toBool(), dialog.field("mirrorB").toBool());
+
+        if(!out.isNull()){
+            out.save(filename, NULL, quality);
+        }
+    }else if(dialog.field("exportBoth").toBool()){
+        QString filenameL = filename;
+        ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'), NULL, quality);
+
+        QString filenameR = filename;
+        ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'), NULL, quality);
+    }else if(dialog.field("exportL").toBool()){
+        ui->imageWidget->imgL.save(filename, NULL, quality);
+    }else if(dialog.field("exportR").toBool()){
+        ui->imageWidget->imgR.save(filename, NULL, quality);
     }
 }
 
