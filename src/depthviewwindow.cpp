@@ -12,6 +12,10 @@
 #include <QUrl>
 #include <QPainter>
 
+#ifdef WIN32
+#include <Windows.h>
+#endif
+
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow), currentDir(QDir::current()),
 #ifdef DEPTHVIEW_PORTABLE
     settings(QApplication::applicationDirPath() + "/DepthView.conf", QSettings::IniFormat)
@@ -494,6 +498,8 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
             }else{
                 warning.append(tr("<p>Argument \"--renderer\" passed with no argument after it!</p>"));
             }
+        }else if(arg == "--register"){
+            registerFileTypes();
         }else if(!loaded){
             loaded = loadImage(arg);
         }
@@ -505,6 +511,45 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
     if(!loaded && (!settings.contains(SettingsWindow::filedialogstartup) || settings.value(SettingsWindow::filedialogstartup).toBool())){
         showLoadImageDialog();
     }
+}
+
+void DepthViewWindow::registerFileTypes(){
+#ifdef WIN32
+    /* TODO - handle errors properly */
+    HKEY jpsKey;
+    HKEY pnsKey;
+    HKEY progKey;
+
+    LPCTSTR progID = TEXT("chipgw.DepthView.1.05");
+
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.jps"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &jpsKey, NULL) != ERROR_SUCCESS){
+        qDebug("Error creating extension key!");
+    }
+
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.pns"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &pnsKey, NULL) != ERROR_SUCCESS){
+        qDebug("Error creating extension key!");
+    }
+
+    if(RegSetValueEx(jpsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
+        qDebug("Error setting ProgID!");
+    }
+
+    if(RegSetValueEx(pnsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
+        qDebug("Error setting ProgID!");
+    }
+
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\chipgw.DepthView.1.05\\shell\\open\\command"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &progKey, NULL) != ERROR_SUCCESS){
+        qDebug("Error creating command key!");
+    }
+
+    QString command = "\"" + QDir::toNativeSeparators(QApplication::applicationFilePath()) + "\" \"%1\"";
+    if(RegSetValueEx(progKey, NULL, 0, REG_SZ, LPBYTE(command.toLocal8Bit().constData()), command.size()) != ERROR_SUCCESS) {
+        qDebug("Error setting command!");
+    }
+
+#else
+    /* TODO - make other platforms work. */
+#endif
 }
 
 void DepthViewWindow::dragEnterEvent(QDragEnterEvent *event){
