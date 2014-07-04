@@ -547,6 +547,10 @@ void DepthViewWindow::registerFileTypes(){
         qDebug("Error setting command!");
     }
 
+    RegCloseKey(jpsKey);
+    RegCloseKey(pnsKey);
+    RegCloseKey(progKey);
+
 #else
     /* TODO - make other platforms work. */
 #endif
