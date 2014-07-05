@@ -499,7 +499,7 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
                 warning.append(tr("<p>Argument \"--renderer\" passed with no argument after it!</p>"));
             }
         }else if(arg == "--register"){
-            registerFileTypes();
+            /* handled in main */
         }else if(!loaded){
             loaded = loadImage(arg);
         }

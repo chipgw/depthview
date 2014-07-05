@@ -35,7 +35,7 @@ public:
     void loadSettings();
 
     void parseCommandLine(const QStringList &args);
-    void registerFileTypes();
+    static void registerFileTypes();
 
     bool setRenderModeFromString(const QString &renderer);
 
