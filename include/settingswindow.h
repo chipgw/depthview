@@ -34,6 +34,8 @@ private slots:
 
     void on_startupDirectoryBrowsePushButton_clicked();
 
+    void on_associateWithFilesPushButton_clicked();
+
 private:
     Ui::SettingsWindow *ui;
     QSettings &settings;

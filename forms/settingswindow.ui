@@ -262,6 +262,20 @@
          </item>
         </layout>
        </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="associateWithFilesPushButton">
+         <property name="text">
+          <string>Associate</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="associateWithFilesLabel">
+         <property name="text">
+          <string>File Association</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>

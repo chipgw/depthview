@@ -1,6 +1,7 @@
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
 #include "imagewidget.h"
+#include "depthviewwindow.h"
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QMenu>
@@ -98,6 +99,10 @@ void SettingsWindow::on_startupDirectoryBrowsePushButton_clicked(){
     if(!directory.isEmpty()){
         ui->startupDirectoryLineEdit->setText(directory);
     }
+}
+
+void SettingsWindow::on_associateWithFilesPushButton_clicked(){
+    DepthViewWindow::registerFileTypes();
 }
 
 const QString SettingsWindow::defaultrender     = "defaultrender";
