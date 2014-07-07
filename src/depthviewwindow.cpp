@@ -522,34 +522,43 @@ void DepthViewWindow::registerFileTypes(){
 
     LPCTSTR progID = TEXT("chipgw.DepthView.1.05");
 
-    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.jps"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &jpsKey, NULL) != ERROR_SUCCESS){
-        qDebug("Error creating extension key!");
+    QString error;
+
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.jps"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &jpsKey, NULL) == ERROR_SUCCESS){
+        if(RegSetValueEx(jpsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
+            error += "<p>Error setting .jps ProgID!</p>";
+        }
+        RegCloseKey(jpsKey);
+    } else {
+        error += "<p>Error creating .jps key!</p>";
     }
 
-    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.pns"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &pnsKey, NULL) != ERROR_SUCCESS){
-        qDebug("Error creating extension key!");
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.pns"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &pnsKey, NULL) == ERROR_SUCCESS){
+        if(RegSetValueEx(pnsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
+            error += "<p>Error setting .pns ProgID!</p>";
+        }
+        RegCloseKey(pnsKey);
+    } else {
+        error += "<p>Error creating .pns key!</p>";
     }
 
-    if(RegSetValueEx(jpsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
-        qDebug("Error setting ProgID!");
+    LPCTSTR progIDPath = TEXT("Software\\Classes\\chipgw.DepthView.1.05\\shell\\open\\command");
+
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, progIDPath, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &progKey, NULL) == ERROR_SUCCESS){
+        QString command = "\"" + QDir::toNativeSeparators(QApplication::applicationFilePath()) + "\" \"%1\"";
+        if(RegSetValueEx(progKey, NULL, 0, REG_SZ, LPBYTE(command.toLocal8Bit().constData()), command.size()) != ERROR_SUCCESS) {
+            error += "<p>Error setting command!</p>";
+        }
+        RegCloseKey(progKey);
+    } else {
+        error += "<p>Error creating command key!</p>";
     }
 
-    if(RegSetValueEx(pnsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
-        qDebug("Error setting ProgID!");
+    if(error.isNull()) {
+        QMessageBox::information(NULL, tr("Success!"), tr("Successfully associated .jps and .pns files with DepthView."));
+    } else {
+        QMessageBox::warning(NULL, tr("Error setting file association!"), error);
     }
-
-    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\chipgw.DepthView.1.05\\shell\\open\\command"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &progKey, NULL) != ERROR_SUCCESS){
-        qDebug("Error creating command key!");
-    }
-
-    QString command = "\"" + QDir::toNativeSeparators(QApplication::applicationFilePath()) + "\" \"%1\"";
-    if(RegSetValueEx(progKey, NULL, 0, REG_SZ, LPBYTE(command.toLocal8Bit().constData()), command.size()) != ERROR_SUCCESS) {
-        qDebug("Error setting command!");
-    }
-
-    RegCloseKey(jpsKey);
-    RegCloseKey(pnsKey);
-    RegCloseKey(progKey);
 
 #else
     /* TODO - make other platforms work. */
