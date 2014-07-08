@@ -562,6 +562,7 @@ void DepthViewWindow::registerFileTypes(){
 
 #else
     /* TODO - make other platforms work. */
+    QMessageBox::warning(NULL, tr("Error!"), tr("File association is currently unsupported on your platform!"));
 #endif
 }
 
