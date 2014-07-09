@@ -519,6 +519,7 @@ void DepthViewWindow::registerFileTypes(){
     HKEY jpsKey;
     HKEY pnsKey;
     HKEY progKey;
+    HKEY cmdKey;
 
     LPCTSTR progID = TEXT("chipgw.DepthView.1.05");
 
@@ -542,14 +543,25 @@ void DepthViewWindow::registerFileTypes(){
         error += "<p>Error creating .pns key!</p>";
     }
 
-    LPCTSTR progIDPath = TEXT("Software\\Classes\\chipgw.DepthView.1.05\\shell\\open\\command");
+    LPCTSTR progIDPath = TEXT("Software\\Classes\\chipgw.DepthView.1.05");
+    LPCTSTR cmdPath = TEXT("Software\\Classes\\chipgw.DepthView.1.05\\shell\\open\\command");
 
     if(RegCreateKeyEx(HKEY_CURRENT_USER, progIDPath, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &progKey, NULL) == ERROR_SUCCESS){
-        QString command = "\"" + QDir::toNativeSeparators(QApplication::applicationFilePath()) + "\" \"%1\"";
-        if(RegSetValueEx(progKey, NULL, 0, REG_SZ, LPBYTE(command.toLocal8Bit().constData()), command.size()) != ERROR_SUCCESS) {
-            error += "<p>Error setting command!</p>";
+        LPCTSTR desc = TEXT("Stereo 3D Image");
+        if(RegSetValueEx(progKey, NULL, 0, REG_SZ, LPBYTE(desc), strlen(desc)) != ERROR_SUCCESS) {
+            error += "<p>Error setting description!</p>";
         }
         RegCloseKey(progKey);
+    } else {
+        error += "<p>Error creating command key!</p>";
+    }
+
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, cmdPath, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &cmdKey, NULL) == ERROR_SUCCESS){
+        QString command = "\"" + QDir::toNativeSeparators(QApplication::applicationFilePath()) + "\" \"%1\"";
+        if(RegSetValueEx(cmdKey, NULL, 0, REG_SZ, LPBYTE(command.toLocal8Bit().constData()), command.size()) != ERROR_SUCCESS) {
+            error += "<p>Error setting command!</p>";
+        }
+        RegCloseKey(cmdKey);
     } else {
         error += "<p>Error creating command key!</p>";
     }
