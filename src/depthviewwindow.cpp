@@ -12,7 +12,7 @@
 #include <QUrl>
 #include <QPainter>
 
-#ifdef WIN32
+#if defined(Q_OS_WIN32)
 #include <Windows.h>
 #endif
 
@@ -514,7 +514,7 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
 }
 
 void DepthViewWindow::registerFileTypes(){
-#ifdef WIN32
+#if defined(Q_OS_WIN32)
     /* TODO - handle errors properly */
     HKEY jpsKey;
     HKEY pnsKey;
