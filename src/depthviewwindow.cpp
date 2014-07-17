@@ -514,6 +514,8 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
 }
 
 void DepthViewWindow::registerFileTypes(){
+    QString error;
+
 #if defined(Q_OS_WIN32)
     /* TODO - handle errors properly */
     HKEY jpsKey;
@@ -522,8 +524,6 @@ void DepthViewWindow::registerFileTypes(){
     HKEY cmdKey;
 
     LPCTSTR progID = TEXT("chipgw.DepthView.1.05");
-
-    QString error;
 
     if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.jps"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &jpsKey, NULL) == ERROR_SUCCESS){
         if(RegSetValueEx(jpsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
@@ -566,16 +566,16 @@ void DepthViewWindow::registerFileTypes(){
         error += "<p>Error creating command key!</p>";
     }
 
+#else
+    /* TODO - make other platforms work. */
+    error = tr("File association is currently unsupported on your platform!");
+#endif
+
     if(error.isNull()) {
         QMessageBox::information(NULL, tr("Success!"), tr("Successfully associated .jps and .pns files with DepthView."));
     } else {
         QMessageBox::warning(NULL, tr("Error setting file association!"), error);
     }
-
-#else
-    /* TODO - make other platforms work. */
-    QMessageBox::warning(NULL, tr("Error!"), tr("File association is currently unsupported on your platform!"));
-#endif
 }
 
 void DepthViewWindow::dragEnterEvent(QDragEnterEvent *event){
