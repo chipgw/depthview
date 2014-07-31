@@ -362,6 +362,9 @@
    <property name="text">
     <string>First</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Left</string>
+   </property>
   </action>
   <action name="actionLast">
    <property name="icon">
@@ -370,6 +373,9 @@
    </property>
    <property name="text">
     <string>Last</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Right</string>
    </property>
   </action>
   <action name="actionZoomIn">
@@ -440,6 +446,9 @@
    <property name="text">
     <string>Show Scrollbars</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
   </action>
   <action name="actionImport">
    <property name="icon">
@@ -448,6 +457,9 @@
    </property>
    <property name="text">
     <string>Import...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
   <action name="actionSmooth_Scaling">
@@ -465,6 +477,9 @@
    </property>
    <property name="text">
     <string>Export...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
  </widget>
