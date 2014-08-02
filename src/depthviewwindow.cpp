@@ -11,6 +11,7 @@
 #include <QMimeData>
 #include <QUrl>
 #include <QPainter>
+#include <QShortcut>
 
 #if defined(Q_OS_WIN32)
 #include <Windows.h>
@@ -75,6 +76,11 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     ui->actionInterlacedHorizontal->setEnabled(false);
     ui->actionInterlacedVertical->setEnabled(false);
     ui->actionCheckerboard->setEnabled(false);
+
+    QShortcut* altenter = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_Return), this);
+    connect(altenter, SIGNAL(activated()), ui->actionFullscreen, SLOT(trigger()));
+    QShortcut* f11 = new QShortcut(QKeySequence(Qt::Key_F11), this);
+    connect(f11, SIGNAL(activated()), ui->actionFullscreen, SLOT(trigger()));
 
     loadSettings();
 }
