@@ -190,7 +190,9 @@ void DepthViewWindow::on_actionSingleRight_triggered(){
 void DepthViewWindow::on_actionFullscreen_toggled(bool val){
     if(val){
         setWindowState(windowState() | Qt::WindowFullScreen);
-        ui->actionShowMenuBar->setChecked(false);
+
+        ui->menubar->hide();
+        ui->actionShowMenuBar->setEnabled(false);
 
         ui->menuInterlaced->setEnabled(true);
         ui->actionInterlacedHorizontal->setEnabled(true);
@@ -199,10 +201,9 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
     }else{
         setWindowState(windowState() & ~Qt::WindowFullScreen);
 
-        if(settings.contains(SettingsWindow::showmenubar)){
-            ui->actionShowMenuBar->setChecked(settings.value(SettingsWindow::showmenubar).toBool());
-        }else{
-            ui->actionShowMenuBar->setChecked(true);
+        ui->actionShowMenuBar->setEnabled(true);
+        if(ui->actionShowMenuBar->isChecked()){
+            ui->menubar->show();
         }
 
         ui->menuInterlaced->setEnabled(false);
