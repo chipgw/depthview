@@ -1,6 +1,7 @@
 #include "depthviewwindow.h"
 #include "ui_depthviewwindow.h"
 #include "importdialog.h"
+#include "importwizard.h"
 #include "exportwizard.h"
 #include "settingswindow.h"
 #include "version.h"
@@ -282,13 +283,13 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
 }
 
 void DepthViewWindow::on_actionImport_triggered(){
-    ImportDialog dialog(currentDir, this);
+    ImportWizard dialog(currentDir, this);
 
     if(dialog.exec() != QDialog::Accepted) return;
 
-    if(dialog.seperateImages){
-        QImage imageL(dialog.filenameLeft);
-        QImage imageR(dialog.filenameRight);
+    if(dialog.field("seperate").toBool()){
+        QImage imageL(dialog.field("filenameL").toString());
+        QImage imageR(dialog.field("filenameR").toString());
         if(imageL.isNull() || imageR.isNull()){
             QMessageBox::warning(this, tr("Error Importing!"), tr("Error loading image files!"));
             return;

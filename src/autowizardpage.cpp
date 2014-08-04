@@ -9,8 +9,10 @@ AutoWizardPage::AutoWizardPage(QLayout *l, QWidget *parent) : QWizardPage(parent
     setLayout(layout);
 }
 
-void AutoWizardPage::addOption(const QString &name, QWidget *widget){
-    layout->addWidget(widget);
+void AutoWizardPage::addOption(const QString &name, QWidget *widget, bool addWidget){
+    if(addWidget){
+        layout->addWidget(widget);
+    }
 
     registerField(name, widget);
 }
