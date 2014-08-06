@@ -303,6 +303,30 @@ void DepthViewWindow::on_actionImport_triggered(){
         ui->imageWidget->updateImages();
 
         setWindowTitle(tr("[ Imported ]"));
+    }else if(dialog.field("sideBySide").toBool()){
+        QImage image(dialog.field("filename").toString());
+        if(image.isNull()){
+            QMessageBox::warning(this, tr("Error Importing!"), tr("Error loading image file!"));
+            return;
+        }
+
+        ui->imageWidget->imgL = image.copy(                0, 0, image.width() / 2, image.height());
+        ui->imageWidget->imgR = image.copy(image.width() / 2, 0, image.width() / 2, image.height());
+        ui->imageWidget->updateImages();
+
+        setWindowTitle(tr("[ Imported ]"));
+    }else if(dialog.field("topBottom").toBool()){
+        QImage image(dialog.field("filename").toString());
+        if(image.isNull()){
+            QMessageBox::warning(this, tr("Error Importing!"), tr("Error loading image file!"));
+            return;
+        }
+
+        ui->imageWidget->imgL = image.copy(0,                  0, image.width(), image.height() / 2);
+        ui->imageWidget->imgR = image.copy(0, image.height() / 2, image.width(), image.height() / 2);
+        ui->imageWidget->updateImages();
+
+        setWindowTitle(tr("[ Imported ]"));
     }
 }
 

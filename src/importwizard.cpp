@@ -26,9 +26,9 @@ int ImportWizard::nextId() const{
         return Page_SelectFile;
     case Page_SelectFile:
         if(field("sideBySide").toBool()){
-            return Page_SideBySide;
+            return -1;// Page_SideBySide; // Currently unused.
         }else if(field("topBottom").toBool()){
-            return Page_TopBottom;
+            return -1;// Page_TopBottom; // Also currently unused.
         }
         return Page_SelectFile;
     case Page_SideBySide:
@@ -54,8 +54,6 @@ QWizardPage* ImportWizard::createIntroPage() {
     QRadioButton *sideBySide = new QRadioButton("Side by Side", page);
     QRadioButton *topBottom = new QRadioButton("Top Bottom", page);
     seperate->setChecked(true);
-    sideBySide->setEnabled(false);
-    topBottom->setEnabled(false);
 
     addOption(seperate);
     addOption(sideBySide);
