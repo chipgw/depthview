@@ -26,9 +26,9 @@ int ImportWizard::nextId() const{
         return Page_SelectFile;
     case Page_SelectFile:
         if(field("sideBySide").toBool()){
-            return -1;// Page_SideBySide; // Currently unused.
+            return Page_SideBySide;
         }else if(field("topBottom").toBool()){
-            return -1;// Page_TopBottom; // Also currently unused.
+            return Page_TopBottom;
         }
         return Page_SelectFile;
     case Page_SideBySide:

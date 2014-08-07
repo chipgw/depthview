@@ -300,9 +300,6 @@ void DepthViewWindow::on_actionImport_triggered(){
 
         ui->imageWidget->imgL = imageL;
         ui->imageWidget->imgR = imageR;
-        ui->imageWidget->updateImages();
-
-        setWindowTitle(tr("[ Imported ]"));
     }else if(dialog.field("sideBySide").toBool()){
         QImage image(dialog.field("filename").toString());
         if(image.isNull()){
@@ -312,9 +309,14 @@ void DepthViewWindow::on_actionImport_triggered(){
 
         ui->imageWidget->imgL = image.copy(                0, 0, image.width() / 2, image.height());
         ui->imageWidget->imgR = image.copy(image.width() / 2, 0, image.width() / 2, image.height());
-        ui->imageWidget->updateImages();
 
-        setWindowTitle(tr("[ Imported ]"));
+        if(dialog.field("mirrorL").toBool()){
+            ui->imageWidget->imgL = ui->imageWidget->imgL.mirrored(true, false);
+        }
+
+        if(dialog.field("mirrorR").toBool()){
+            ui->imageWidget->imgR = ui->imageWidget->imgR.mirrored(true, false);
+        }
     }else if(dialog.field("topBottom").toBool()){
         QImage image(dialog.field("filename").toString());
         if(image.isNull()){
@@ -324,10 +326,18 @@ void DepthViewWindow::on_actionImport_triggered(){
 
         ui->imageWidget->imgL = image.copy(0,                  0, image.width(), image.height() / 2);
         ui->imageWidget->imgR = image.copy(0, image.height() / 2, image.width(), image.height() / 2);
-        ui->imageWidget->updateImages();
 
-        setWindowTitle(tr("[ Imported ]"));
+        if(dialog.field("mirrorT").toBool()){
+            ui->imageWidget->imgL = ui->imageWidget->imgL.mirrored(false, true);
+        }
+
+        if(dialog.field("mirrorB").toBool()){
+            ui->imageWidget->imgR = ui->imageWidget->imgR.mirrored(false, true);
+        }
     }
+    ui->imageWidget->updateImages();
+
+    setWindowTitle(tr("[ Imported ]"));
 }
 
 void DepthViewWindow::on_actionSaveAs_triggered(){
