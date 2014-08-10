@@ -104,7 +104,7 @@ QWizardPage* ImportWizard::createSelectFilePage() {
     FileChooser *filename = new FileChooser(tr("Images (*.png *.xpm *.jpg *.bmp)"), currentDirectory.absolutePath(), page);
     layout->addWidget(filename);
 
-    page->addOption("filename", filename->filename, false);
+    page->addOption("filename*", filename->filename, false);
 
     return page;
 }
@@ -122,8 +122,8 @@ QWizardPage* ImportWizard::createSeperatePage() {
     layout->addWidget(filenameL);
     layout->addWidget(filenameR);
 
-    page->addOption("filenameL", filenameL->filename, false);
-    page->addOption("filenameR", filenameR->filename, false);
+    page->addOption("filenameL*", filenameL->filename, false);
+    page->addOption("filenameR*", filenameR->filename, false);
 
     return page;
 }
