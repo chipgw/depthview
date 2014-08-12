@@ -286,58 +286,60 @@ void DepthViewWindow::on_actionImport_triggered(){
 
     if(dialog.exec() != QDialog::Accepted) return;
 
+    QString error;
+
     if(dialog.field("seperate").toBool()){
         QImage imageL(dialog.field("filenameL").toString());
         QImage imageR(dialog.field("filenameR").toString());
         if(imageL.isNull() || imageR.isNull()){
-            QMessageBox::warning(this, tr("Error Importing!"), tr("Error loading image files!"));
-            return;
+            error += tr("<p>Error loading image files!</p>");
+        }else if(imageL.size() != imageR.size()){
+            error += tr("<p>Image sizes are not the same!</p>");
+        }else{
+            ui->imageWidget->imgL = imageL;
+            ui->imageWidget->imgR = imageR;
         }
-        if(imageL.size() != imageR.size()){
-            QMessageBox::warning(this, tr("Error Importing!"), tr("Image sizes are not the same!"));
-            return;
-        }
-
-        ui->imageWidget->imgL = imageL;
-        ui->imageWidget->imgR = imageR;
     }else if(dialog.field("sideBySide").toBool()){
         QImage image(dialog.field("filename").toString());
         if(image.isNull()){
-            QMessageBox::warning(this, tr("Error Importing!"), tr("Error loading image file!"));
-            return;
-        }
+            error += tr("<p>Error loading image file!</p>");
+        }else{
+            ui->imageWidget->imgL = image.copy(                0, 0, image.width() / 2, image.height());
+            ui->imageWidget->imgR = image.copy(image.width() / 2, 0, image.width() / 2, image.height());
 
-        ui->imageWidget->imgL = image.copy(                0, 0, image.width() / 2, image.height());
-        ui->imageWidget->imgR = image.copy(image.width() / 2, 0, image.width() / 2, image.height());
+            if(dialog.field("mirrorL").toBool()){
+                ui->imageWidget->imgL = ui->imageWidget->imgL.mirrored(true, false);
+            }
 
-        if(dialog.field("mirrorL").toBool()){
-            ui->imageWidget->imgL = ui->imageWidget->imgL.mirrored(true, false);
-        }
-
-        if(dialog.field("mirrorR").toBool()){
-            ui->imageWidget->imgR = ui->imageWidget->imgR.mirrored(true, false);
+            if(dialog.field("mirrorR").toBool()){
+                ui->imageWidget->imgR = ui->imageWidget->imgR.mirrored(true, false);
+            }
         }
     }else if(dialog.field("topBottom").toBool()){
         QImage image(dialog.field("filename").toString());
         if(image.isNull()){
-            QMessageBox::warning(this, tr("Error Importing!"), tr("Error loading image file!"));
-            return;
-        }
+            error += tr("<p>Error loading image file!</p>");
+        }else{
+            ui->imageWidget->imgL = image.copy(0,                  0, image.width(), image.height() / 2);
+            ui->imageWidget->imgR = image.copy(0, image.height() / 2, image.width(), image.height() / 2);
 
-        ui->imageWidget->imgL = image.copy(0,                  0, image.width(), image.height() / 2);
-        ui->imageWidget->imgR = image.copy(0, image.height() / 2, image.width(), image.height() / 2);
+            if(dialog.field("mirrorT").toBool()){
+                ui->imageWidget->imgL = ui->imageWidget->imgL.mirrored(false, true);
+            }
 
-        if(dialog.field("mirrorT").toBool()){
-            ui->imageWidget->imgL = ui->imageWidget->imgL.mirrored(false, true);
-        }
-
-        if(dialog.field("mirrorB").toBool()){
-            ui->imageWidget->imgR = ui->imageWidget->imgR.mirrored(false, true);
+            if(dialog.field("mirrorB").toBool()){
+                ui->imageWidget->imgR = ui->imageWidget->imgR.mirrored(false, true);
+            }
         }
     }
-    ui->imageWidget->updateImages();
 
-    setWindowTitle(tr("[ Imported ]"));
+    if(!error.isNull()){
+        QMessageBox::warning(this, tr("Error Importing!"), error);
+    }else{
+        ui->imageWidget->updateImages();
+
+        setWindowTitle(tr("[ Imported ]"));
+    }
 }
 
 void DepthViewWindow::on_actionSaveAs_triggered(){
