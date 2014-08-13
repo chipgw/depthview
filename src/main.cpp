@@ -6,10 +6,6 @@
 int main(int argc, char *argv[]){
     QApplication app(argc, argv);
 
-    if(QDir::currentPath() == QApplication::applicationDirPath()){
-        QDir::setCurrent(QDir::homePath());
-    }
-
     app.setOrganizationName("chipgw");
     app.setApplicationName("DepthView");
     app.setApplicationVersion(version::getVersionString());
@@ -18,6 +14,11 @@ int main(int argc, char *argv[]){
         DepthViewWindow::registerFileTypes();
         return 0;
     }
+
+    if(QDir::currentPath() == app.applicationDirPath()){
+        QDir::setCurrent(QDir::homePath());
+    }
+
     DepthViewWindow window;
     window.show();
     window.parseCommandLine(app.arguments());
