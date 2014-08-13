@@ -11,12 +11,18 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
 
     ui->defaultRendererComboBox->addItems(ImageWidget::drawModeNames.keys());
 
-    ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings.value(defaultrender).toString()));
-    ui->startFullscreenCheckBox->setChecked(settings.value(startfullscreen).toBool());
-    ui->swapLeftRightCheckBox->setChecked(settings.value(swapLR).toBool());
-    ui->startupDirectoryLineEdit->setText(settings.value(startupdirectory).toString());
-
-    // check if it exists so that it will default to true if it does not.
+    if(settings.contains(defaultrender)){
+        ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings.value(defaultrender).toString()));
+    }
+    if(settings.contains(startfullscreen)){
+        ui->startFullscreenCheckBox->setChecked(settings.value(startfullscreen).toBool());
+    }
+    if(settings.contains(swapLR)){
+        ui->swapLeftRightCheckBox->setChecked(settings.value(swapLR).toBool());
+    }
+    if(settings.contains(startupdirectory)){
+        ui->startupDirectoryLineEdit->setText(settings.value(startupdirectory).toString());
+    }
     if(settings.contains(showmenubar)){
         ui->showMenuBarCheckBox->setChecked(settings.value(showmenubar).toBool());
     }
@@ -29,17 +35,16 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
     if(settings.contains(showscrollbars)){
         ui->showScrollbarsCheckBox->setChecked(settings.value(showscrollbars).toBool());
     }
-    ui->enableSmoothScalingCheckBox->setChecked(settings.value(smoothscaling).toBool());
-
-    connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
-    connect(ui->rememberWindowStateCheckBox, SIGNAL(toggled(bool)), ui->startFullscreenCheckBox, SLOT(setDisabled(bool)));
+    if(settings.contains(smoothscaling)){
+        ui->enableSmoothScalingCheckBox->setChecked(settings.value(smoothscaling).toBool());
+    }
 
     if(settings.contains(rememberwindow)){
         ui->rememberWindowStateCheckBox->setChecked(settings.value(rememberwindow).toBool());
     }
-
-    ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
-
+    if(settings.contains(disabledragdrop)){
+        ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
+    }
     ui->panButtonMenuPushButton->setMenu(new QMenu());
     ui->panButtonMenuPushButton->menu()->addAction(ui->actionLeft_Mouse);
     ui->panButtonMenuPushButton->menu()->addAction(ui->actionMiddle_Mouse);
@@ -50,6 +55,9 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
         ui->actionLeft_Mouse->setChecked(buttons.testFlag(Qt::LeftButton));
         ui->actionMiddle_Mouse->setChecked(buttons.testFlag(Qt::MiddleButton));
     }
+
+    connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults), SIGNAL(clicked()), this, SLOT(restoreDefaults()));
+    connect(ui->rememberWindowStateCheckBox, SIGNAL(toggled(bool)), ui->startFullscreenCheckBox, SLOT(setDisabled(bool)));
 }
 
 SettingsWindow::~SettingsWindow(){
