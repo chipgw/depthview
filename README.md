@@ -20,7 +20,7 @@ Building
 --------
 * Clone or download the source code.
 * In the source folder, create a `build` folder.
-* In the build folder, run `cmake ..`, Add -D<option>=ON with any option listed below in place of <option> to enable that option.
+* In the build folder, run `cmake ..`, Add `-D<option>=ON` with any option listed below in place of `<option>` to enable that option.
 * If you want to use a different generator than your platform default, add `-G <generator>` to the cmake command, with your desired generator. A list of generators can be found by running `cmake -h`.
 * The project files should now be generated in `build`.
 
