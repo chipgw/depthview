@@ -15,8 +15,6 @@ Dependencies
 ------------
 * [CMake]
 * [Qt]
-* [GLM]
-* [TinyXml]
 
 Building
 --------
