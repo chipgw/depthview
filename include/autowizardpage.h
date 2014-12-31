@@ -1,8 +1,8 @@
-#ifndef AUTOWIZARDPAGE_H
-#define AUTOWIZARDPAGE_H
+#pragma once
 
 #include <QWizardPage>
 
+/* A simple class to put controls on a QWizardPage. */
 class AutoWizardPage : public QWizardPage {
     Q_OBJECT
 public:
@@ -13,5 +13,3 @@ public:
 private:
     QLayout *layout;
 };
-
-#endif // AUTOWIZARDPAGE_H

@@ -1,5 +1,4 @@
-#ifndef EXPORTWIZARD_H
-#define EXPORTWIZARD_H
+#pragma once
 
 #include <QWizard>
 
@@ -20,5 +19,3 @@ private:
     QWizardPage *createSeperatePage();
     QWizardPage *createConclusionPage();
 };
-
-#endif // EXPORTWIZARD_H

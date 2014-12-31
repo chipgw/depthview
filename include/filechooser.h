@@ -1,5 +1,4 @@
-#ifndef FILECHOOSER_H
-#define FILECHOOSER_H
+#pragma once
 
 #include <QWidget>
 #include <QLineEdit>
@@ -27,5 +26,3 @@ signals:
 public slots:
     void on_BrowseButton_clicked();
 };
-
-#endif // FILECHOOSER_H

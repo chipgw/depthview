@@ -1,5 +1,4 @@
-#ifndef IMPORTWIZARD_H
-#define IMPORTWIZARD_H
+#pragma once
 
 #include <QWizard>
 #include <QDir>
@@ -23,5 +22,3 @@ private:
     QWizardPage *createSeperatePage();
     QWizardPage *createConclusionPage();
 };
-
-#endif // IMPORTWIZARD_H

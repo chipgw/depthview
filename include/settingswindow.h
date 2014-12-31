@@ -1,5 +1,4 @@
-#ifndef SETTINGSWINDOW_H
-#define SETTINGSWINDOW_H
+#pragma once
 
 #include <QDialog>
 #include <QSettings>
@@ -40,5 +39,3 @@ private:
     Ui::SettingsWindow *ui;
     QSettings &settings;
 };
-
-#endif // SETTINGSWINDOW_H

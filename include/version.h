@@ -1,5 +1,4 @@
-#ifndef VERSION_H
-#define VERSION_H
+#pragma once
 
 #include <QString>
 
@@ -10,5 +9,3 @@ namespace version{
     QString getVersionString();
     extern const QString build_type;
 }
-
-#endif // VERSION_H

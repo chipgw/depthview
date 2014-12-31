@@ -1,5 +1,4 @@
-#ifndef DEPTHVIEWWINDOW_H
-#define DEPTHVIEWWINDOW_H
+#pragma once
 
 #include "imagewidget.h"
 #include <QMainWindow>
@@ -76,5 +75,3 @@ private slots:
     void on_actionFirst_triggered();
     void on_actionLast_triggered();
 };
-
-#endif // DEPTHVIEWWINDOW_H
