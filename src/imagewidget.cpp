@@ -128,8 +128,8 @@ void ImageWidget::updateImages(){
 
 void ImageWidget::mouseMoveEvent(QMouseEvent *e){
     if((e->buttons() & panButtons) && (vBar.maximum() > 0 || hBar.maximum() > 0)){
-        vBar.setValue(vBar.value() + lastmousepos.y() - e->y());
-        hBar.setValue(hBar.value() + lastmousepos.x() - e->x());
+        vBar.setValue(vBar.value() + lastMousePos.y() - e->y());
+        hBar.setValue(hBar.value() + lastMousePos.x() - e->x());
 
         if(continuousPan){
             QPoint warpto = e->pos();
@@ -149,16 +149,16 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
                 QCursor::setPos(mapToGlobal(warpto));
             }
 
-            lastmousepos = warpto;
+            lastMousePos = warpto;
         }else{
-            lastmousepos = e->pos();
+            lastMousePos = e->pos();
         }
 
         setCursor(Qt::SizeAllCursor);
     }else{
         setCursor(Qt::ArrowCursor);
 
-        lastmousepos = e->pos();
+        lastMousePos = e->pos();
     }
     mouseTimer.start(4000);
 }

@@ -29,14 +29,29 @@ public:
 protected:
     QScrollBar hBar;
     QScrollBar vBar;
-    QPoint lastmousepos;
+
+    /* The position of the mouse in the last mouse event. */
+    QPoint lastMousePos;
+
+    /* Zoom factor. 1.0 is 1:1, 0 is auto fit. */
     qreal zoom;
+
+    /* Enable using imgL for the right eye and visa versa. */
     bool swapLR;
+
+    /* Are the scrollbars visible? */
     bool scrollbarsVisible;
+
+    /* Warp the mouse to the other end of the screen when it reaches the edge while panning. */
     bool continuousPan;
+
+    /* Do we use smooth transformations with QPainter? */
     bool smoothTransform;
+
+    /* The button mask used to check if a mouse movement event translates to panning. */
     Qt::MouseButtons panButtons;
 
+    /* This timer hides the mouse 4 seconds after it was last moved. */
     QTimer mouseTimer;
 
     DrawMode mode;
@@ -86,6 +101,8 @@ public slots:
 
     /* Enable using imgL for the right eye and visa versa. */
     void enableSwapLR(bool enable);
+
+    /* Show or hide the scrollbars. */
     void showScrollbars(bool show);
 
     /* Enables warping the mouse to the other end of the screen when it reaches the edge while panning. */

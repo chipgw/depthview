@@ -13,6 +13,7 @@ public:
     explicit SettingsWindow(QSettings &Settings, QWidget *parent = NULL);
     ~SettingsWindow();
     
+    /* The string keys to load and save settings with. */
     const static QString defaultrender;
     const static QString rememberwindow;
     const static QString startfullscreen;
