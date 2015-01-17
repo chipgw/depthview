@@ -24,7 +24,7 @@ VS_VERSION_INFO VERSIONINFO
       BEGIN
         VALUE "FileDescription", "A Basic Viewer for Stereo 3D Images."
         VALUE "FileVersion", VER_FILEVERSION_STR
-        VALUE "LegalCopyright", "© 2013 chipgw, released under the MIT license"
+        VALUE "LegalCopyright", "© 2011-2015 chipgw, released under the MIT license"
         VALUE "OriginalFilename", "DepthView.exe"
         VALUE "ProductName", "DepthView"
         VALUE "ProductVersion", VER_FILEVERSION_STR
