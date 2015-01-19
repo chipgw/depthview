@@ -1,7 +1,7 @@
 set(CMAKE_BUILD_TYPE_INIT "Release")
 
 project(DepthView)
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.11)
 
 option(DEPTHVIEW_USE_QT4 "use Qt 4 rather than Qt 5." OFF)
 option(DEPTHVIEW_PORTABLE "build a portable version of DepthView (i.e. settings are saved in the application directory)" OFF)
@@ -11,13 +11,6 @@ set(DepthView_VERSION_MINOR 05)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
-
-# Silences warnings about the policy not being set.
-# We still manually link to Qt5::WinMain to support older versions of CMake.
-# As far as I can tell there is no harm in doing both.
-if(POLICY CMP0020)
-    cmake_policy(SET CMP0020 NEW)
-endif(POLICY CMP0020)
 
 include_directories("./include")
 
@@ -57,9 +50,6 @@ if(DEPTHVIEW_USE_QT4)
     qt4_wrap_ui(FORM_HEADERS ${FORMS})
 else(DEPTHVIEW_USE_QT4)
     find_package(Qt5Widgets)
-    include_directories(${Qt5Widgets_INCLUDE_DIRS})
-    add_definitions(${Qt5Widgets_DEFINITIONS})
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
     qt5_wrap_ui(FORM_HEADERS ${FORMS})
     qt5_add_resources(RESOURCES_RCC ${RESOURCES})
@@ -70,11 +60,7 @@ add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${FORM_HEADERS} ${HEADERS} ${RES
 if(DEPTHVIEW_USE_QT4)
     target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
 else(DEPTHVIEW_USE_QT4)
-    qt5_use_modules(${PROJECT_NAME} Widgets)
-
-    if(WIN32)
-        target_link_libraries(${PROJECT_NAME} Qt5::WinMain)
-    endif(WIN32)
+    target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 endif(DEPTHVIEW_USE_QT4)
 
 # TODO - make this whole CPack thing a lot less messy...
