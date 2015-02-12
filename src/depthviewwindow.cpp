@@ -281,6 +281,11 @@ void DepthViewWindow::mouseDoubleClickEvent(QMouseEvent *e){
     }
 }
 
+void DepthViewWindow::closeEvent(QCloseEvent *e){
+    QApplication::quit();
+    e->accept();
+}
+
 void DepthViewWindow::on_actionImport_triggered(){
     ImportWizard dialog(currentDir, this);
 
@@ -621,22 +626,22 @@ void DepthViewWindow::registerFileTypes(){
     }
 }
 
-void DepthViewWindow::dragEnterEvent(QDragEnterEvent *event){
-    if(event->mimeData()->hasUrls()){
-        foreach(QUrl url, event->mimeData()->urls()){
+void DepthViewWindow::dragEnterEvent(QDragEnterEvent *e){
+    if(e->mimeData()->hasUrls()){
+        foreach(QUrl url, e->mimeData()->urls()){
             QFileInfo info(url.toLocalFile());
             if(info.exists() && QDir::match(currentDir.nameFilters(), info.fileName())){
-                return event->acceptProposedAction();
+                return e->acceptProposedAction();
             }
         }
     }
 }
 
-void DepthViewWindow::dropEvent(QDropEvent *event){
-    if(event->mimeData()->hasUrls()){
-        foreach(QUrl url, event->mimeData()->urls()){
+void DepthViewWindow::dropEvent(QDropEvent *e){
+    if(e->mimeData()->hasUrls()){
+        foreach(QUrl url, e->mimeData()->urls()){
             if(loadImage(url.toLocalFile())){
-                return event->acceptProposedAction();
+                return e->acceptProposedAction();
             }
         }
     }
