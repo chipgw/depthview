@@ -3,7 +3,7 @@
 
 AutoWizardPage::AutoWizardPage(QLayout *l, QWidget *parent) : QWizardPage(parent) , layout(l) {
     /* default to vertical layout */
-    if(layout == NULL){
+    if(layout == nullptr){
         layout = new QVBoxLayout;
     }
     setLayout(layout);

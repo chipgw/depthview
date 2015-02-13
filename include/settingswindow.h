@@ -10,9 +10,9 @@ class SettingsWindow;
 class SettingsWindow : public QDialog {
     Q_OBJECT
 public:
-    explicit SettingsWindow(QSettings &Settings, QWidget *parent = NULL);
+    explicit SettingsWindow(QSettings &Settings, QWidget *parent = nullptr);
     ~SettingsWindow();
-    
+
     /* The string keys to load and save settings with. */
     const static QString defaultrender;
     const static QString rememberwindow;

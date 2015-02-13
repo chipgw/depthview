@@ -28,7 +28,7 @@ public:
     QString currentFile;
     QSettings settings;
 
-    explicit DepthViewWindow(QWidget *parent = NULL);
+    explicit DepthViewWindow(QWidget *parent = nullptr);
     ~DepthViewWindow();
 
     bool loadImage(const QString &filename);

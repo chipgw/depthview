@@ -5,8 +5,9 @@
 #include <QElapsedTimer>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), zoom(0.0),
-    swapLR(false), scrollbarsVisible(true), continuousPan(true), smoothTransform(false), panButtons(Qt::LeftButton | Qt::MidButton), mouseTimer(this), mode(AnglaphFull),
-    maskInterlacedHorizontal(":/masks/interlacedH.pbm"), maskInterlacedVertical(":/masks/interlacedV.pbm"), maskCheckerboard(":/masks/checkerboard.pbm") {
+    swapLR(false), scrollbarsVisible(true), continuousPan(true), smoothTransform(false), panButtons(Qt::LeftButton | Qt::MidButton),
+    mouseTimer(this), mode(AnglaphFull), maskInterlacedHorizontal(":/masks/interlacedH.pbm"),
+    maskInterlacedVertical(":/masks/interlacedV.pbm"), maskCheckerboard(":/masks/checkerboard.pbm") {
 
     setMouseTracking(true);
     recalculatescroolmax();
@@ -40,12 +41,14 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         font.setPointSize(32);
         painter.setFont(font);
         painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("No Image Loaded"));
-    }else if(parentWidget() && !parentWidget()->isFullScreen() && (mode == InterlacedHorizontal || mode == InterlacedVertical || mode == Checkerboard)){
+    }else if(parentWidget() && !parentWidget()->isFullScreen() &&
+             (mode == InterlacedHorizontal || mode == InterlacedVertical || mode == Checkerboard)){
         painter.setPen(Qt::gray);
         QFont font;
         font.setPointSize(24);
         painter.setFont(font);
-        painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("%1 Display Must Be Fullscreen").arg(mode == Checkerboard ? "Checkerboard" : "Interlaced"));
+        painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap,
+                         tr("%1 Display Must Be Fullscreen").arg(mode == Checkerboard ? "Checkerboard" : "Interlaced"));
 
         /* keep scrollbars hidden. */
         zoom = 0.0f;

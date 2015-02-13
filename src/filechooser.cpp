@@ -4,7 +4,8 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
-FileChooser::FileChooser(const QString &filenameFilter, const QString &defaultDir, QWidget *parent, QString text) : QWidget(parent), filter(filenameFilter), dir(defaultDir){
+FileChooser::FileChooser(const QString &filenameFilter, const QString &defaultDir, QWidget *parent, QString text) :
+    QWidget(parent), filter(filenameFilter), dir(defaultDir){
     layout = new QHBoxLayout;
     setLayout(layout);
 

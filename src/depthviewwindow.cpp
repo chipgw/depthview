@@ -40,7 +40,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
             msgBox.exec();
 
             if(msgBox.clickedButton() == (QAbstractButton*)deleteButton || msgBox.clickedButton() == (QAbstractButton*)keepButton){
-                foreach(QString key, oldSettings.allKeys()){
+                for(const QString& key : oldSettings.allKeys()){
                     settings.setValue(key, oldSettings.value(key));
                 }
 
@@ -119,7 +119,8 @@ bool DepthViewWindow::loadImage(const QString &filename){
 }
 
 bool DepthViewWindow::showLoadImageDialog(){
-    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), currentDir.path(), tr("Stereo Image Files (*.jps *.pns)"));
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open Image"), currentDir.path(),
+                                                    tr("Stereo Image Files (*.jps *.pns)"));
     return loadImage(filename);
 }
 
@@ -376,7 +377,8 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
 void DepthViewWindow::on_actionExport_triggered() {
     if(ui->imageWidget->imgR.isNull() || ui->imageWidget->imgL.isNull()) return;
 
-    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), currentDir.path(), tr("Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
+    QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), currentDir.path(),
+                                                    tr("Image Files (*.bmp *.jpg *.jpeg *.png *.ppm *.tiff *.xbm *.xpm)"));
 
     if(filename.isNull()) return;
 
@@ -398,34 +400,36 @@ void DepthViewWindow::on_actionExport_triggered() {
         }
 
         if(!out.isNull()){
-            out.save(filename, NULL, quality);
+            out.save(filename, nullptr, quality);
         }
     }else if(dialog.field("sideBySide").toBool()){
         QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
         QPainter paint(&out);
-        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0, dialog.field("mirrorL").toBool(), dialog.field("mirrorR").toBool());
+        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0,
+                       dialog.field("mirrorL").toBool(), dialog.field("mirrorR").toBool());
 
         if(!out.isNull()){
-            out.save(filename, NULL, quality);
+            out.save(filename, nullptr, quality);
         }
     }else if(dialog.field("topBottom").toBool()){
         QImage out(ui->imageWidget->imgL.width(), ui->imageWidget->imgL.height() + ui->imageWidget->imgR.height(), QImage::Format_RGB32);
         QPainter paint(&out);
-        drawTopBottom(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0, dialog.field("mirrorT").toBool(), dialog.field("mirrorB").toBool());
+        drawTopBottom(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, 1.0,
+                      dialog.field("mirrorT").toBool(), dialog.field("mirrorB").toBool());
 
         if(!out.isNull()){
-            out.save(filename, NULL, quality);
+            out.save(filename, nullptr, quality);
         }
     }else if(dialog.field("exportBoth").toBool()){
         QString filenameL = filename;
-        ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'), NULL, quality);
+        ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'), nullptr, quality);
 
         QString filenameR = filename;
-        ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'), NULL, quality);
+        ui->imageWidget->imgR.save(filenameR.insert(filenameR.lastIndexOf('.'), 'R'), nullptr, quality);
     }else if(dialog.field("exportL").toBool()){
-        ui->imageWidget->imgL.save(filename, NULL, quality);
+        ui->imageWidget->imgL.save(filename, nullptr, quality);
     }else if(dialog.field("exportR").toBool()){
-        ui->imageWidget->imgR.save(filename, NULL, quality);
+        ui->imageWidget->imgR.save(filename, nullptr, quality);
     }
 }
 
@@ -463,7 +467,8 @@ void DepthViewWindow::on_actionAbout_triggered(){
                       #endif
                           " (%2)</h1><p>DepthView is a basic application for viewing stereo 3D image files.</p>"
                           "<p>DepthView website: <a href=\"https://github.com/chipgw/depthview\">github.com/chipgw/depthview</a></p>"
-                          "<p>Please report any bugs at: <a href=\"https://github.com/chipgw/depthview/issues\">github.com/chipgw/depthview/issues</a></p>"
+                          "<p>Please report any bugs at: "
+                          "<a href=\"https://github.com/chipgw/depthview/issues\">github.com/chipgw/depthview/issues</a></p>"
                           "</body></html>").arg(version::getVersionString()).arg(version::git_revision.left(7)));
 }
 
@@ -504,9 +509,12 @@ void DepthViewWindow::loadSettings(){
 
     ui->actionSwap_Left_Right->setChecked(settings.contains(SettingsWindow::swapLR) ? settings.value(SettingsWindow::swapLR).toBool() : false);
     setAcceptDrops(settings.contains(SettingsWindow::disabledragdrop) ? !settings.value(SettingsWindow::disabledragdrop).toBool() : true);
-    ui->imageWidget->enableContinuousPan(settings.contains(SettingsWindow::continuouspan) ? settings.value(SettingsWindow::continuouspan).toBool() : true);
-    ui->actionShow_Scrollbars->setChecked(settings.contains(SettingsWindow::showscrollbars) ? settings.value(SettingsWindow::showscrollbars).toBool() : true);
-    ui->actionSmooth_Scaling->setChecked(settings.contains(SettingsWindow::smoothscaling) ? settings.value(SettingsWindow::smoothscaling).toBool() : false);
+    ui->imageWidget->enableContinuousPan(settings.contains(SettingsWindow::continuouspan) ?
+                                             settings.value(SettingsWindow::continuouspan).toBool() : true);
+    ui->actionShow_Scrollbars->setChecked(settings.contains(SettingsWindow::showscrollbars) ?
+                                              settings.value(SettingsWindow::showscrollbars).toBool() : true);
+    ui->actionSmooth_Scaling->setChecked(settings.contains(SettingsWindow::smoothscaling) ?
+                                             settings.value(SettingsWindow::smoothscaling).toBool() : false);
 
     if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && currentDir.absolutePath() == QDir::homePath()){
         currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
@@ -573,8 +581,9 @@ void DepthViewWindow::registerFileTypes(){
 
     LPCTSTR progID = TEXT("chipgw.DepthView.1.05");
 
-    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.jps"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &jpsKey, NULL) == ERROR_SUCCESS){
-        if(RegSetValueEx(jpsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.jps"), 0, nullptr,
+                      REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr, &jpsKey, nullptr) == ERROR_SUCCESS){
+        if(RegSetValueEx(jpsKey, nullptr, 0, REG_SZ, LPBYTE(progID), DWORD(strlen(progID))) != ERROR_SUCCESS) {
             error += "<p>Error setting .jps ProgID!</p>";
         }
         RegCloseKey(jpsKey);
@@ -582,8 +591,9 @@ void DepthViewWindow::registerFileTypes(){
         error += "<p>Error creating .jps key!</p>";
     }
 
-    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.pns"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &pnsKey, NULL) == ERROR_SUCCESS){
-        if(RegSetValueEx(pnsKey, NULL, 0, REG_SZ, LPBYTE(progID), strlen(progID)) != ERROR_SUCCESS) {
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, TEXT("Software\\Classes\\.pns"), 0, nullptr,
+                      REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr, &pnsKey, nullptr) == ERROR_SUCCESS){
+        if(RegSetValueEx(pnsKey, nullptr, 0, REG_SZ, LPBYTE(progID), DWORD(strlen(progID))) != ERROR_SUCCESS) {
             error += "<p>Error setting .pns ProgID!</p>";
         }
         RegCloseKey(pnsKey);
@@ -594,9 +604,10 @@ void DepthViewWindow::registerFileTypes(){
     LPCTSTR progIDPath = TEXT("Software\\Classes\\chipgw.DepthView.1.05");
     LPCTSTR cmdPath = TEXT("Software\\Classes\\chipgw.DepthView.1.05\\shell\\open\\command");
 
-    if(RegCreateKeyEx(HKEY_CURRENT_USER, progIDPath, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &progKey, NULL) == ERROR_SUCCESS){
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, progIDPath, 0, nullptr,
+                      REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, nullptr, &progKey, nullptr) == ERROR_SUCCESS){
         LPCTSTR desc = TEXT("Stereo 3D Image");
-        if(RegSetValueEx(progKey, NULL, 0, REG_SZ, LPBYTE(desc), strlen(desc)) != ERROR_SUCCESS) {
+        if(RegSetValueEx(progKey, nullptr, 0, REG_SZ, LPBYTE(desc), DWORD(strlen(desc))) != ERROR_SUCCESS) {
             error += "<p>Error setting description!</p>";
         }
         RegCloseKey(progKey);
@@ -604,9 +615,10 @@ void DepthViewWindow::registerFileTypes(){
         error += "<p>Error creating command key!</p>";
     }
 
-    if(RegCreateKeyEx(HKEY_CURRENT_USER, cmdPath, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &cmdKey, NULL) == ERROR_SUCCESS){
+    if(RegCreateKeyEx(HKEY_CURRENT_USER, cmdPath, 0, nullptr, REG_OPTION_NON_VOLATILE,
+                      KEY_ALL_ACCESS, nullptr, &cmdKey, nullptr) == ERROR_SUCCESS){
         QString command = "\"" + QDir::toNativeSeparators(QApplication::applicationFilePath()) + "\" \"%1\"";
-        if(RegSetValueEx(cmdKey, NULL, 0, REG_SZ, LPBYTE(command.toLocal8Bit().constData()), command.size()) != ERROR_SUCCESS) {
+        if(RegSetValueEx(cmdKey, nullptr, 0, REG_SZ, LPBYTE(command.toLocal8Bit().constData()), command.size()) != ERROR_SUCCESS) {
             error += "<p>Error setting command!</p>";
         }
         RegCloseKey(cmdKey);
@@ -620,15 +632,15 @@ void DepthViewWindow::registerFileTypes(){
 #endif
 
     if(error.isNull()) {
-        QMessageBox::information(NULL, tr("Success!"), tr("Successfully associated .jps and .pns files with DepthView."));
+        QMessageBox::information(nullptr, tr("Success!"), tr("Successfully associated .jps and .pns files with DepthView."));
     } else {
-        QMessageBox::warning(NULL, tr("Error setting file association!"), error);
+        QMessageBox::warning(nullptr, tr("Error setting file association!"), error);
     }
 }
 
 void DepthViewWindow::dragEnterEvent(QDragEnterEvent *e){
     if(e->mimeData()->hasUrls()){
-        foreach(QUrl url, e->mimeData()->urls()){
+        for(const QUrl& url : e->mimeData()->urls()){
             QFileInfo info(url.toLocalFile());
             if(info.exists() && QDir::match(currentDir.nameFilters(), info.fileName())){
                 return e->acceptProposedAction();
@@ -639,7 +651,7 @@ void DepthViewWindow::dragEnterEvent(QDragEnterEvent *e){
 
 void DepthViewWindow::dropEvent(QDropEvent *e){
     if(e->mimeData()->hasUrls()){
-        foreach(QUrl url, e->mimeData()->urls()){
+        for(const QUrl& url : e->mimeData()->urls()){
             if(loadImage(url.toLocalFile())){
                 return e->acceptProposedAction();
             }

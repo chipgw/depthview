@@ -72,7 +72,7 @@ public:
     QImage imgL, imgR;
     QPixmap pixmapL, pixmapR;
 
-    explicit ImageWidget(QWidget *parent = NULL);
+    explicit ImageWidget(QWidget *parent = nullptr);
 
     /* Load a .jps or .pns file from the hard disk. Returns true on success. */
     bool loadStereoImage(const QString &filename);
