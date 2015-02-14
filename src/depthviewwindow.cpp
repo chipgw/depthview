@@ -13,9 +13,6 @@
 #include <QPainter>
 #include <QShortcut>
 
-#if defined(Q_OS_WIN32)
-#include <Windows.h>
-#endif
 
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow), currentDir(QDir::current()),
 #ifdef DEPTHVIEW_PORTABLE
@@ -25,6 +22,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 #endif
 {
 #ifndef DEPTHVIEW_PORTABLE
+    /* Migrate old settings. */
     if(!settings.allKeys().size()){
         QSettings oldSettings("DepthView","DepthView");
 
@@ -540,38 +538,41 @@ void DepthViewWindow::parseCommandLine(const QStringList &args){
             if(i.hasNext()){
                 const QString &dir = i.next();
                 if(!currentDir.cd(dir)){
-                    warning.append(tr("<p>Invalid directory \"%1\" passed to \"--startdir\" argument!</p>").arg(dir));
+                    warning += tr("<p>Invalid directory \"%1\" passed to \"--startdir\" argument!</p>").arg(dir);
                 }
             }else{
-                warning.append(tr("<p>Argument \"--startdir\" passed with no argument after it!</p>"));
+                warning += tr("<p>Argument \"--startdir\" passed with no argument after it!</p>");
             }
         }else if(arg == "--renderer"){
             if(i.hasNext()){
                 const QString &renderer = i.next();
                 if(!setRenderModeFromString(renderer)){
-                    warning.append(tr("<p>Invalid renderer \"%1\" passed to \"--renderer\" argument!</p>").arg(renderer));
+                    warning += tr("<p>Invalid renderer \"%1\" passed to \"--renderer\" argument!</p>").arg(renderer);
                 }
             }else{
-                warning.append(tr("<p>Argument \"--renderer\" passed with no argument after it!</p>"));
+                warning += tr("<p>Argument \"--renderer\" passed with no argument after it!</p>");
             }
-        }else if(arg == "--register"){
-            /* handled in main */
         }else if(!loaded){
             loaded = loadImage(arg);
         }
+        /* "--register" is handled in main. */
     }
+    /* If there weren't any warnings we don't show the dialog. */
     if(!warning.isEmpty()){
-        QMessageBox::warning(this, tr("Warning: Invalid Command Line!"), warning);
+        QMessageBox::warning(this, tr("Invalid Command Line!"), warning);
     }
 
+    /* We show the load image dialog if nothing was loaded and the setting is enabled. */
     if(!loaded && (!settings.contains(SettingsWindow::filedialogstartup) || settings.value(SettingsWindow::filedialogstartup).toBool())){
         showLoadImageDialog();
     }
 }
 
 #if defined(Q_OS_WIN32)
+#include <Windows.h>
+
 void addRegistryEntry(const QString& path, const QString& value, QString& error){
-    /* TODO - handle errors properly */
+    /* TODO - handle errors properly. */
     HKEY key;
 
     LSTATUS result = RegCreateKeyEx(HKEY_CURRENT_USER, LPCSTR(path.toLocal8Bit().constData()), 0, nullptr,
@@ -580,7 +581,7 @@ void addRegistryEntry(const QString& path, const QString& value, QString& error)
     if(result == ERROR_SUCCESS){
         result = RegSetValueEx(key, nullptr, 0, REG_SZ, LPBYTE(value.toLocal8Bit().constData()), DWORD(value.size()));
         if(result != ERROR_SUCCESS) {
-            error += "<p>Error setting ProgID for \"" + path + "\"!</p>";
+            error += "<p>Error setting value for \"" + path + "\"!</p>";
         }
         RegCloseKey(key);
     } else {
@@ -594,7 +595,7 @@ void DepthViewWindow::registerFileTypes(){
     QString error;
 
 #if defined(Q_OS_WIN32)
-    QString progID = "chipgw.DepthView.1.05";
+    QString progID = "chipgw.DepthView." + version::getVersionString();
 
     addRegistryEntry("Software\\Classes\\.jps", progID, error);
     addRegistryEntry("Software\\Classes\\.pns", progID, error);
