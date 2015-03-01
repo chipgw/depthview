@@ -13,7 +13,6 @@
 #include <QPainter>
 #include <QShortcut>
 
-
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow), currentDir(QDir::current()),
 #ifdef DEPTHVIEW_PORTABLE
     settings(QApplication::applicationDirPath() + "/DepthView.conf", QSettings::IniFormat)
@@ -24,7 +23,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 #ifndef DEPTHVIEW_PORTABLE
     /* Migrate old settings. */
     if(!settings.allKeys().size()){
-        QSettings oldSettings("DepthView","DepthView");
+        QSettings oldSettings("DepthView", "DepthView");
 
         if(oldSettings.allKeys().size()){
             QMessageBox msgBox(this);
@@ -245,14 +244,18 @@ void DepthViewWindow::on_actionPrevious_triggered(){
 void DepthViewWindow::on_actionFirst_triggered(){
     QStringList entryList = currentDir.entryList();
     if(!entryList.isEmpty()){
-        loadImage(entryList[0]);
+        /* Setting currentFile to the last file and opening the next one from there makes sure a valid image gets loaded. */
+        currentFile = entryList.last();
+        on_actionNext_triggered();
     }
 }
 
 void DepthViewWindow::on_actionLast_triggered(){
     QStringList entryList = currentDir.entryList();
     if(!entryList.isEmpty()){
-        loadImage(entryList[entryList.count() - 1]);
+        /* Setting currentFile to the first file and opening the previous one from there makes sure a valid image gets loaded. */
+        currentFile = entryList.first();
+        on_actionPrevious_triggered();
     }
 }
 
