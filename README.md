@@ -6,9 +6,9 @@ Render Modes
 ------------
 * Red/Cyan Anglaph (full-color, half-color, and greyscale)
 * Side by Side (with mirror)
-* Top/Tottom (also with mirror)
-* Interlaced (horizontal and vertical, not fully tested)
-* Checkerboard (also not fully tested)
+* Top/Bottom (also with mirror)
+* Interlaced (horizontal and vertical, requires fullscreen)
+* Checkerboard (also requires fullscreen)
 * Single Image (Mono)
 
 Dependencies
