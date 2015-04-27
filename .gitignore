@@ -48,3 +48,8 @@ Thumbs.db
 # build directories #
 #####################
 build*
+
+# Git patch files #
+###################
+*.patch
+*.diff
