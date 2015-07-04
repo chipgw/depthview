@@ -7,8 +7,8 @@ Render Modes
 * Red/Cyan Anglaph (full-color, half-color, and greyscale)
 * Side by Side (with mirror)
 * Top/Bottom (also with mirror)
-* Interlaced (horizontal and vertical, requires fullscreen)
-* Checkerboard (also requires fullscreen)
+* Interlaced (horizontal and vertical, fullscreen only)
+* Checkerboard (fullscreen only)
 * Single Image (Mono)
 
 Dependencies
@@ -20,14 +20,14 @@ Building
 --------
 * Clone or download the source code.
 * In the source folder, create a `build` folder.
-* In the build folder, run `cmake ..`, Add `-D<option>=ON` with any option listed below in place of `<option>` to enable that option.
-* If you want to use a different generator than your platform default, add `-G <generator>` to the cmake command, with your desired generator. A list of generators can be found by running `cmake -h`.
+* In the build folder, run `cmake ..`. Add any options listed below to enable them.
+* To use a different generator than your platform default, add `-G <generator>` to the cmake command with your desired generator. A list of generators can be found by running `cmake -h`.
 * The project files should now be generated in `build`.
 
 Build options
 -------------
-* DEPTHVIEW_PORTABLE	- Builds a portable version that stores settings in the same directory as the executable.
-* DEPTHVIEW_USE_QT4	- Builds against Qt 4 instead of 5.
+* -DDEPTHVIEW_PORTABLE=On	- Builds a portable version that stores settings in the same directory as the executable.
+* -DDEPTHVIEW_USE_QT4=On	- Builds against Qt 4 instead of 5.
 
 License
 -------
