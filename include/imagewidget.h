@@ -48,6 +48,9 @@ protected:
     /* Do we use smooth transformations with QPainter? */
     bool smoothTransform;
 
+    /* Squash Side-by-Side and Top/Bottom to fit both images in the same aspect ratio as the original image. */
+    bool anamorphicDualview;
+
     /* The button mask used to check if a mouse movement event translates to panning. */
     Qt::MouseButtons panButtons;
 
@@ -110,6 +113,9 @@ public slots:
 
     /* Enables the QPainter::SmoothPixmapTransform flag when painting, which decreases pixelation when zoom isn't 1:1. */
     void enableSmoothTransform(bool enable);
+
+    /* Squash Side-by-Side and Top/Bottom to fit both images in the same aspect ratio as the original image. */
+    void enableAnamorphicDualview(bool enable);
 
 protected:
     /* Update the anglaph pixmaps. Should be called any time the images or the draw mode are changed. */

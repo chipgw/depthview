@@ -5,8 +5,8 @@
 #include <QElapsedTimer>
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), zoom(0.0),
-    swapLR(false), scrollbarsVisible(true), continuousPan(true), smoothTransform(false), panButtons(Qt::LeftButton | Qt::MidButton),
-    mouseTimer(this), mode(AnglaphFull), maskInterlacedHorizontal(":/masks/interlacedH.pbm"),
+    swapLR(false), scrollbarsVisible(true), continuousPan(true), smoothTransform(false), anamorphicDualview(false),
+    panButtons(Qt::LeftButton | Qt::MidButton), mouseTimer(this), mode(AnglaphFull), maskInterlacedHorizontal(":/masks/interlacedH.pbm"),
     maskInterlacedVertical(":/masks/interlacedV.pbm"), maskCheckerboard(":/masks/checkerboard.pbm") {
 
     setMouseTracking(true);
@@ -67,28 +67,28 @@ void ImageWidget::paintEvent(QPaintEvent *e){
             drawSingle(anglaph, -hBar.value(), -vBar.value(), painter, zoom);
             break;
         case SidebySide:
-            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom);
+            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom);
             break;
         case SidebySideMLeft:
-            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true);
+            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom, true);
             break;
         case SidebySideMRight:
-            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, false, true);
+            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom, false, true);
             break;
         case SidebySideMBoth:
-            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
+            drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom, true, true);
             break;
         case TopBottom:
-            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom);
+            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom);
             break;
         case TopBottomMTop:
-            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true);
+            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom, true);
             break;
         case TopBottomMBottom:
-            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, false, true);
+            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom, false, true);
             break;
         case TopBottomMBoth:
-            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, zoom, true, true);
+            drawTopBottom(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom, true, true);
             break;
         case InterlacedHorizontal:
             drawInterlaced(L, R, -hBar.value(), -vBar.value(), painter, maskInterlacedHorizontal, zoom);
@@ -186,8 +186,8 @@ void ImageWidget::leaveEvent(QEvent *e){
 }
 
 void ImageWidget::recalculatescroolmax(){
-    int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
-    int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
+    int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth) && !anamorphicDualview;
+    int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth) && !anamorphicDualview;
 
     int hmax = qMax(int((imgL.width() << isSidebySide) * zoom - width()) >> (isSidebySide + 1), 0);
     hBar.setRange(-hmax, hmax);
@@ -215,8 +215,8 @@ void ImageWidget::zoomOut(){
 
 void ImageWidget::addZoom(qreal amount){
     if(zoom <= 0.0){
-        int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth);
-        int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth);
+        int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth) && !anamorphicDualview;
+        int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth) && !anamorphicDualview;
 
         zoom = qMin(qreal(width()) / qreal(imgL.width() << isSidebySide), qreal(height()) / qreal(imgL.height() << isTopBottom));
     }
@@ -246,6 +246,12 @@ void ImageWidget::enableContinuousPan(bool enable){
 
 void ImageWidget::enableSmoothTransform(bool enable){
     smoothTransform = enable;
+    repaint();
+}
+
+void ImageWidget::enableAnamorphicDualview(bool enable){
+    anamorphicDualview = enable;
+    recalculatescroolmax();
     repaint();
 }
 

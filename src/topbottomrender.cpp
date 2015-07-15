@@ -1,12 +1,12 @@
 #include "renderers.h"
 #include <QPainter>
 
-void drawTopBottom(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY, QPainter &painter, qreal zoom, bool mirrorL, bool mirrorR){
+void drawTopBottom(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY, QPainter &painter, bool anamorphic, qreal zoom, bool mirrorL, bool mirrorR){
     QRect size = painter.window();
 
-    if(zoom <= 0.0){
-        zoom = qMin(qreal(size.width()) / qreal(imgL.width()), qreal(size.height()) / qreal(imgL.height()) * 0.5);
-    }
+    /* Calculate the zoom based on how the image will fit in the painter window. */
+    if(zoom <= 0.0)
+        zoom = qMin(qreal(size.width()) / qreal(imgL.width()), qreal(size.height()) / qreal(imgL.height()) * (anamorphic ? 1.0 : 0.5));
 
     QRect clip(0, 0, size.width(), size.height() / 2);
 
@@ -15,7 +15,10 @@ void drawTopBottom(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY,
     painter.translate(size.width() / 2,
                       size.height() / 4);
 
-    if(mirrorL) painter.scale(1, -1);
+    if(mirrorL) painter.scale(1.0, -1.0);
+
+    /* If anamorphic is enabled we ned to squash the y-axis. */
+    if(anamorphic) painter.scale(1.0, 0.5);
 
     painter.translate(panX, panY);
 
@@ -30,7 +33,10 @@ void drawTopBottom(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY,
     painter.translate(size.width() / 2,
                       size.height() / 4);
 
-    if(mirrorR) painter.scale(1, -1);
+    if(mirrorR) painter.scale(1.0, -1.0);
+
+    /* If anamorphic is enabled we ned to squash the y-axis. */
+    if(anamorphic) painter.scale(1.0, 0.5);
 
     painter.translate(panX, panY);
 

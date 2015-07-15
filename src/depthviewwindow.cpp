@@ -63,9 +63,10 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(showLoadImageDialog()));
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
 
-    connect(ui->actionSwap_Left_Right, SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableSwapLR(bool)));
-    connect(ui->actionShow_Scrollbars, SIGNAL(toggled(bool)), ui->imageWidget, SLOT(showScrollbars(bool)));
-    connect(ui->actionSmooth_Scaling,  SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableSmoothTransform(bool)));
+    connect(ui->actionSwap_Left_Right,      SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableSwapLR(bool)));
+    connect(ui->actionShow_Scrollbars,      SIGNAL(toggled(bool)), ui->imageWidget, SLOT(showScrollbars(bool)));
+    connect(ui->actionSmooth_Scaling,       SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableSmoothTransform(bool)));
+    connect(ui->actionAnamorphic_Dualview,  SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableAnamorphicDualview(bool)));
 
     connect(ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
 
@@ -359,7 +360,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
     if(filename.contains(".jps", Qt::CaseInsensitive)){
         QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
         QPainter paint(&out);
-        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint);
+        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, false);
 
         if(!out.isNull()){
             out.save(filename, "JPG");
@@ -367,7 +368,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
     }else if(filename.contains(".pns", Qt::CaseInsensitive)){
         QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
         QPainter paint(&out);
-        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint);
+        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, false);
 
         if(!out.isNull()){
             out.save(filename, "PNG");
