@@ -10,7 +10,7 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), hBar(Qt::Horizontal
     maskInterlacedVertical(":/masks/interlacedV.pbm"), maskCheckerboard(":/masks/checkerboard.pbm") {
 
     setMouseTracking(true);
-    recalculatescroolmax();
+    recalculateScrollMax();
 
     connect(&hBar, SIGNAL(valueChanged(int)), this, SLOT(update()));
     connect(&vBar, SIGNAL(valueChanged(int)), this, SLOT(update()));
@@ -26,7 +26,7 @@ void ImageWidget::resizeEvent(QResizeEvent *e){
     vBar.resize(vBar.sizeHint().width(), e->size().height() - hBar.sizeHint().height());
     vBar.move(e->size().width() - vBar.sizeHint().width(), 0);
 
-    recalculatescroolmax();
+    recalculateScrollMax();
 }
 
 void ImageWidget::paintEvent(QPaintEvent *e){
@@ -50,9 +50,9 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap,
                          tr("%1 Display Must Be Fullscreen").arg(mode == Checkerboard ? "Checkerboard" : "Interlaced"));
 
-        /* keep scrollbars hidden. */
+        /* Keep scrollbars hidden. */
         zoom = 0.0f;
-        recalculatescroolmax();
+        recalculateScrollMax();
     }else{
         QElapsedTimer time;
         time.start();
@@ -124,7 +124,7 @@ bool ImageWidget::loadStereoImage(const QString &filename){
 void ImageWidget::updateImages(){
     pixmapL = QPixmap::fromImage(imgL);
     pixmapR = QPixmap::fromImage(imgR);
-    recalculatescroolmax();
+    recalculateScrollMax();
     updateAnglaph();
     repaint();
 }
@@ -137,20 +137,20 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
         if(continuousPan){
             QPoint warpto = e->pos();
 
-            if(e->x() <= 0){
+            /* If we're at the last pixel on either side of the screen, warp to the other side of the screen. */
+            if(e->x() <= 0)
                 warpto.setX(width() - 3);
-            }else if(e->x() >= width() - 1){
+            else if(e->x() >= width() - 1)
                 warpto.setX(2);
-            }
-            if(e->y() <= 0){
-                warpto.setY(height() - 3);
-            }else if(e->y() >= height() - 1){
-                warpto.setY(2);
-            }
 
-            if(warpto != e->pos()){
+            /* If we're at the last pixel on the top or bottom of the screen, warp to the other side of the screen. */
+            if(e->y() <= 0)
+                warpto.setY(height() - 3);
+            else if(e->y() >= height() - 1)
+                warpto.setY(2);
+
+            if(warpto != e->pos())
                 QCursor::setPos(mapToGlobal(warpto));
-            }
 
             lastMousePos = warpto;
         }else{
@@ -163,29 +163,33 @@ void ImageWidget::mouseMoveEvent(QMouseEvent *e){
 
         lastMousePos = e->pos();
     }
+
+    /* Hide the cursor in 4 seconds. (unless another event happens) */
     mouseTimer.start(4000);
 }
 
 void ImageWidget::mouseReleaseEvent(QMouseEvent *e){
-    if(panButtons.testFlag(e->button())){
+    /* Any time a button used for panning is released reset to the arrow cursor. */
+    if(panButtons.testFlag(e->button()))
         setCursor(Qt::ArrowCursor);
-    }
 }
 
 void ImageWidget::wheelEvent(QWheelEvent *e){
-    addZoom(e->delta() / 1000.0);
+    addZoom(e->delta() * 1.0e-3);
 }
 
 void ImageWidget::enterEvent(QEvent *e){
+    /* Hide the cursor in 4 seconds. (unless another event happens) */
     mouseTimer.start(4000);
 }
 
 void ImageWidget::leaveEvent(QEvent *e){
+    /*  */
     mouseTimer.stop();
     setCursor(Qt::ArrowCursor);
 }
 
-void ImageWidget::recalculatescroolmax(){
+void ImageWidget::recalculateScrollMax(){
     int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth) && !anamorphicDualview;
     int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth) && !anamorphicDualview;
 
@@ -201,7 +205,9 @@ void ImageWidget::recalculatescroolmax(){
 
 void ImageWidget::setZoom(qreal val){
     zoom = val;
-    recalculatescroolmax();
+
+    /* When the zoom is set we need to repaint and calculate the scrollbars' limits again. */
+    recalculateScrollMax();
     repaint();
 }
 
@@ -223,7 +229,7 @@ void ImageWidget::addZoom(qreal amount){
     qreal zoomorig = zoom;
     zoom += amount * zoom;
     zoom = qBound(0.2, zoom, 4.0);
-    recalculatescroolmax();
+    recalculateScrollMax();
     vBar.setValue(vBar.value() * zoom / zoomorig);
     hBar.setValue(hBar.value() * zoom / zoomorig);
     repaint();
@@ -237,7 +243,7 @@ void ImageWidget::enableSwapLR(bool enable){
 
 void ImageWidget::showScrollbars(bool show){
     scrollbarsVisible = show;
-    recalculatescroolmax();
+    recalculateScrollMax();
 }
 
 void ImageWidget::enableContinuousPan(bool enable){
@@ -251,7 +257,7 @@ void ImageWidget::enableSmoothTransform(bool enable){
 
 void ImageWidget::enableAnamorphicDualview(bool enable){
     anamorphicDualview = enable;
-    recalculatescroolmax();
+    recalculateScrollMax();
     repaint();
 }
 
@@ -261,7 +267,7 @@ void ImageWidget::hideCursor(){
 
 void ImageWidget::setRenderMode(DrawMode m){
     mode = m;
-    recalculatescroolmax();
+    recalculateScrollMax();
     updateAnglaph();
     repaint();
 }

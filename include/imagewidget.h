@@ -100,7 +100,7 @@ public slots:
     void zoomOut();
 
     /* Recalculates the bounds of the scrollbars to allow panning only where the image is drawn. */
-    void recalculatescroolmax();
+    void recalculateScrollMax();
 
     /* Enable using imgL for the right eye and visa versa. */
     void enableSwapLR(bool enable);
