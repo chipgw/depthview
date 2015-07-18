@@ -15,9 +15,8 @@ int main(int argc, char *argv[]){
         return 0;
     }
 
-    if(QDir::currentPath() == app.applicationDirPath()){
+    if(QDir::currentPath() == app.applicationDirPath())
         QDir::setCurrent(QDir::homePath());
-    }
 
     DepthViewWindow window;
     window.show();

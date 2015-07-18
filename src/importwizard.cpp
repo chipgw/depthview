@@ -20,16 +20,14 @@ ImportWizard::ImportWizard(const QDir &directory, QWidget *parent) : QWizard(par
 int ImportWizard::nextId() const{
     switch(currentId()){
     case Page_Intro:
-        if(field("seperate").toBool()){
+        if(field("seperate").toBool())
             return Page_Seperate;
-        }
         return Page_SelectFile;
     case Page_SelectFile:
-        if(field("sideBySide").toBool()){
+        if(field("sideBySide").toBool())
             return Page_SideBySide;
-        }else if(field("topBottom").toBool()){
+        else if(field("topBottom").toBool())
             return Page_TopBottom;
-        }
         return Page_SelectFile;
     case Page_SideBySide:
     case Page_TopBottom:

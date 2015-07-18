@@ -4,9 +4,9 @@
 #include <QBitmap>
 
 void drawInterlaced(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY, QPainter &painter, QBitmap &mask, qreal zoom){
-    if(zoom <= 0.0){
+    if(zoom <= 0.0)
         zoom = qMin(qreal(painter.window().width()) / qreal(imgL.width()), qreal(painter.window().height()) / qreal(imgL.height()));
-    }
+
     QRect outRect(panX + painter.window().width()  / 2 - (imgL.width()  / 2) * zoom,
                   panY + painter.window().height() / 2 - (imgL.height() / 2) * zoom,
                   imgL.width() * zoom, imgL.height() * zoom);

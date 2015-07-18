@@ -37,18 +37,17 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
             msgBox.exec();
 
             if(msgBox.clickedButton() == (QAbstractButton*)deleteButton || msgBox.clickedButton() == (QAbstractButton*)keepButton){
-                for(const QString& key : oldSettings.allKeys()){
+                for(const QString& key : oldSettings.allKeys())
                     settings.setValue(key, oldSettings.value(key));
-                }
 
-                if(msgBox.clickedButton() == (QAbstractButton*)deleteButton){
+                if(msgBox.clickedButton() == (QAbstractButton*)deleteButton)
                     oldSettings.clear();
-                }
             }
         }
     }
 #endif
 
+    /* These extensions are the supported stereo image formats. */
     currentDir.setNameFilters(QStringList() << "*.jps" << "*.pns");
 
     ui->setupUi(this);
@@ -75,6 +74,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     ui->actionInterlacedVertical->setEnabled(false);
     ui->actionCheckerboard->setEnabled(false);
 
+    /* Alternate shortcuts for entering fullscreen. */
     QShortcut* altenter = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_Return), this);
     connect(altenter, SIGNAL(activated()), ui->actionFullscreen, SLOT(trigger()));
     QShortcut* f11 = new QShortcut(QKeySequence(Qt::Key_F11), this);
@@ -84,6 +84,7 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 }
 
 DepthViewWindow::~DepthViewWindow(){
+    /* Save the window geometry so that it can be restored next run if the setting is enabled. */
     settings.beginGroup("Window");
     settings.setValue("geometry", saveGeometry());
     settings.setValue("state", saveState());
@@ -95,21 +96,29 @@ DepthViewWindow::~DepthViewWindow(){
 bool DepthViewWindow::loadImage(const QString &filename){
     QFileInfo info(filename);
 
+    /* If the file passed doesn't exist, try relative to currentDir. */
     if(!info.exists()){
         info.setFile(currentDir.filePath(filename));
 
-        if(!info.exists()){
+        if(!info.exists())
             return false;
-        }
     }
 
+    /* Make sure the filename matches the filters. */
     if(QDir::match(currentDir.nameFilters(), info.fileName())){
+        /* Now we set the currentDir to the containing folder. */
         currentDir.cd(info.path());
+
+        /* This string is used for the title and for finding the index when going to the next/previous file. */
         currentFile = info.fileName();
+
+        /* Actually load the image. */
         if(ui->imageWidget->loadStereoImage(info.filePath())){
             setWindowTitle(currentFile);
             return true;
         }
+
+        /* It failed to load! Clear the currentFile and title, as there is no file loaded at this point. */
         currentFile.clear();
         setWindowTitle("DepthView");
     }
@@ -190,9 +199,11 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
     if(val){
         setWindowState(windowState() | Qt::WindowFullScreen);
 
+        /* Disable the menubar in fullscreen mode, it interferes with Interlaced/Checkerboard modes. */
         ui->menubar->hide();
         ui->actionShowMenuBar->setEnabled(false);
 
+        /* Enable the fullscreen-only renderers. */
         ui->menuInterlaced->setEnabled(true);
         ui->actionInterlacedHorizontal->setEnabled(true);
         ui->actionInterlacedVertical->setEnabled(true);
@@ -200,11 +211,12 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
     }else{
         setWindowState(windowState() & ~Qt::WindowFullScreen);
 
+        /* Allow enabling the menubar again, and if it was shown before entering fullscreen, show it. */
         ui->actionShowMenuBar->setEnabled(true);
-        if(ui->actionShowMenuBar->isChecked()){
+        if(ui->actionShowMenuBar->isChecked())
             ui->menubar->show();
-        }
 
+        /* Can't use these modes anymore... */
         ui->menuInterlaced->setEnabled(false);
         ui->actionInterlacedHorizontal->setEnabled(false);
         ui->actionInterlacedVertical->setEnabled(false);
@@ -214,31 +226,33 @@ void DepthViewWindow::on_actionFullscreen_toggled(bool val){
 
 void DepthViewWindow::on_actionNext_triggered(){
     QStringList entryList = currentDir.entryList();
+
     if(!entryList.empty()){
+        /* Try to find the current file in the list. */
         int index = entryList.indexOf(currentFile);
         do{
             ++index;
-            if(index < 0){
-                index = entryList.count() - 1;
-            }else if(index >= entryList.count()){
+
+            /* Wrap the index value if it ends up outside the list bounds. */
+            if(index >= entryList.count())
                 index = 0;
-            }
-        }while(!loadImage(entryList[index]));
+        } while(!loadImage(entryList[index]));
     }
 }
 
 void DepthViewWindow::on_actionPrevious_triggered(){
     QStringList entryList = currentDir.entryList();
+
     if(!entryList.empty()){
+        /* Try to find the current file in the list. */
         int index = entryList.indexOf(currentFile);
         do{
             --index;
-            if(index < 0){
+
+            /* Wrap the index value if it ends up outside the list bounds. */
+            if(index < 0)
                 index = entryList.count() - 1;
-            }else if(index >= entryList.count()){
-                index = 0;
-            }
-        }while(!loadImage(entryList[index]));
+        } while(!loadImage(entryList[index]));
     }
 }
 
@@ -297,8 +311,10 @@ void DepthViewWindow::on_actionImport_triggered(){
     QString error;
 
     if(dialog.field("seperate").toBool()){
+        /* Load to a local image so if there is an error the currently loaded image is not replaced/cleared. */
         QImage imageL(dialog.field("filenameL").toString());
         QImage imageR(dialog.field("filenameR").toString());
+
         if(imageL.isNull() || imageR.isNull()){
             error += tr("<p>Error loading image files!</p>");
         }else if(imageL.size() != imageR.size()){
@@ -309,35 +325,33 @@ void DepthViewWindow::on_actionImport_triggered(){
         }
     }else if(dialog.field("sideBySide").toBool()){
         QImage image(dialog.field("filename").toString());
+
         if(image.isNull()){
             error += tr("<p>Error loading image file!</p>");
         }else{
             ui->imageWidget->imgL = image.copy(                0, 0, image.width() / 2, image.height());
             ui->imageWidget->imgR = image.copy(image.width() / 2, 0, image.width() / 2, image.height());
 
-            if(dialog.field("mirrorL").toBool()){
+            if(dialog.field("mirrorL").toBool())
                 ui->imageWidget->imgL = ui->imageWidget->imgL.mirrored(true, false);
-            }
 
-            if(dialog.field("mirrorR").toBool()){
+            if(dialog.field("mirrorR").toBool())
                 ui->imageWidget->imgR = ui->imageWidget->imgR.mirrored(true, false);
-            }
         }
     }else if(dialog.field("topBottom").toBool()){
         QImage image(dialog.field("filename").toString());
+
         if(image.isNull()){
             error += tr("<p>Error loading image file!</p>");
         }else{
             ui->imageWidget->imgL = image.copy(0,                  0, image.width(), image.height() / 2);
             ui->imageWidget->imgR = image.copy(0, image.height() / 2, image.width(), image.height() / 2);
 
-            if(dialog.field("mirrorT").toBool()){
+            if(dialog.field("mirrorT").toBool())
                 ui->imageWidget->imgL = ui->imageWidget->imgL.mirrored(false, true);
-            }
 
-            if(dialog.field("mirrorB").toBool()){
+            if(dialog.field("mirrorB").toBool())
                 ui->imageWidget->imgR = ui->imageWidget->imgR.mirrored(false, true);
-            }
         }
     }
 
@@ -445,9 +459,9 @@ void DepthViewWindow::on_actionzoom200_triggered(){
 
 void DepthViewWindow::on_actionOptions_triggered(){
     SettingsWindow settingsdialog(settings, this);
-    if(settingsdialog.exec() == QDialog::Accepted){
+
+    if(settingsdialog.exec() == QDialog::Accepted)
         loadSettings();
-    }
 }
 
 void DepthViewWindow::on_actionAbout_triggered(){
@@ -475,30 +489,28 @@ bool DepthViewWindow::setRenderModeFromString(const QString &renderer){
 }
 
 void DepthViewWindow::loadSettings(){
-    if(settings.contains(SettingsWindow::defaultrender)){
+    if(settings.contains(SettingsWindow::defaultrender))
         setRenderModeFromString(settings.value(SettingsWindow::defaultrender).toString());
-    }
+
     if(settings.contains(SettingsWindow::rememberwindow) && settings.value(SettingsWindow::rememberwindow).toBool()){
         settings.beginGroup("Window");
         restoreGeometry(settings.value("geometry").toByteArray());
         restoreState(settings.value("state").toByteArray());
         settings.endGroup();
 
-        if(windowState().testFlag(Qt::WindowFullScreen)){
-            /* hides the menubar and makes toggling fullscreen work right */
+        if(windowState().testFlag(Qt::WindowFullScreen))
+            /* Hides the menubar and makes toggling fullscreen work right */
             ui->actionFullscreen->setChecked(true);
-        }
     }else if(settings.contains(SettingsWindow::startfullscreen)){
         ui->actionFullscreen->setChecked(settings.value(SettingsWindow::startfullscreen).toBool());
     }else{
         ui->actionFullscreen->setChecked(false);
 
-        /* keeps the menubar from enabling in fullscreen mode */
-        if(settings.contains(SettingsWindow::showmenubar)){
+        /* Keeps the menubar from enabling in fullscreen mode */
+        if(settings.contains(SettingsWindow::showmenubar))
             ui->actionShowMenuBar->setChecked(settings.value(SettingsWindow::showmenubar).toBool());
-        }else{
+        else
             ui->actionShowMenuBar->setChecked(true);
-        }
     }
 
     ui->actionSwap_Left_Right->setChecked(settings.contains(SettingsWindow::swapLR) ? settings.value(SettingsWindow::swapLR).toBool() : false);
@@ -510,58 +522,58 @@ void DepthViewWindow::loadSettings(){
     ui->actionSmooth_Scaling->setChecked(settings.contains(SettingsWindow::smoothscaling) ?
                                              settings.value(SettingsWindow::smoothscaling).toBool() : false);
 
-    if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && currentDir.absolutePath() == QDir::homePath()){
+    if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && currentDir.absolutePath() == QDir::homePath())
         currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
-    }
-    if(settings.contains(SettingsWindow::panbuttons)){
+
+    if(settings.contains(SettingsWindow::panbuttons))
         ui->imageWidget->setPanButtons(Qt::MouseButtons(settings.value(SettingsWindow::panbuttons).toInt()));
-    }
-    if(settings.contains("lastrun")){
+
+    if(settings.contains("lastrun"))
         settings.remove("lastrun");
-    }
 }
 
 void DepthViewWindow::parseCommandLine(const QStringList &args){
     bool loaded = !currentFile.isEmpty();
 
+    /* We use one string to hold all warning messages, so we only have to show one dialog. */
     QString warning;
 
     for(QStringListIterator i(args); i.hasNext();){
         const QString &arg = i.next();
+
         if(arg == "--fullscreen"){
             ui->actionFullscreen->setChecked(true);
         }else if(arg == "--startdir"){
+            /* We need another argument. */
             if(i.hasNext()){
                 const QString &dir = i.next();
-                if(!currentDir.cd(dir)){
+                if(!currentDir.cd(dir))
                     warning += tr("<p>Invalid directory \"%1\" passed to \"--startdir\" argument!</p>").arg(dir);
-                }
             }else{
                 warning += tr("<p>Argument \"--startdir\" passed with no argument after it!</p>");
             }
         }else if(arg == "--renderer"){
+            /* We need another argument. */
             if(i.hasNext()){
                 const QString &renderer = i.next();
-                if(!setRenderModeFromString(renderer)){
+                if(!setRenderModeFromString(renderer))
                     warning += tr("<p>Invalid renderer \"%1\" passed to \"--renderer\" argument!</p>").arg(renderer);
-                }
             }else{
                 warning += tr("<p>Argument \"--renderer\" passed with no argument after it!</p>");
             }
         }else if(!loaded){
+            /* If the argument isn't one of the above try opening it as a file. */
             loaded = loadImage(arg);
         }
         /* "--register" is handled in main. */
     }
     /* If there weren't any warnings we don't show the dialog. */
-    if(!warning.isEmpty()){
+    if(!warning.isEmpty())
         QMessageBox::warning(this, tr("Invalid Command Line!"), warning);
-    }
 
     /* We show the load image dialog if nothing was loaded and the setting is enabled. */
-    if(!loaded && (!settings.contains(SettingsWindow::filedialogstartup) || settings.value(SettingsWindow::filedialogstartup).toBool())){
+    if(!loaded && (!settings.contains(SettingsWindow::filedialogstartup) || settings.value(SettingsWindow::filedialogstartup).toBool()))
         showLoadImageDialog();
-    }
 }
 
 #if defined(Q_OS_WIN32)
@@ -576,9 +588,9 @@ void addRegistryEntry(const QString& path, const QString& value, QString& error)
 
     if(result == ERROR_SUCCESS){
         result = RegSetValueEx(key, nullptr, 0, REG_SZ, LPBYTE(value.toLocal8Bit().constData()), DWORD(value.size()));
-        if(result != ERROR_SUCCESS) {
+        if(result != ERROR_SUCCESS)
             error += "<p>Error setting value for \"" + path + "\"!</p>";
-        }
+
         RegCloseKey(key);
     } else {
         error += "<p>Error creating key \"" + path + "\"!</p>";
@@ -606,20 +618,19 @@ void DepthViewWindow::registerFileTypes(){
     error = tr("File association is currently unsupported on your platform!");
 #endif
 
-    if(error.isNull()) {
+    if(error.isNull())
         QMessageBox::information(nullptr, tr("Success!"), tr("Successfully associated .jps and .pns files with DepthView."));
-    } else {
+    else
         QMessageBox::warning(nullptr, tr("Error setting file association!"), error);
-    }
 }
 
 void DepthViewWindow::dragEnterEvent(QDragEnterEvent *e){
     if(e->mimeData()->hasUrls()){
         for(const QUrl& url : e->mimeData()->urls()){
             QFileInfo info(url.toLocalFile());
-            if(info.exists() && QDir::match(currentDir.nameFilters(), info.fileName())){
+            /* If there are any local URLs that exist and match the filters, accept the drop. */
+            if(info.exists() && QDir::match(currentDir.nameFilters(), info.fileName()))
                 return e->acceptProposedAction();
-            }
         }
     }
 }
@@ -627,9 +638,9 @@ void DepthViewWindow::dragEnterEvent(QDragEnterEvent *e){
 void DepthViewWindow::dropEvent(QDropEvent *e){
     if(e->mimeData()->hasUrls()){
         for(const QUrl& url : e->mimeData()->urls()){
-            if(loadImage(url.toLocalFile())){
+            /* If there are any local URLs that exist and match the filters, accept the drop. */
+            if(loadImage(url.toLocalFile()))
                 return e->acceptProposedAction();
-            }
         }
     }
 }

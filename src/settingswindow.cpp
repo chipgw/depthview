@@ -11,40 +11,40 @@ SettingsWindow::SettingsWindow(QSettings &Settings, QWidget *parent) : QDialog(p
 
     ui->defaultRendererComboBox->addItems(ImageWidget::drawModeNames.keys());
 
-    if(settings.contains(defaultrender)){
+    if(settings.contains(defaultrender))
         ui->defaultRendererComboBox->setCurrentIndex(ui->defaultRendererComboBox->findText(settings.value(defaultrender).toString()));
-    }
-    if(settings.contains(startfullscreen)){
-        ui->startFullscreenCheckBox->setChecked(settings.value(startfullscreen).toBool());
-    }
-    if(settings.contains(swapLR)){
-        ui->swapLeftRightCheckBox->setChecked(settings.value(swapLR).toBool());
-    }
-    if(settings.contains(startupdirectory)){
-        ui->startupDirectoryLineEdit->setText(settings.value(startupdirectory).toString());
-    }
-    if(settings.contains(showmenubar)){
-        ui->showMenuBarCheckBox->setChecked(settings.value(showmenubar).toBool());
-    }
-    if(settings.contains(filedialogstartup)){
-        ui->fileDialogStartupCheckBox->setChecked(settings.value(filedialogstartup).toBool());
-    }
-    if(settings.contains(continuouspan)){
-        ui->enableContinuousPanCheckBox->setChecked(settings.value(continuouspan).toBool());
-    }
-    if(settings.contains(showscrollbars)){
-        ui->showScrollbarsCheckBox->setChecked(settings.value(showscrollbars).toBool());
-    }
-    if(settings.contains(smoothscaling)){
-        ui->enableSmoothScalingCheckBox->setChecked(settings.value(smoothscaling).toBool());
-    }
 
-    if(settings.contains(rememberwindow)){
+    if(settings.contains(startfullscreen))
+        ui->startFullscreenCheckBox->setChecked(settings.value(startfullscreen).toBool());
+
+    if(settings.contains(swapLR))
+        ui->swapLeftRightCheckBox->setChecked(settings.value(swapLR).toBool());
+
+    if(settings.contains(startupdirectory))
+        ui->startupDirectoryLineEdit->setText(settings.value(startupdirectory).toString());
+
+    if(settings.contains(showmenubar))
+        ui->showMenuBarCheckBox->setChecked(settings.value(showmenubar).toBool());
+
+    if(settings.contains(filedialogstartup))
+        ui->fileDialogStartupCheckBox->setChecked(settings.value(filedialogstartup).toBool());
+
+    if(settings.contains(continuouspan))
+        ui->enableContinuousPanCheckBox->setChecked(settings.value(continuouspan).toBool());
+
+    if(settings.contains(showscrollbars))
+        ui->showScrollbarsCheckBox->setChecked(settings.value(showscrollbars).toBool());
+
+    if(settings.contains(smoothscaling))
+        ui->enableSmoothScalingCheckBox->setChecked(settings.value(smoothscaling).toBool());
+
+
+    if(settings.contains(rememberwindow))
         ui->rememberWindowStateCheckBox->setChecked(settings.value(rememberwindow).toBool());
-    }
-    if(settings.contains(disabledragdrop)){
+
+    if(settings.contains(disabledragdrop))
         ui->disableDragDropCheckBox->setChecked(settings.value(disabledragdrop).toBool());
-    }
+
     ui->panButtonMenuPushButton->setMenu(new QMenu());
     ui->panButtonMenuPushButton->menu()->addAction(ui->actionLeft_Mouse);
     ui->panButtonMenuPushButton->menu()->addAction(ui->actionMiddle_Mouse);
@@ -104,9 +104,8 @@ void SettingsWindow::restoreDefaults(){
 
 void SettingsWindow::on_startupDirectoryBrowsePushButton_clicked(){
     QString directory = QFileDialog::getExistingDirectory(this, tr("Choose Directory"), ui->startupDirectoryLineEdit->text());
-    if(!directory.isEmpty()){
+    if(!directory.isEmpty())
         ui->startupDirectoryLineEdit->setText(directory);
-    }
 }
 
 void SettingsWindow::on_associateWithFilesPushButton_clicked(){

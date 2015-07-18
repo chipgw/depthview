@@ -15,11 +15,10 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR){
         lineL = (const QRgb*)imgL.constScanLine(y);
         lineR = (const QRgb*)imgR.constScanLine(y);
         for(int x = 0; x < final.width(); ++x){
-            if(imgL.valid(x,y) && imgR.valid(x,y)){
+            if(imgL.valid(x,y) && imgR.valid(x,y))
                 line[x] = (lineL[x] & lEyeMask) | (lineR[x] & rEyeMask);
-            }else{
+            else
                 line[x] = 0;
-            }
         }
     }
 

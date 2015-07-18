@@ -2,9 +2,9 @@
 #include <QPainter>
 
 void drawSingle(const QPixmap &img, int panX, int panY, QPainter &painter, qreal zoom){
-    if(zoom <= 0.0){
+    if(zoom <= 0.0)
         zoom = qMin(qreal(painter.window().width()) / qreal(img.width()), qreal(painter.window().height()) / qreal(img.height()));
-    }
+
     painter.translate(painter.window().width() / 2,
                       painter.window().height() / 2);
 

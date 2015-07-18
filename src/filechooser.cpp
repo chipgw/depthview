@@ -22,7 +22,6 @@ FileChooser::FileChooser(const QString &filenameFilter, const QString &defaultDi
 
 void FileChooser::on_BrowseButton_clicked(){
     QString name = QFileDialog::getOpenFileName(this, tr("Open File"), filename->text().isEmpty() ? dir : filename->text(), filter);
-    if(!name.isEmpty()){
+    if(!name.isEmpty())
         filename->setText(name);
-    }
 }

@@ -19,15 +19,15 @@ ExportWizard::ExportWizard(QWidget *parent) : QWizard(parent) {
 int ExportWizard::nextId() const{
     switch(currentId()){
     case Page_Intro:
-        if(field("anglaph").toBool()){
+        if(field("anglaph").toBool())
             return ExportWizard::Page_Anglaph;
-        }else if(field("sideBySide").toBool()){
+        else if(field("sideBySide").toBool())
             return ExportWizard::Page_SideBySide;
-        }else if(field("topBottom").toBool()){
+        else if(field("topBottom").toBool())
             return ExportWizard::Page_TopBottom;
-        }else if(field("seperate").toBool()){
+        else if(field("seperate").toBool())
             return ExportWizard::Page_Seperate;
-        }
+
         return -1;
     case Page_Anglaph:
     case Page_SideBySide:
