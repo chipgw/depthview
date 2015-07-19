@@ -329,6 +329,10 @@ void DepthViewWindow::on_actionImport_triggered(){
         if(image.isNull()){
             error += tr("<p>Error loading image file!</p>");
         }else{
+            /* If file is anamorphic, double the width. */
+            if(dialog.field("anamorphic").toBool())
+                image = image.scaled(image.width() * 2, image.height());
+
             ui->imageWidget->imgL = image.copy(                0, 0, image.width() / 2, image.height());
             ui->imageWidget->imgR = image.copy(image.width() / 2, 0, image.width() / 2, image.height());
 
@@ -344,6 +348,10 @@ void DepthViewWindow::on_actionImport_triggered(){
         if(image.isNull()){
             error += tr("<p>Error loading image file!</p>");
         }else{
+            /* If file is anamorphic, double the height. */
+            if(dialog.field("anamorphic").toBool())
+                image = image.scaled(image.width(), image.height() * 2);
+
             ui->imageWidget->imgL = image.copy(0,                  0, image.width(), image.height() / 2);
             ui->imageWidget->imgR = image.copy(0, image.height() / 2, image.width(), image.height() / 2);
 
@@ -413,18 +421,20 @@ void DepthViewWindow::on_actionExport_triggered() {
         if(!out.isNull())
             out.save(filename, nullptr, quality);
     }else if(dialog.field("sideBySide").toBool()){
-        QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
+        QImage out(ui->imageWidget->imgL.width() << !dialog.field("anamorphic").toBool(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
+
         QPainter paint(&out);
-        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, false, 1.0,
-                       dialog.field("mirrorL").toBool(), dialog.field("mirrorR").toBool());
+        drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, dialog.field("anamorphic").toBool(),
+                       1.0, dialog.field("mirrorL").toBool(), dialog.field("mirrorR").toBool());
 
         if(!out.isNull())
             out.save(filename, nullptr, quality);
     }else if(dialog.field("topBottom").toBool()){
-        QImage out(ui->imageWidget->imgL.width(), ui->imageWidget->imgL.height() + ui->imageWidget->imgR.height(), QImage::Format_RGB32);
+        QImage out(ui->imageWidget->imgL.width(), ui->imageWidget->imgL.height() << !dialog.field("anamorphic").toBool(), QImage::Format_RGB32);
+
         QPainter paint(&out);
-        drawTopBottom(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, false, 1.0,
-                      dialog.field("mirrorT").toBool(), dialog.field("mirrorB").toBool());
+        drawTopBottom(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, dialog.field("anamorphic").toBool(),
+                      1.0, dialog.field("mirrorT").toBool(), dialog.field("mirrorB").toBool());
 
         if(!out.isNull())
             out.save(filename, nullptr, quality);

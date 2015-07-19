@@ -89,9 +89,11 @@ QWizardPage* ExportWizard::createSideBySidePage() {
 
     QCheckBox *mirrorL = new QCheckBox("Mirror Left", page);
     QCheckBox *mirrorR = new QCheckBox("Mirror Right", page);
+    QCheckBox *anamorphic = new QCheckBox("Anamorphic", page);
 
     addOption(mirrorL);
     addOption(mirrorR);
+    addOption(anamorphic);
 
     return page;
 }
@@ -104,9 +106,11 @@ QWizardPage* ExportWizard::createTopBottomPage() {
 
     QCheckBox *mirrorT = new QCheckBox("Mirror Top", page);
     QCheckBox *mirrorB = new QCheckBox("Mirror Bottom", page);
+    QCheckBox *anamorphic = new QCheckBox("Anamorphic", page);
 
     addOption(mirrorT);
     addOption(mirrorB);
+    addOption(anamorphic);
 
     return page;
 }
