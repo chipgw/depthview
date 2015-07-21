@@ -22,6 +22,7 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR){
             if(imgL.valid(x,y) && imgR.valid(x,y))
                 line[x] = (lineL[x] & lEyeMask) | (lineR[x] & rEyeMask);
             else
+                /* We need to set all other pixels to 0 or else there will be garbage. */
                 line[x] = 0;
         }
     }
@@ -53,6 +54,7 @@ QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR){
                                qGreen(lineR[x]) / 2 + gR,
                                qBlue( lineR[x]) / 2 + gR);
             }else{
+                /* We need to set all other pixels to 0 or else there will be garbage. */
                 line[x] = 0;
             }
         }
@@ -82,6 +84,7 @@ QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR){
                 int gR = qGray(lineR[x]);
                 line[x] = qRgb(gL, gR, gR);
             }else{
+                /* We need to set all other pixels to 0 or else there will be garbage. */
                 line[x] = 0;
             }
         }

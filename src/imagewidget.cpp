@@ -277,8 +277,10 @@ void ImageWidget::setPanButtons(Qt::MouseButtons buttons){
 }
 
 void ImageWidget::updateAnglaph(){
+    /* Generate an anglaph pixmap to use with drawSingle() so we don't have to redo it every time you pan and such. */
     const QImage &L = swapLR ? imgR : imgL;
     const QImage &R = swapLR ? imgL : imgR;
+
     switch(mode){
     case AnglaphFull:
         anglaph = QPixmap::fromImage(drawAnglaph(L, R));
@@ -289,10 +291,13 @@ void ImageWidget::updateAnglaph(){
     case AnglaphGreyscale:
         anglaph = QPixmap::fromImage(drawAnglaphGrey(L, R));
         break;
-    default: break;
+    default:
+        /* If we aren't in anglaph mode just ignore. */
+        break;
     }
 }
 
+/* Name -> Enum list. */
 QMap<QString, ImageWidget::DrawMode> initDrawModeList(){
     QMap<QString, ImageWidget::DrawMode> list;
     list.insert("Anglaph, Full Color",          ImageWidget::AnglaphFull);

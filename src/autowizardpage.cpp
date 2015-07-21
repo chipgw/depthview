@@ -2,17 +2,16 @@
 #include <QVBoxLayout>
 
 AutoWizardPage::AutoWizardPage(QLayout *l, QWidget *parent) : QWizardPage(parent) , layout(l) {
-    /* default to vertical layout */
-    if(layout == nullptr){
+    /* Default to vertical layout */
+    if(layout == nullptr)
         layout = new QVBoxLayout;
-    }
+
     setLayout(layout);
 }
 
 void AutoWizardPage::addOption(const QString &name, QWidget *widget, bool addWidget){
-    if(addWidget){
+    if(addWidget)
         layout->addWidget(widget);
-    }
 
     registerField(name, widget);
 }
