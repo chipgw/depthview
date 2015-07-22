@@ -1,10 +1,11 @@
 set(CMAKE_BUILD_TYPE_INIT "Release")
 
 project(DepthView)
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.2)
 
-option(DEPTHVIEW_USE_QT4 "use Qt 4 rather than Qt 5." OFF)
-option(DEPTHVIEW_PORTABLE "build a portable version of DepthView (i.e. settings are saved in the application directory)" OFF)
+unset(DEPTHVIEW_USE_QT4 CACHE)
+
+option(DEPTHVIEW_PORTABLE "Build a portable version of DepthView (i.e. settings are saved in the application directory)" OFF)
 
 set(DepthView_VERSION_MAJOR 1)
 set(DepthView_VERSION_MINOR 05)
@@ -44,26 +45,14 @@ if(DEPTHVIEW_PORTABLE)
     add_definitions(-DDEPTHVIEW_PORTABLE)
 endif(DEPTHVIEW_PORTABLE)
 
-if(DEPTHVIEW_USE_QT4)
-    find_package(Qt4 REQUIRED)
-    include(${QT_USE_FILE})
+find_package(Qt5Widgets 5.2 REQUIRED)
 
-    qt4_add_resources(RESOURCES_RCC ${RESOURCES})
-    qt4_wrap_ui(FORM_HEADERS ${FORMS})
-else(DEPTHVIEW_USE_QT4)
-    find_package(Qt5Widgets)
-
-    qt5_wrap_ui(FORM_HEADERS ${FORMS})
-    qt5_add_resources(RESOURCES_RCC ${RESOURCES})
-endif(DEPTHVIEW_USE_QT4)
+qt5_wrap_ui(FORM_HEADERS ${FORMS})
+qt5_add_resources(RESOURCES_RCC ${RESOURCES})
 
 add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${FORM_HEADERS} ${HEADERS} ${RESOURCES_RCC} ${WINDRES})
 
-if(DEPTHVIEW_USE_QT4)
-    target_link_libraries(${PROJECT_NAME} ${QT_LIBRARIES})
-else(DEPTHVIEW_USE_QT4)
-    target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
-endif(DEPTHVIEW_USE_QT4)
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 
 # TODO - make this whole CPack thing a lot less messy...
 

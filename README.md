@@ -27,7 +27,6 @@ Building
 Build options
 -------------
 * -DDEPTHVIEW_PORTABLE=On	- Builds a portable version that stores settings in the same directory as the executable.
-* -DDEPTHVIEW_USE_QT4=On	- Builds against Qt 4 instead of 5.
 
 License
 -------
