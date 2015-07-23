@@ -5,6 +5,8 @@
 #include <QSettings>
 #include <QDir>
 
+class QCommandLineParser;
+
 namespace Ui {
 class DepthViewWindow;
 }
@@ -35,7 +37,7 @@ public:
 
     void loadSettings();
 
-    void parseCommandLine(const QStringList &args);
+    void parseCommandLine(const QCommandLineParser &args);
     static void registerFileTypes();
 
     bool setRenderModeFromString(const QString &renderer);

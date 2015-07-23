@@ -12,6 +12,7 @@
 #include <QUrl>
 #include <QPainter>
 #include <QShortcut>
+#include <QCommandLineParser>
 
 DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::DepthViewWindow), currentDir(QDir::current()),
 #ifdef DEPTHVIEW_PORTABLE
@@ -542,41 +543,42 @@ void DepthViewWindow::loadSettings(){
         settings.remove("lastrun");
 }
 
-void DepthViewWindow::parseCommandLine(const QStringList &args){
+void DepthViewWindow::parseCommandLine(const QCommandLineParser &args){
     bool loaded = !currentFile.isEmpty();
 
     /* We use one string to hold all warning messages, so we only have to show one dialog. */
     QString warning;
 
-    for(QStringListIterator i(args); i.hasNext();){
-        const QString &arg = i.next();
+    if(args.isSet("f"))
+        ui->actionFullscreen->setChecked(true);
 
-        if(arg == "--fullscreen"){
-            ui->actionFullscreen->setChecked(true);
-        }else if(arg == "--startdir"){
-            /* We need another argument. */
-            if(i.hasNext()){
-                const QString &dir = i.next();
-                if(!currentDir.cd(dir))
-                    warning += tr("<p>Invalid directory \"%1\" passed to \"--startdir\" argument!</p>").arg(dir);
-            }else{
-                warning += tr("<p>Argument \"--startdir\" passed with no argument after it!</p>");
-            }
-        }else if(arg == "--renderer"){
-            /* We need another argument. */
-            if(i.hasNext()){
-                const QString &renderer = i.next();
-                if(!setRenderModeFromString(renderer))
-                    warning += tr("<p>Invalid renderer \"%1\" passed to \"--renderer\" argument!</p>").arg(renderer);
-            }else{
-                warning += tr("<p>Argument \"--renderer\" passed with no argument after it!</p>");
-            }
-        }else if(!loaded){
+    if(args.isSet("d")){
+        const QString &dir = args.value("d");
+
+        if(dir.isEmpty())
+            warning += tr("<p>Argument \"--startdir\" passed with no argument after it!</p>");
+        else if(!currentDir.cd(dir))
+            warning += tr("<p>Invalid directory \"%1\" passed to \"--startdir\" argument!</p>").arg(dir);
+    }
+
+    if(args.isSet("r")){
+        const QString &renderer = args.value("r");
+
+        if(renderer.isEmpty())
+            warning += tr("<p>Argument \"--renderer\" passed with no argument after it!</p>");
+        else if(!setRenderModeFromString(renderer))
+            warning += tr("<p>Invalid renderer \"%1\" passed to \"--renderer\" argument!</p>").arg(renderer);
+    }
+
+    /* "--register" is handled in main. */
+
+    for(const QString& arg : args.positionalArguments()){
+        if(!loaded){
             /* If the argument isn't one of the above try opening it as a file. */
             loaded = loadImage(arg);
         }
-        /* "--register" is handled in main. */
     }
+
     /* If there weren't any warnings we don't show the dialog. */
     if(!warning.isEmpty())
         QMessageBox::warning(this, tr("Invalid Command Line!"), warning);
