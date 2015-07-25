@@ -55,20 +55,20 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
     ui->imageWidget->addActions(ui->menubar->actions());
     ui->imageWidget->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    connect(ui->actionZoomIn,  SIGNAL(triggered()), ui->imageWidget, SLOT(zoomIn()));
-    connect(ui->actionZoomOut, SIGNAL(triggered()), ui->imageWidget, SLOT(zoomOut()));
+    connect(ui->actionZoomIn,  &QAction::triggered, ui->imageWidget, &ImageWidget::zoomIn);
+    connect(ui->actionZoomOut, &QAction::triggered, ui->imageWidget, &ImageWidget::zoomOut);
 
-    connect(ui->actionShowMenuBar, SIGNAL(toggled(bool)), ui->menubar, SLOT(setVisible(bool)));
+    connect(ui->actionShowMenuBar, &QAction::toggled, ui->menubar, &QMenuBar::setVisible);
 
-    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(showLoadImageDialog()));
-    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
+    connect(ui->actionOpen, &QAction::triggered, this, &DepthViewWindow::showLoadImageDialog);
+    connect(ui->actionExit, &QAction::triggered, this, &DepthViewWindow::close);
 
-    connect(ui->actionSwap_Left_Right,      SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableSwapLR(bool)));
-    connect(ui->actionShow_Scrollbars,      SIGNAL(toggled(bool)), ui->imageWidget, SLOT(showScrollbars(bool)));
-    connect(ui->actionSmooth_Scaling,       SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableSmoothTransform(bool)));
-    connect(ui->actionAnamorphic_Dualview,  SIGNAL(toggled(bool)), ui->imageWidget, SLOT(enableAnamorphicDualview(bool)));
+    connect(ui->actionSwap_Left_Right,      &QAction::toggled, ui->imageWidget, &ImageWidget::enableSwapLR);
+    connect(ui->actionShow_Scrollbars,      &QAction::toggled, ui->imageWidget, &ImageWidget::showScrollbars);
+    connect(ui->actionSmooth_Scaling,       &QAction::toggled, ui->imageWidget, &ImageWidget::enableSmoothTransform);
+    connect(ui->actionAnamorphic_Dualview,  &QAction::toggled, ui->imageWidget, &ImageWidget::enableAnamorphicDualview);
 
-    connect(ui->actionAboutQt, SIGNAL(triggered()), QApplication::instance(), SLOT(aboutQt()));
+    connect(ui->actionAboutQt, &QAction::triggered, QApplication::instance(), &QApplication::aboutQt);
 
     ui->menuInterlaced->setEnabled(false);
     ui->actionInterlacedHorizontal->setEnabled(false);
@@ -77,9 +77,9 @@ DepthViewWindow::DepthViewWindow(QWidget *parent) : QMainWindow(parent), ui(new 
 
     /* Alternate shortcuts for entering fullscreen. */
     QShortcut* altenter = new QShortcut(QKeySequence(Qt::ALT + Qt::Key_Return), this);
-    connect(altenter, SIGNAL(activated()), ui->actionFullscreen, SLOT(trigger()));
-    QShortcut* f11 = new QShortcut(QKeySequence(Qt::Key_F11), this);
-    connect(f11, SIGNAL(activated()), ui->actionFullscreen, SLOT(trigger()));
+    QShortcut* f11 =      new QShortcut(QKeySequence(Qt::Key_F11), this);
+    connect(altenter, &QShortcut::activated, ui->actionFullscreen, &QAction::trigger);
+    connect(f11,      &QShortcut::activated, ui->actionFullscreen, &QAction::trigger);
 
     loadSettings();
 }

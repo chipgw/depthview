@@ -25,11 +25,9 @@ void drawInterlaced(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY
     painter.setBackgroundMode(Qt::TransparentMode);
 
     /* Fill the image area with the mask. */
-    for(int x = maskArea.left(); x < maskArea.right(); x += mask.width()){
-        for(int y = maskArea.top(); y < maskArea.bottom(); y += mask.height()){
+    for(int x = maskArea.left(); x < maskArea.right(); x += mask.width())
+        for(int y = maskArea.top(); y < maskArea.bottom(); y += mask.height())
             painter.drawPixmap(x, y, mask);
-        }
-    }
 
     /* Draw left image in opaque pixels. */
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);

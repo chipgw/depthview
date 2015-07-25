@@ -12,20 +12,23 @@ ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), hBar(Qt::Horizontal
     setMouseTracking(true);
     recalculateScrollMax();
 
-    connect(&hBar, SIGNAL(valueChanged(int)), this, SLOT(update()));
-    connect(&vBar, SIGNAL(valueChanged(int)), this, SLOT(update()));
+    /* Repaint whenever the user pans. */
+    connect(&hBar, SIGNAL(valueChanged(int)), SLOT(update()));
+    connect(&vBar, SIGNAL(valueChanged(int)), SLOT(update()));
 
     mouseTimer.setSingleShot(true);
-    connect(&mouseTimer, SIGNAL(timeout()), this, SLOT(hideCursor()));
+    connect(&mouseTimer, &QTimer::timeout, this, &ImageWidget::hideCursor);
 }
 
 void ImageWidget::resizeEvent(QResizeEvent *e){
+    /* Resize the scrollbars to be on the bottom & right and not overlap. */
     hBar.resize(e->size().width() - vBar.sizeHint().width(), hBar.sizeHint().height());
     hBar.move(0, e->size().height() - hBar.sizeHint().height());
 
     vBar.resize(vBar.sizeHint().width(), e->size().height() - hBar.sizeHint().height());
     vBar.move(e->size().width() - vBar.sizeHint().width(), 0);
 
+    /* The window resize will change how the image fits in it. */
     recalculateScrollMax();
 }
 
@@ -35,7 +38,8 @@ void ImageWidget::paintEvent(QPaintEvent *e){
     painter.setBrush(QBrush(Qt::black));
     painter.drawRect(e->rect());
 
-    if(imgL.isNull() && imgR.isNull()){
+    if(imgL.isNull() || imgR.isNull()){
+        /* If either image is null tell the user. */
         painter.setPen(Qt::gray);
         QFont font;
         font.setPointSize(32);
@@ -43,6 +47,7 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         painter.drawText(rect(), Qt::AlignCenter | Qt::TextWordWrap, tr("No Image Loaded"));
     }else if(parentWidget() && !parentWidget()->isFullScreen() &&
              (mode == InterlacedHorizontal || mode == InterlacedVertical || mode == Checkerboard)){
+        /* These renderers only work properly in fullscreen mode. */
         painter.setPen(Qt::gray);
         QFont font;
         font.setPointSize(24);
@@ -54,6 +59,7 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         zoom = 0.0f;
         recalculateScrollMax();
     }else{
+        /* Keep track of how long it took to draw. */
         QElapsedTimer time;
         time.start();
 
@@ -184,7 +190,7 @@ void ImageWidget::enterEvent(QEvent *e){
 }
 
 void ImageWidget::leaveEvent(QEvent *e){
-    /*  */
+    /* We don't want the cursor to be hidden if it's outside the window. */
     mouseTimer.stop();
     setCursor(Qt::ArrowCursor);
 }
@@ -220,15 +226,22 @@ void ImageWidget::zoomOut(){
 }
 
 void ImageWidget::addZoom(qreal amount){
+    /* If zoom is auto we need to figure out what that is. */
     if(zoom <= 0.0){
         int isSidebySide = (mode == SidebySide || mode == SidebySideMLeft || mode == SidebySideMRight || mode == SidebySideMBoth) && !anamorphicDualview;
         int isTopBottom  = (mode == TopBottom  || mode == TopBottomMTop   || mode == TopBottomMBottom || mode == TopBottomMBoth) && !anamorphicDualview;
 
         zoom = qMin(qreal(width()) / qreal(imgL.width() << isSidebySide), qreal(height()) / qreal(imgL.height() << isTopBottom));
     }
+
     qreal zoomorig = zoom;
+
+    /* This way zoom changes faster when further out. */
     zoom += amount * zoom;
+
     zoom = qBound(0.2, zoom, 4.0);
+
+    /* The scrollbars need adjusting whenever the zoom changes. */
     recalculateScrollMax();
     vBar.setValue(vBar.value() * zoom / zoomorig);
     hBar.setValue(hBar.value() * zoom / zoomorig);
