@@ -321,6 +321,7 @@ void DepthViewWindow::on_actionImport_triggered(){
         }else if(imageL.size() != imageR.size()){
             error += tr("<p>Image sizes are not the same!</p>");
         }else{
+            /* Now we can safely set the images. */
             ui->imageWidget->imgL = imageL;
             ui->imageWidget->imgR = imageR;
         }
@@ -367,6 +368,7 @@ void DepthViewWindow::on_actionImport_triggered(){
     if(!error.isNull()){
         QMessageBox::warning(this, tr("Error Importing!"), error);
     }else{
+        /* Update the pixmaps. */
         ui->imageWidget->updateImages();
 
         setWindowTitle(tr("[ Imported ]"));
@@ -380,7 +382,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
 
     if(filename.isNull()) return;
 
-    QImage out(ui->imageWidget->imgL.width() + ui->imageWidget->imgR.width(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
+    QImage out(ui->imageWidget->imgL.width() * 2, ui->imageWidget->imgL.height(), QImage::Format_RGB32);
     QPainter paint(&out);
 
     /* Files are loaded with the left image on the right side, so save stereo images that way too. */
@@ -396,6 +398,7 @@ void DepthViewWindow::on_actionSaveAs_triggered(){
 }
 
 void DepthViewWindow::on_actionExport_triggered() {
+    /* Don't bother exporting if either image is null. */
     if(ui->imageWidget->imgR.isNull() || ui->imageWidget->imgL.isNull()) return;
 
     QString filename = QFileDialog::getSaveFileName(this, tr("Save Image"), currentDir.path(),
@@ -412,6 +415,7 @@ void DepthViewWindow::on_actionExport_triggered() {
     if(dialog.field("anglaph").toBool()){
         QImage out;
 
+        /* What kind of anglaph are we exporting? */
         if(dialog.field("fullColor").toBool())
             out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR);
         else if(dialog.field("halfColor").toBool())
@@ -422,8 +426,10 @@ void DepthViewWindow::on_actionExport_triggered() {
         if(!out.isNull())
             out.save(filename, nullptr, quality);
     }else if(dialog.field("sideBySide").toBool()){
+        /* Width is bit-shifted to double if anamorphic is disabled. */
         QImage out(ui->imageWidget->imgL.width() << !dialog.field("anamorphic").toBool(), ui->imageWidget->imgL.height(), QImage::Format_RGB32);
 
+        /* Use a painter on out to render image. */
         QPainter paint(&out);
         drawSideBySide(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, dialog.field("anamorphic").toBool(),
                        1.0, dialog.field("mirrorL").toBool(), dialog.field("mirrorR").toBool());
@@ -431,8 +437,10 @@ void DepthViewWindow::on_actionExport_triggered() {
         if(!out.isNull())
             out.save(filename, nullptr, quality);
     }else if(dialog.field("topBottom").toBool()){
+        /* Height is bit-shifted to double if anamorphic is disabled. */
         QImage out(ui->imageWidget->imgL.width(), ui->imageWidget->imgL.height() << !dialog.field("anamorphic").toBool(), QImage::Format_RGB32);
 
+        /* Use a painter on out to render image. */
         QPainter paint(&out);
         drawTopBottom(ui->imageWidget->pixmapL, ui->imageWidget->pixmapR, 0, 0, paint, dialog.field("anamorphic").toBool(),
                       1.0, dialog.field("mirrorT").toBool(), dialog.field("mirrorB").toBool());
@@ -440,6 +448,7 @@ void DepthViewWindow::on_actionExport_triggered() {
         if(!out.isNull())
             out.save(filename, nullptr, quality);
     }else if(dialog.field("exportBoth").toBool()){
+        /* Add an 'L' or 'R' to filename before extension to designate left or right image, respectively. */
         QString filenameL = filename;
         ui->imageWidget->imgL.save(filenameL.insert(filenameL.lastIndexOf('.'), 'L'), nullptr, quality);
 
@@ -504,6 +513,7 @@ void DepthViewWindow::loadSettings(){
         setRenderModeFromString(settings.value(SettingsWindow::defaultrender).toString());
 
     if(settings.contains(SettingsWindow::rememberwindow) && settings.value(SettingsWindow::rememberwindow).toBool()){
+        /* Restore window state from the stored geometry. */
         settings.beginGroup("Window");
         restoreGeometry(settings.value("geometry").toByteArray());
         restoreState(settings.value("state").toByteArray());
@@ -524,21 +534,33 @@ void DepthViewWindow::loadSettings(){
             ui->actionShowMenuBar->setChecked(true);
     }
 
+    /* Swap L/R defaults to false. */
     ui->actionSwap_Left_Right->setChecked(settings.contains(SettingsWindow::swapLR) ? settings.value(SettingsWindow::swapLR).toBool() : false);
+
+    /* Drag/Drop on by default, setting is to disable. */
     setAcceptDrops(settings.contains(SettingsWindow::disabledragdrop) ? !settings.value(SettingsWindow::disabledragdrop).toBool() : true);
+
+    /* Continuous pan defaults to true. */
     ui->imageWidget->enableContinuousPan(settings.contains(SettingsWindow::continuouspan) ?
                                              settings.value(SettingsWindow::continuouspan).toBool() : true);
+
+    /* Scrollbars enabled by default. */
     ui->actionShow_Scrollbars->setChecked(settings.contains(SettingsWindow::showscrollbars) ?
                                               settings.value(SettingsWindow::showscrollbars).toBool() : true);
+
+    /* Smooth scaling defaults to false. */
     ui->actionSmooth_Scaling->setChecked(settings.contains(SettingsWindow::smoothscaling) ?
                                              settings.value(SettingsWindow::smoothscaling).toBool() : false);
 
+    /* Only use the startup directory when the current directory is at the default (home). */
     if(settings.contains(SettingsWindow::startupdirectory) && currentFile.isEmpty() && currentDir.absolutePath() == QDir::homePath())
         currentDir.cd(settings.value(SettingsWindow::startupdirectory).toString());
 
+    /* Pan buttons are bitflags stored as an int. */
     if(settings.contains(SettingsWindow::panbuttons))
         ui->imageWidget->setPanButtons(Qt::MouseButtons(settings.value(SettingsWindow::panbuttons).toInt()));
 
+    /* Why did I ever even have this? */
     if(settings.contains("lastrun"))
         settings.remove("lastrun");
 }
@@ -589,6 +611,7 @@ void DepthViewWindow::parseCommandLine(const QCommandLineParser &args){
 }
 
 #if defined(Q_OS_WIN32)
+/* Windows-specific code used for file association. */
 #include <Windows.h>
 
 void addRegistryEntry(const QString& path, const QString& value, QString& error){
