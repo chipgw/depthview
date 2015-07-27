@@ -34,5 +34,5 @@ License
 
 
 [CMake]:http://www.cmake.org
-[Qt]:http://qt-project.org
+[Qt]:http://www.qt.io
 [MIT License]:LICENSE

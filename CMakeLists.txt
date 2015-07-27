@@ -50,7 +50,7 @@ find_package(Qt5Widgets 5.2 REQUIRED)
 qt5_wrap_ui(FORM_HEADERS ${FORMS})
 qt5_add_resources(RESOURCES_RCC ${RESOURCES})
 
-add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${FORM_HEADERS} ${HEADERS} ${RESOURCES_RCC} ${WINDRES})
+add_executable(${PROJECT_NAME} WIN32 ${SOURCES} ${FORM_HEADERS} ${HEADERS} ${RESOURCES_RCC} ${WINDRES} README.md LICENSE)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 
