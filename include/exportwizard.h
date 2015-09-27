@@ -10,10 +10,10 @@ public:
     int nextId() const;
 
 private:
-    enum { Page_Intro, Page_Anglaph, Page_SideBySide, Page_TopBottom, Page_Seperate, Page_Conclusion };
+    enum { Page_Intro, Page_Anaglyph, Page_SideBySide, Page_TopBottom, Page_Seperate, Page_Conclusion };
 
     QWizardPage *createIntroPage();
-    QWizardPage *createAnglaphPage();
+    QWizardPage *createAnaglyphPage();
     QWizardPage *createSideBySidePage();
     QWizardPage *createTopBottomPage();
     QWizardPage *createSeperatePage();

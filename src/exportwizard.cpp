@@ -9,7 +9,7 @@
 
 ExportWizard::ExportWizard(QWidget *parent) : QWizard(parent) {
     setPage(Page_Intro, createIntroPage());
-    setPage(Page_Anglaph, createAnglaphPage());
+    setPage(Page_Anaglyph, createAnaglyphPage());
     setPage(Page_SideBySide, createSideBySidePage());
     setPage(Page_TopBottom, createTopBottomPage());
     setPage(Page_Seperate, createSeperatePage());
@@ -19,8 +19,8 @@ ExportWizard::ExportWizard(QWidget *parent) : QWizard(parent) {
 int ExportWizard::nextId() const{
     switch(currentId()){
     case Page_Intro:
-        if(field("anglaph").toBool())
-            return ExportWizard::Page_Anglaph;
+        if(field("anaglyph").toBool())
+            return ExportWizard::Page_Anaglyph;
         else if(field("sideBySide").toBool())
             return ExportWizard::Page_SideBySide;
         else if(field("topBottom").toBool())
@@ -29,7 +29,7 @@ int ExportWizard::nextId() const{
             return ExportWizard::Page_Seperate;
 
         return -1;
-    case Page_Anglaph:
+    case Page_Anaglyph:
     case Page_SideBySide:
     case Page_TopBottom:
     case Page_Seperate:
@@ -49,13 +49,13 @@ QWizardPage* ExportWizard::createIntroPage() {
     page->setTitle(tr("Export Image"));
     page->setSubTitle(tr("Choose Export Type"));
 
-    QRadioButton *anglaph = new QRadioButton("Anglaph", page);
+    QRadioButton *anaglyph = new QRadioButton("Anaglyph", page);
     QRadioButton *sideBySide = new QRadioButton("Side by Side", page);
     QRadioButton *topBottom = new QRadioButton("Top Bottom", page);
     QRadioButton *seperate = new QRadioButton("Seperate Images", page);
-    anglaph->setChecked(true);
+    anaglyph->setChecked(true);
 
-    addOption(anglaph);
+    addOption(anaglyph);
     addOption(sideBySide);
     addOption(topBottom);
     addOption(seperate);
@@ -63,11 +63,11 @@ QWizardPage* ExportWizard::createIntroPage() {
     return page;
 }
 
-QWizardPage* ExportWizard::createAnglaphPage() {
+QWizardPage* ExportWizard::createAnaglyphPage() {
     AutoWizardPage *page = new AutoWizardPage;
 
     page->setTitle(tr("Export Image"));
-    page->setSubTitle(tr("Anglaph Options"));
+    page->setSubTitle(tr("Anaglyph Options"));
 
     QRadioButton *fullColor = new QRadioButton("Full Color", page);
     QRadioButton *halfColor = new QRadioButton("Half Color", page);

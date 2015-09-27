@@ -8,9 +8,9 @@ class ImageWidget : public QWidget {
     Q_OBJECT
 public:
     enum DrawMode{
-        AnglaphFull,
-        AnglaphHalf,
-        AnglaphGreyscale,
+        AnaglyphFull,
+        AnaglyphHalf,
+        AnaglyphGreyscale,
         SidebySide,
         SidebySideMLeft,
         SidebySideMRight,
@@ -59,8 +59,8 @@ protected:
 
     DrawMode mode;
 
-    /* The pixmap generated for anglaph draw modes. */
-    QPixmap anglaph;
+    /* The pixmap generated for anaglyph draw modes. */
+    QPixmap anaglyph;
 
     /* Interlacing masks. */
     QBitmap maskInterlacedHorizontal;
@@ -84,7 +84,7 @@ public:
     void setZoom(qreal val);
     void addZoom(qreal amount);
 
-    /* Change the draw mode. Will recalculate scroll bounds, update anglaph pixmap (if needed), and repaint the widget. */
+    /* Change the draw mode. Will recalculate scroll bounds, update anaglyph pixmap (if needed), and repaint the widget. */
     void setRenderMode(DrawMode m);
 
     /* Set the mouse button mask used for panning. */
@@ -118,8 +118,8 @@ public slots:
     void enableAnamorphicDualview(bool enable);
 
 protected:
-    /* Update the anglaph pixmaps. Should be called any time the images or the draw mode are changed. */
-    void updateAnglaph();
+    /* Update the anaglyph pixmaps. Should be called any time the images or the draw mode are changed. */
+    void updateAnaglyph();
 
     /* All the events we listen for. */
     void resizeEvent(QResizeEvent *e);

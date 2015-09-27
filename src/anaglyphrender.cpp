@@ -3,7 +3,7 @@
 const QRgb lEyeMask = qRgb(0xff, 0x00, 0x00);
 const QRgb rEyeMask = qRgb(0x00, 0xff, 0xff);
 
-QImage drawAnglaph(const QImage &imgL, const QImage &imgR){
+QImage drawAnaglyph(const QImage &imgL, const QImage &imgR){
     QImage final(imgL.size(), QImage::Format_RGB32);
 
     QRgb *line;
@@ -30,7 +30,7 @@ QImage drawAnglaph(const QImage &imgL, const QImage &imgR){
     return final;
 }
 
-QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR){
+QImage drawAnaglyphHalf(const QImage &imgL, const QImage &imgR){
     QImage final(imgL.size(), QImage::Format_RGB32);
 
     QRgb *line;
@@ -63,7 +63,7 @@ QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR){
     return final;
 }
 
-QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR){
+QImage drawAnaglyphGrey(const QImage &imgL, const QImage &imgR){
     QImage final(imgL.size(), QImage::Format_RGB32);
 
     QRgb *line;

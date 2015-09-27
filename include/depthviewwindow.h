@@ -57,9 +57,9 @@ private slots:
     void on_actionzoom100_triggered();
     void on_actionzoom50_triggered();
 
-    void on_actionAnglaphFullColor_triggered();
-    void on_actionAnglaphHalfColor_triggered();
-    void on_actionAnglaphGreyscale_triggered();
+    void on_actionAnaglyphFullColor_triggered();
+    void on_actionAnaglyphHalfColor_triggered();
+    void on_actionAnaglyphGreyscale_triggered();
     void on_actionSideBySideNoMirror_triggered();
     void on_actionSideBySideMirrorLeft_triggered();
     void on_actionSideBySideMirrorRight_triggered();

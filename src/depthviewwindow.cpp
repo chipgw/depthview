@@ -132,16 +132,16 @@ bool DepthViewWindow::showLoadImageDialog(){
     return loadImage(filename);
 }
 
-void DepthViewWindow::on_actionAnglaphFullColor_triggered(){
-    ui->imageWidget->setRenderMode(ImageWidget::AnglaphFull);
+void DepthViewWindow::on_actionAnaglyphFullColor_triggered(){
+    ui->imageWidget->setRenderMode(ImageWidget::AnaglyphFull);
 }
 
-void DepthViewWindow::on_actionAnglaphHalfColor_triggered(){
-    ui->imageWidget->setRenderMode(ImageWidget::AnglaphHalf);
+void DepthViewWindow::on_actionAnaglyphHalfColor_triggered(){
+    ui->imageWidget->setRenderMode(ImageWidget::AnaglyphHalf);
 }
 
-void DepthViewWindow::on_actionAnglaphGreyscale_triggered(){
-    ui->imageWidget->setRenderMode(ImageWidget::AnglaphGreyscale);
+void DepthViewWindow::on_actionAnaglyphGreyscale_triggered(){
+    ui->imageWidget->setRenderMode(ImageWidget::AnaglyphGreyscale);
 }
 
 void DepthViewWindow::on_actionSideBySideNoMirror_triggered(){
@@ -412,16 +412,16 @@ void DepthViewWindow::on_actionExport_triggered() {
 
     int quality = dialog.field("quality").toInt();
 
-    if(dialog.field("anglaph").toBool()){
+    if(dialog.field("anaglyph").toBool()){
         QImage out;
 
-        /* What kind of anglaph are we exporting? */
+        /* What kind of anaglyph are we exporting? */
         if(dialog.field("fullColor").toBool())
-            out = drawAnglaph(ui->imageWidget->imgL, ui->imageWidget->imgR);
+            out = drawAnaglyph(ui->imageWidget->imgL, ui->imageWidget->imgR);
         else if(dialog.field("halfColor").toBool())
-            out = drawAnglaphHalf(ui->imageWidget->imgL, ui->imageWidget->imgR);
+            out = drawAnaglyphHalf(ui->imageWidget->imgL, ui->imageWidget->imgR);
         else
-            out = drawAnglaphGrey(ui->imageWidget->imgL, ui->imageWidget->imgR);
+            out = drawAnaglyphGrey(ui->imageWidget->imgL, ui->imageWidget->imgR);
 
         if(!out.isNull())
             out.save(filename, nullptr, quality);

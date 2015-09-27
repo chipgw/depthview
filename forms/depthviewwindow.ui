@@ -48,13 +48,13 @@
     <property name="title">
      <string>Stereo Mode</string>
     </property>
-    <widget class="QMenu" name="menuAnglaph">
+    <widget class="QMenu" name="menuAnaglyph">
      <property name="title">
-      <string>Anglaph</string>
+      <string>Anaglyph</string>
      </property>
-     <addaction name="actionAnglaphFullColor"/>
-     <addaction name="actionAnglaphHalfColor"/>
-     <addaction name="actionAnglaphGreyscale"/>
+     <addaction name="actionAnaglyphFullColor"/>
+     <addaction name="actionAnaglyphHalfColor"/>
+     <addaction name="actionAnaglyphGreyscale"/>
     </widget>
     <widget class="QMenu" name="menuSide_By_Side">
      <property name="title">
@@ -88,7 +88,7 @@
      <addaction name="actionTopBottomMirrorBottom"/>
      <addaction name="actionTopBottomMirrorBoth"/>
     </widget>
-    <addaction name="menuAnglaph"/>
+    <addaction name="menuAnaglyph"/>
     <addaction name="menuSide_By_Side"/>
     <addaction name="menuTop_Bottom"/>
     <addaction name="menuInterlaced"/>
@@ -198,17 +198,17 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionAnglaphFullColor">
+  <action name="actionAnaglyphFullColor">
    <property name="text">
     <string>Full Color (Red/Cyan)</string>
    </property>
   </action>
-  <action name="actionAnglaphHalfColor">
+  <action name="actionAnaglyphHalfColor">
    <property name="text">
     <string>Half Color (Red/Cyan)</string>
    </property>
   </action>
-  <action name="actionAnglaphGreyscale">
+  <action name="actionAnaglyphGreyscale">
    <property name="text">
     <string>Greyscale (Red/Cyan)</string>
    </property>

@@ -6,7 +6,7 @@
 
 ImageWidget::ImageWidget(QWidget *parent) : QWidget(parent), hBar(Qt::Horizontal, this), vBar(Qt::Vertical, this), zoom(0.0),
     swapLR(false), scrollbarsVisible(true), continuousPan(true), smoothTransform(false), anamorphicDualview(false),
-    panButtons(Qt::LeftButton | Qt::MidButton), mouseTimer(this), mode(AnglaphFull), maskInterlacedHorizontal(":/masks/interlacedH.pbm"),
+    panButtons(Qt::LeftButton | Qt::MidButton), mouseTimer(this), mode(AnaglyphFull), maskInterlacedHorizontal(":/masks/interlacedH.pbm"),
     maskInterlacedVertical(":/masks/interlacedV.pbm"), maskCheckerboard(":/masks/checkerboard.pbm") {
 
     setMouseTracking(true);
@@ -67,10 +67,10 @@ void ImageWidget::paintEvent(QPaintEvent *e){
         const QPixmap &R = swapLR ? pixmapL : pixmapR;
 
         switch(mode){
-        case AnglaphFull:
-        case AnglaphHalf:
-        case AnglaphGreyscale:
-            drawSingle(anglaph, -hBar.value(), -vBar.value(), painter, zoom);
+        case AnaglyphFull:
+        case AnaglyphHalf:
+        case AnaglyphGreyscale:
+            drawSingle(anaglyph, -hBar.value(), -vBar.value(), painter, zoom);
             break;
         case SidebySide:
             drawSideBySide(L, R, -hBar.value(), -vBar.value(), painter, anamorphicDualview, zoom);
@@ -131,7 +131,7 @@ void ImageWidget::updateImages(){
     pixmapL = QPixmap::fromImage(imgL);
     pixmapR = QPixmap::fromImage(imgR);
     recalculateScrollMax();
-    updateAnglaph();
+    updateAnaglyph();
     repaint();
 }
 
@@ -250,7 +250,7 @@ void ImageWidget::addZoom(qreal amount){
 
 void ImageWidget::enableSwapLR(bool enable){
     swapLR = enable;
-    updateAnglaph();
+    updateAnaglyph();
     repaint();
 }
 
@@ -281,7 +281,7 @@ void ImageWidget::hideCursor(){
 void ImageWidget::setRenderMode(DrawMode m){
     mode = m;
     recalculateScrollMax();
-    updateAnglaph();
+    updateAnaglyph();
     repaint();
 }
 
@@ -289,23 +289,23 @@ void ImageWidget::setPanButtons(Qt::MouseButtons buttons){
     panButtons = buttons;
 }
 
-void ImageWidget::updateAnglaph(){
-    /* Generate an anglaph pixmap to use with drawSingle() so we don't have to redo it every time you pan and such. */
+void ImageWidget::updateAnaglyph(){
+    /* Generate an anaglyph pixmap to use with drawSingle() so we don't have to redo it every time you pan and such. */
     const QImage &L = swapLR ? imgR : imgL;
     const QImage &R = swapLR ? imgL : imgR;
 
     switch(mode){
-    case AnglaphFull:
-        anglaph = QPixmap::fromImage(drawAnglaph(L, R));
+    case AnaglyphFull:
+        anaglyph = QPixmap::fromImage(drawAnaglyph(L, R));
         break;
-    case AnglaphHalf:
-        anglaph = QPixmap::fromImage(drawAnglaphHalf(L, R));
+    case AnaglyphHalf:
+        anaglyph = QPixmap::fromImage(drawAnaglyphHalf(L, R));
         break;
-    case AnglaphGreyscale:
-        anglaph = QPixmap::fromImage(drawAnglaphGrey(L, R));
+    case AnaglyphGreyscale:
+        anaglyph = QPixmap::fromImage(drawAnaglyphGrey(L, R));
         break;
     default:
-        /* If we aren't in anglaph mode just ignore. */
+        /* If we aren't in anaglyph mode just ignore. */
         break;
     }
 }
@@ -313,9 +313,9 @@ void ImageWidget::updateAnglaph(){
 /* Name -> Enum list. */
 QMap<QString, ImageWidget::DrawMode> initDrawModeList(){
     QMap<QString, ImageWidget::DrawMode> list;
-    list.insert("Anglaph, Full Color",          ImageWidget::AnglaphFull);
-    list.insert("Anglaph, Half Color",          ImageWidget::AnglaphHalf);
-    list.insert("Anglaph, Greyscale",           ImageWidget::AnglaphGreyscale);
+    list.insert("Anaglyph, Full Color",         ImageWidget::AnaglyphFull);
+    list.insert("Anaglyph, Half Color",         ImageWidget::AnaglyphHalf);
+    list.insert("Anaglyph, Greyscale",          ImageWidget::AnaglyphGreyscale);
     list.insert("Side by Side, No Mirror",      ImageWidget::SidebySide);
     list.insert("Side by Side, Mirror Left",    ImageWidget::SidebySideMLeft);
     list.insert("Side by Side, Mirror Right",   ImageWidget::SidebySideMRight);

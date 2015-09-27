@@ -3,10 +3,10 @@
 #include <QImage>
 #include <QPixmap>
 
-/* Anglaph generates a pixmap once on loading the image and uses that with drawSingle() for zooming & panning. */
-QImage drawAnglaph(const QImage &imgL, const QImage &imgR);
-QImage drawAnglaphHalf(const QImage &imgL, const QImage &imgR);
-QImage drawAnglaphGrey(const QImage &imgL, const QImage &imgR);
+/* Anaglyph generates a pixmap once on loading the image and uses that with drawSingle() for zooming & panning. */
+QImage drawAnaglyph(const QImage &imgL, const QImage &imgR);
+QImage drawAnaglyphHalf(const QImage &imgL, const QImage &imgR);
+QImage drawAnaglyphGrey(const QImage &imgL, const QImage &imgR);
 
 /* Interlaced/checkerboard uses a mask to tell which image to use for which screen pixels. Only works properly without the menubar in fullscreen mode. */
 void drawInterlaced(const QPixmap &imgL, const QPixmap &imgR, int panX, int panY, QPainter &painter, QBitmap &mask, qreal zoom = 0.0);
