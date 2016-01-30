@@ -36,7 +36,7 @@ void ImageWidget::paintEvent(QPaintEvent *e){
     QPainter painter(this);
     painter.setRenderHint(QPainter::SmoothPixmapTransform, smoothTransform);
     painter.setBrush(QBrush(Qt::black));
-    painter.drawRect(e->rect());
+    painter.drawRect(e->rect().adjusted(-2, -2, 2, 2));
 
     if(imgL.isNull() || imgR.isNull()){
         /* If either image is null tell the user. */
